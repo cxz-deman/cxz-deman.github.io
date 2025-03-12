@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="John Doe">
+
+
+
+
+
+<title>day02 数字及其常用函数-列表 | Hexo</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">day02 数字及其常用函数-列表</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 12, 2025&nbsp;&nbsp;22:50:03</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="上接变量"><a href="#上接变量" class="headerlink" title="上接变量"></a>上接变量</h1><h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><h3 id="字符串常用官方api"><a href="#字符串常用官方api" class="headerlink" title="字符串常用官方api()"></a>字符串常用官方api()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">text = <span class="string">&quot;helLO,World,CXK J N T m      &quot;</span></span><br><span class="line">text2 = text.lower()  <span class="comment"># 小写</span></span><br><span class="line"><span class="built_in">print</span>(text2)</span><br><span class="line"></span><br><span class="line">text3 = text.upper()  <span class="comment"># 大写</span></span><br><span class="line"><span class="built_in">print</span>(text3)</span><br><span class="line"></span><br><span class="line">text4 = text.capitalize()  <span class="comment"># 首字母大写</span></span><br><span class="line"><span class="built_in">print</span>(text4)</span><br><span class="line"></span><br><span class="line">text5 = text.strip()  <span class="comment"># 去除空格</span></span><br><span class="line"><span class="built_in">print</span>(text5)</span><br><span class="line"></span><br><span class="line">text6 = text.split()  <span class="comment"># 以空格分割</span></span><br><span class="line"><span class="built_in">print</span>(text6)</span><br><span class="line"></span><br><span class="line">text7 = text.split(<span class="string">&quot;,&quot;</span>)  <span class="comment"># 替换符号</span></span><br><span class="line"><span class="built_in">print</span>(text7)</span><br><span class="line"></span><br><span class="line">text8 = <span class="string">&quot;_&quot;</span>.join(text7)  <span class="comment"># 每个逗号中间替换成&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(text8)</span><br><span class="line"></span><br><span class="line">text9 = text.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;_&quot;</span>)  <span class="comment"># 替换空格为&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(text9)</span><br><span class="line"></span><br><span class="line">text10 = text.find(<span class="string">&quot;o&quot;</span>)  <span class="comment"># 查找o输出索引值</span></span><br><span class="line"><span class="built_in">print</span>(text10)</span><br><span class="line"></span><br><span class="line">text11 = text.startswith(<span class="string">&quot;hel&quot;</span>)  <span class="comment"># 判断是否以hel开头</span></span><br><span class="line"><span class="built_in">print</span>(text11)</span><br><span class="line"></span><br><span class="line">text12 = text.endswith(<span class="string">&quot;m&quot;</span>)  <span class="comment"># 判断是否以m结尾</span></span><br><span class="line"><span class="built_in">print</span>(text12)</span><br><span class="line"></span><br><span class="line">text13 = text.isalpha()  <span class="comment"># 判断是否为字母</span></span><br><span class="line"><span class="built_in">print</span>(text13)</span><br><span class="line"></span><br><span class="line">text14 = text.isdigit()  <span class="comment"># 判断是否为数字</span></span><br><span class="line"><span class="built_in">print</span>(text14)</span><br><span class="line"></span><br><span class="line">text15 = text.isalnum()  <span class="comment"># 判断是否为字母或数字</span></span><br><span class="line"><span class="built_in">print</span>(text15)</span><br><span class="line"></span><br><span class="line">text16 = text.count(<span class="string">&quot;o&quot;</span>)  <span class="comment"># 查找o输出个数</span></span><br><span class="line"><span class="built_in">print</span>(text16)</span><br><span class="line"></span><br><span class="line">name = <span class="string">&quot;cxk&quot;</span></span><br><span class="line">age = <span class="number">18.0110000000000000002</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;我的名字是%s,年龄是%.2f&quot;</span> % (name, age))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;我的名字是&#123;0&#125;,年龄是&#123;1:.4f&#125;&quot;</span>.<span class="built_in">format</span>(name, age))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;我的名字是<span class="subst">&#123;name&#125;</span>,年龄是<span class="subst">&#123;age:<span class="number">.6</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="数字（布尔值也是数字的一种）"><a href="#数字（布尔值也是数字的一种）" class="headerlink" title="数字（布尔值也是数字的一种）"></a>数字（布尔值也是数字的一种）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 布尔值</span><br><span class="line">flag = True</span><br><span class="line">flag2 = False</span><br><span class="line">print(10 &gt; 20)</span><br><span class="line">x = &quot;&quot;</span><br><span class="line">print(bool(x))</span><br><span class="line">x = -0</span><br><span class="line">print(bool(x))</span><br><span class="line">x = 10</span><br><span class="line">print(bool(x))</span><br><span class="line">x = []</span><br><span class="line">print(bool(x))</span><br></pre></td></tr></table></figure>
+
+<h4 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 整数</span><br><span class="line">x = 10  # 十进制</span><br><span class="line">print(x)</span><br><span class="line">x_2j = 0b10  # 2进制</span><br><span class="line">print(x_2j)</span><br><span class="line">x_8j = 0o10  # 8进制</span><br><span class="line">print(x_8j)</span><br><span class="line">x_16j = 0x10  # 16进制</span><br><span class="line">print(x_16j)</span><br></pre></td></tr></table></figure>
+
+<h4 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 浮点数</span><br><span class="line">x = 1.2</span><br><span class="line">print(x)</span><br><span class="line">x = 10.</span><br><span class="line">print(x)</span><br><span class="line">x = .9</span><br><span class="line">print(x)</span><br><span class="line">x = 1e-3  # 科学计数法</span><br><span class="line">print(x)</span><br><span class="line">x = 1e3</span><br><span class="line">print(x)</span><br><span class="line">x = 1e03</span><br><span class="line">print(x)</span><br><span class="line"></span><br><span class="line">import math</span><br><span class="line">print(math.pi)</span><br><span class="line">print(math.e)</span><br></pre></td></tr></table></figure>
+
+<h4 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 复数</span><br><span class="line">a = 1 + 2j</span><br><span class="line">print(a)  # 复数</span><br><span class="line">print(a.real)</span><br><span class="line">print(a.imag)</span><br><span class="line">print(a.conjugate())  # 共轭</span><br><span class="line">print(a ** 2)</span><br></pre></td></tr></table></figure>
+
+<h4 id="数字类型转换"><a href="#数字类型转换" class="headerlink" title="数字类型转换"></a>数字类型转换</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 数字类型转换</span><br><span class="line">x = 6</span><br><span class="line">x_bin = bin(x)  # 二进制</span><br><span class="line">print(type(x))</span><br><span class="line">print(type(x_bin))</span><br><span class="line">print(x_bin)</span><br><span class="line">x_oct = oct(x)  # 八进制</span><br><span class="line">print(type(x_oct))</span><br><span class="line">print(x_oct)</span><br><span class="line">x_hex = hex(x)  # 十六进制</span><br><span class="line">print(type(x_hex))</span><br><span class="line">print(x_hex)</span><br><span class="line">x_f = float(x)</span><br><span class="line">print(type(x_f))</span><br><span class="line">print(x_f)</span><br><span class="line">x_s = str(x)</span><br><span class="line">print(type(x_s))</span><br><span class="line">print(x_s)</span><br><span class="line">x_b = bool(x)</span><br><span class="line">print(type(x_b))</span><br><span class="line">print(x_b)</span><br><span class="line">x_i = int(x_s)</span><br><span class="line">print(type(x_i))</span><br><span class="line">print(x_i)</span><br><span class="line">x_com = complex(x)</span><br><span class="line">print(type(x_com))</span><br><span class="line">print(x_com)</span><br><span class="line">x_list = [1, 2, 3, 4, 5]</span><br><span class="line">x_tuple = tuple(x_list)</span><br><span class="line">print(type(x_tuple))</span><br><span class="line">print(x_tuple)</span><br><span class="line">x_set = set(x_list)</span><br><span class="line">print(type(x_set))</span><br><span class="line">print(x_set)</span><br></pre></td></tr></table></figure>
+
+<h4 id="数字类型取整"><a href="#数字类型取整" class="headerlink" title="数字类型取整"></a>数字类型取整</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line">re = math.ceil(3.14)  # 向上取整</span><br><span class="line">print(re)</span><br><span class="line">re = math.floor(3.94)  # 向下取整</span><br><span class="line">print(re)</span><br><span class="line">re = round(3.50)  # 四舍五入</span><br><span class="line">print(re)  # 输出4</span><br><span class="line">print(&quot;-----------------&quot;)</span><br><span class="line">re = round(2.50)</span><br><span class="line">print(re)  # 输出2</span><br><span class="line">re = round(5.50)</span><br><span class="line">print(re)  # 输出6</span><br><span class="line">re = round(5.70)</span><br><span class="line">print(re)  # 输出6</span><br><span class="line">re = round(5.20)</span><br><span class="line">print(re)  # 输出5</span><br><span class="line">re = round(6.70)</span><br><span class="line">print(re)  # 输出7</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte_string = b&#x27;hello&#x27;</span><br><span class="line">print(byte_string)  # 输出: b&#x27;hello&#x27;</span><br><span class="line">print(type(byte_string))  # 输出: &lt;class &#x27;bytes&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">none_value = None</span><br><span class="line">print(none_value)  # 输出: None</span><br><span class="line">print(type(none_value))  # 输出: &lt;class &#x27;NoneType&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h1><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = []</span><br><span class="line">print(x)</span><br><span class="line">x = [1, 2, 3, 4, 5]</span><br><span class="line">print(x)</span><br><span class="line">x = [&quot;zx&quot;, 1, &quot;2.0&quot;, 2.0, True, [1.0, 2]]</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建列表"><a href="#创建列表" class="headerlink" title="创建列表"></a>创建列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = list()</span><br><span class="line">x = [1, 2, 3, 4, 5]</span><br><span class="line">print(x)</span><br><span class="line">x = list(range(1, 6))</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+
+<h3 id="拼接列表"><a href="#拼接列表" class="headerlink" title="拼接列表"></a>拼接列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 拼接</span><br><span class="line">x = [1, 2]</span><br><span class="line">x1 = [1, 2, 3, 5]</span><br><span class="line">x3 = x + x1</span><br><span class="line">print(x3)</span><br><span class="line">x4 = x3 * 3</span><br><span class="line">print(x4)</span><br><span class="line"></span><br><span class="line">x4 = [1, 2]</span><br><span class="line">x5 = [1, 2]</span><br><span class="line">print(x4 == x5)</span><br><span class="line"></span><br><span class="line">x6 = [1, 2, 3, 4, 5]</span><br><span class="line">print(1 in x6)</span><br><span class="line">print(1 not in x6)</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表索引"><a href="#列表索引" class="headerlink" title="列表索引"></a>列表索引</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 索引</span><br><span class="line">x = [1, 2, 3, 4, 5]</span><br><span class="line">print(x[0])</span><br><span class="line">print(x[2])</span><br><span class="line">print(x[-1])</span><br><span class="line">print(x[::-1])</span><br><span class="line">print(x[1:4:2])</span><br><span class="line"></span><br><span class="line"># 创建二维表</span><br><span class="line">x = [[1, 2, 3],</span><br><span class="line">     [4, 5, 6],</span><br><span class="line">     [7, 8, 9]]</span><br><span class="line">print(x[0][0])</span><br><span class="line">print(x[1:3])</span><br></pre></td></tr></table></figure>
+
+<h1 id="课后练习"><a href="#课后练习" class="headerlink" title="课后练习"></a>课后练习</h1><p>python中数字有哪些形式?分别写一个具体的值<br>整数：1<br>浮点数：1.2<br>复数：1+2j<br>布尔值：True （10&#x3D;&#x3D;10）<br>空值：None</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 如何把10进制的数转化为16进制数,举例说明</span><br><span class="line">x = 10</span><br><span class="line">x1 = hex(x)  # 十进制转十六进制</span><br><span class="line">print(x1)</span><br><span class="line"></span><br><span class="line"># 如何把16进制的数转化为8进制数,举例说明</span><br><span class="line">x3 = 0x10</span><br><span class="line">x2 = oct(x3)  # 十六进制转八进制</span><br><span class="line">print(x2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 列表的切片操作有哪些手段</span><br><span class="line"># 拼接：</span><br><span class="line">x = [1, 2]</span><br><span class="line">x1 = [1, 2, 3, 5]</span><br><span class="line">x3 = x + x1</span><br><span class="line">print(x3)</span><br><span class="line">x4 = x3 * 3</span><br><span class="line">print(x4)</span><br><span class="line"></span><br><span class="line">x4 = [1, 2]</span><br><span class="line">x5 = [1, 2]</span><br><span class="line">print(x4 == x5)</span><br><span class="line"></span><br><span class="line">x6 = [1, 2, 3, 4, 5]</span><br><span class="line">print(1 in x6)</span><br><span class="line">print(1 not in x6)</span><br><span class="line"></span><br><span class="line"># 索引</span><br><span class="line">x = [1, 2, 3, 4, 5]</span><br><span class="line">print(x[0])</span><br><span class="line">print(x[2])</span><br><span class="line">print(x[-1])</span><br><span class="line">print(x[::-1])</span><br><span class="line">print(x[1:4:2])</span><br><span class="line"></span><br><span class="line"># 创建二维表</span><br><span class="line">x = [[1, 2, 3],</span><br><span class="line">     [4, 5, 6],</span><br><span class="line">     [7, 8, 9]]</span><br><span class="line">print(x[0][0])</span><br><span class="line">print(x[1:3])</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/03/12/day03-%E5%85%83%E7%BB%84-%E5%AD%97%E5%85%B8/">day03 元组-字典</a>
+            
+            
+            <a class="next" rel="next" href="/2025/03/09/day01-%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83-%E6%B3%A8%E9%87%8A%E8%B5%8B%E5%80%BC-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB/">day01 创建环境-注释赋值-变量种类</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© John Doe | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
