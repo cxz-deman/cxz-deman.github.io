@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>02.基础补习.Python.高级语法 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">02.基础补习.Python.高级语法</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 16, 2025&nbsp;&nbsp;18:41:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、函数式编程"><a href="#一、函数式编程" class="headerlink" title="一、函数式编程"></a>一、函数式编程</h1><p>Python的函数式编程（Functional Programming, FP）是一种编程范式。</p>
+<h2 id="1-函数作为参数"><a href="#1-函数作为参数" class="headerlink" title="1. 函数作为参数"></a>1. 函数作为参数</h2><ul>
+<li>将核心逻辑传入方法体，使该方法的适用性更广。</li>
+</ul>
+<p><strong>示例1：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func01</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;func01执行&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func02</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;func02执行&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func03</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;func03执行&quot;</span>)</span><br><span class="line">    func()</span><br><span class="line"></span><br><span class="line">func03(func02)</span><br><span class="line">func03(func01)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-函数作为返回值"><a href="#2-函数作为返回值" class="headerlink" title="2. 函数作为返回值"></a>2. 函数作为返回值</h2><p>我们可以通过闭包思想完成这一特性。</p>
+<p>闭包是指引用了此函数外部嵌套函数的变量的函数，并把该函数作为返回值，是一种思想。</p>
+<h3 id="2-1-闭包定义"><a href="#2-1-闭包定义" class="headerlink" title="2.1 闭包定义"></a>2.1 闭包定义</h3><p><strong>闭包必须满足以下三个条件：</strong></p>
+<ul>
+<li>必须有一个内嵌函数</li>
+<li>内嵌函数必须引用外部函数中变量</li>
+<li>外部函数返回值必须是内嵌函数</li>
+</ul>
+<h3 id="2-2-闭包优缺点"><a href="#2-2-闭包优缺点" class="headerlink" title="2.2 闭包优缺点"></a>2.2 闭包优缺点</h3><p><strong>优点</strong></p>
+<ol>
+<li>逻辑连续，当闭包作为另一个函数调用参数时，避免脱离当前逻辑而单独编写额外逻辑。</li>
+<li>方便调用上下文的局部变量。</li>
+<li>加强封装性，是第2点的延伸，可以达到对变量的保护作用。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<p>引用在，空间不灭：闭包使得函数中的变量保存在内存中，内存消耗很大</p>
+<p><strong>示例1</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">give_yasuiqian</span>(<span class="params">money</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">child_buy</span>(<span class="params">obj, m</span>):</span><br><span class="line">        <span class="keyword">nonlocal</span> money</span><br><span class="line">        <span class="keyword">if</span> money &gt; m:</span><br><span class="line">            money -= m</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;买&#x27;</span>, obj, <span class="string">&#x27;花了&#x27;</span>, m, <span class="string">&#x27;元, 剩余&#x27;</span>, money, <span class="string">&#x27;元&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;买&quot;</span>, obj, <span class="string">&#x27;失败&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> child_buy</span><br><span class="line">cb = give_yashuqian(<span class="number">1000</span>)    </span><br><span class="line">cb(<span class="string">&#x27;变形金刚&#x27;</span>, <span class="number">200</span>)</span><br><span class="line">cb(<span class="string">&#x27;漫画三国&#x27;</span>, <span class="number">100</span>)</span><br><span class="line">cb(<span class="string">&#x27;手机&#x27;</span>, <span class="number">1300</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例2</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># file : closure.py</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_power</span>(<span class="params">y</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fn</span>(<span class="params">x</span>):</span><br><span class="line">        <span class="keyword">return</span> x ** y</span><br><span class="line">    <span class="keyword">return</span> fn</span><br><span class="line">pow2 = make_power(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;5的平方是:&quot;</span>, pow2(<span class="number">5</span>))</span><br><span class="line">pow3 = make_power(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;6的立方是:&quot;</span>, pow3(<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-装饰器"><a href="#3-装饰器" class="headerlink" title="3. 装饰器"></a>3. 装饰器</h2><p>装饰器是Python对<strong>闭包思想</strong>的具体语法实现，其功能就是在不破坏目标函数原有的代码和功能的前提下，为目标函数增加新功能。</p>
+<ol>
+<li>日志记录：可以使用装饰器来记录函数的输入、输出或执行时间。</li>
+<li>认证和授权：装饰器可以用于检查用户是否有权限执行特定操作。</li>
+<li>缓存：装饰器可以缓存函数的结果，从而提高执行效率。</li>
+<li>参数验证：可以使用装饰器来验证函数的输入参数是否符合预期。</li>
+<li>代码注入：装饰器可以在函数的执行前后注入额外的代码。</li>
+</ol>
+<h3 id="3-1-基本装饰器"><a href="#3-1-基本装饰器" class="headerlink" title="3.1 基本装饰器"></a>3.1 基本装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_decorator</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I am decorator&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening before the function is called.&quot;</span>)</span><br><span class="line">        func()  <span class="comment"># 调用传入的函数</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening after the function is called.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@my_decorator  </span><span class="comment"># 应用装饰器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;say_hello is:&quot;</span>, say_hello)  <span class="comment"># 装饰器装饰之后的函数</span></span><br><span class="line">say_hello()  <span class="comment"># 调用经过装饰器之后的函数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$my_decorator$ 是一个接受一个函数 $func$ 作为参数的装饰器。</li>
+<li>$wrapper$ 函数在被装饰函数前后添加了额外的操作。</li>
+<li>使用 <code>@my_decorator</code> 将 <code>say_hello</code> 函数装饰，使其在调用前后执行 <code>wrapper</code> 中的代码。</li>
+</ul>
+<h3 id="3-2-带参装饰器"><a href="#3-2-带参装饰器" class="headerlink" title="3.2 带参装饰器"></a>3.2 带参装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">repeat</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;...函数名...()...函数执行...&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">func</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;...装饰器...()...装饰器执行...&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">                func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@repeat(<span class="params"><span class="number">3</span></span>)  </span><span class="comment"># 应用装饰器，重复执行下面的函数3次</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">greet(<span class="string">&quot;Alice&quot;</span>)  <span class="comment"># 调用被装饰的函数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$repeat$ 是一个接受参数的装饰器工厂函数，它返回一个装饰器。</li>
+<li>$decorator$ 是真正的装饰器，它接受一个函数 $func$ 作为参数。</li>
+<li>$wrapper$ 函数重复执行被装饰的函数 <code>num</code> 次。</li>
+</ul>
+<h3 id="3-3-装饰器链"><a href="#3-3-装饰器链" class="headerlink" title="3.3 装饰器链"></a>3.3 装饰器链</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">uppercase</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> result.upper()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exclamation</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> result + <span class="string">&quot;!&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@exclamation</span></span><br><span class="line"><span class="meta">@uppercase</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">greeting = say_hello(<span class="string">&quot;Bob&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(greeting)  <span class="comment"># 输出 &quot;HELLO, BOB!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$uppercase$ 和 $exclamation$ 是两个装饰器，分别将文本转换为大写和添加感叹号。</li>
+<li>使用 <code>@exclamation</code> 和 <code>@uppercase</code> 创建装饰器链，它们按照声明的顺序依次应用。</li>
+</ul>
+<h3 id="3-4-类装饰器"><a href="#3-4-类装饰器" class="headerlink" title="3.4 类装饰器"></a>3.4 类装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyDecorator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, func</span>):</span><br><span class="line">        <span class="variable language_">self</span>.func = func</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening before the function is called.&quot;</span>)</span><br><span class="line">        result = <span class="variable language_">self</span>.func(*args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening after the function is called.&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MyDecorator  </span><span class="comment"># 应用类装饰器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">say_hello(<span class="string">&quot;Charlie&quot;</span>)  <span class="comment"># 调用被装饰的函数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$MyDecorator$ 是一个类装饰器，它接受一个函数 $func$ 作为参数并在 <strong>_<em>call</em>_</strong> 方法中执行额外操作。</li>
+</ul>
+<h3 id="3-5-应用实例"><a href="#3-5-应用实例" class="headerlink" title="3.5 应用实例"></a>3.5 应用实例</h3><p>性能计时器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">performance_timer</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        start_time = time.time()  <span class="comment"># 记录开始时间</span></span><br><span class="line">        result = func(*args, **kwargs)  <span class="comment"># 执行被装饰的函数</span></span><br><span class="line">        end_time = time.time()  <span class="comment"># 记录结束时间</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> took <span class="subst">&#123;end_time - start_time&#125;</span> seconds to execute.&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@performance_timer  </span><span class="comment"># 应用性能计时器装饰器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">time_consuming_function</span>():</span><br><span class="line">    <span class="comment"># 模拟一个耗时操作</span></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">time_consuming_function()  <span class="comment"># 调用被装饰的函数并测量执行时间</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$performance_timer$ 是一个装饰器，它用于测量被装饰函数的执行时间。</li>
+<li>$wrapper$ 函数 $记录开始时间、执行被装饰函数、记录结束时间$，最后输出执行时间。</li>
+</ul>
+<h1 id="二、面向对象编程"><a href="#二、面向对象编程" class="headerlink" title="二、面向对象编程"></a>二、面向对象编程</h1><p>面向对象编程（Object-Oriented Programming，简称OOP）是一种通过组织对象来设计程序的编程方法。</p>
+<p>Python天生就是面向对象的模块化编程。</p>
+<h2 id="1-初识类和对象"><a href="#1-初识类和对象" class="headerlink" title="1. 初识类和对象"></a>1. 初识类和对象</h2><p>示意图：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">       /-------&gt; BYD  E6(京A.88888) 实例，对象</span><br><span class="line">车(类)  </span><br><span class="line">       \-------&gt; BMW  X5(京B.00000) 实例(对象)</span><br><span class="line">    </span><br><span class="line">       /-------&gt; 小京巴(户籍号:000001)</span><br><span class="line">狗(类)  </span><br><span class="line">       \-------&gt; 导盲犬（户籍号:000002）</span><br><span class="line"></span><br><span class="line">       /-------&gt; 100 (对象)</span><br><span class="line">int(类)  </span><br><span class="line">       \-------&gt; 200 (对象)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-类→Class"><a href="#1-1-类→Class" class="headerlink" title="1.1 类→Class"></a>1.1 类→Class</h3><p>物以类聚</p>
+<h4 id="1-1-1-概念"><a href="#1-1-1-概念" class="headerlink" title="1.1.1 概念"></a>1.1.1 概念</h4><p>类是对一类对象的抽象，是对象的模板或蓝图。它定义了对象的属性（特征）和方法（功能）。</p>
+<table>
+<thead>
+<tr>
+<th align="center"><img src="media/image-20241114161806224.png" alt="image-20241114161806224" style="zoom:50%;" /></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">自动驾驶汽车 类</td>
+</tr>
+<tr>
+<td align="center"><img src="media/image-20241114162043128.png" alt="image-20241114162043128" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td align="center">智能手机 类</td>
+</tr>
+</tbody></table>
+<h4 id="1-1-2-创建"><a href="#1-1-2-创建" class="headerlink" title="1.1.2 创建"></a>1.1.2 创建</h4><ul>
+<li><p>数据成员：表明事物的特征。  相当于变量</p>
+</li>
+<li><p>方法成员：表明事物的功能。  相当于函数</p>
+</li>
+<li><p>通过<code>class</code>关键字定义类。</p>
+</li>
+<li><p>类的创建语句语法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span> (<span class="title class_ inherited__">继承列表</span>):</span><br><span class="line">	实例属性(类内的变量) 定义</span><br><span class="line">    实例方法(类内的函数method) 定义</span><br><span class="line">    类变量(<span class="keyword">class</span> <span class="title class_">variable</span>) 定义</span><br><span class="line">    类方法(@<span class="built_in">classmethod</span>) 定义</span><br><span class="line">    静态方法(@<span class="built_in">staticmethod</span>) 定义</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span> says Woof!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>类名就是标识符，建议（<strong>有点强烈</strong>）首字母大写</p>
+</li>
+<li><p>类名实质上就是变量，它绑定一个类</p>
+</li>
+<li><p>self代表类实例化的<strong>对象</strong>本身</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-对象→Object"><a href="#1-2-对象→Object" class="headerlink" title="1.2 对象→Object"></a>1.2 对象→Object</h3><p>人以群分，每个人就是一个对象。</p>
+<h4 id="1-2-1-概念"><a href="#1-2-1-概念" class="headerlink" title="1.2.1 概念"></a>1.2.1 概念</h4><p>对象是类的实例化，是类的实际数据存储，具有类所定义的属性和方法。</p>
+<table>
+<thead>
+<tr>
+<th align="center"><img src="/media/image-20241114162704089.png" alt="image-20241114162704089"></th>
+<th align="center"><img src="media/image-20241114162512462.png" alt="image-20241114162512462" style="zoom:88%;" /></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">特斯拉就是类的实例对象</td>
+<td align="center">智能手机就是类的实例对象</td>
+</tr>
+</tbody></table>
+<h4 id="1-2-2-创建"><a href="#1-2-2-创建" class="headerlink" title="1.2.2 创建"></a>1.2.2 创建</h4><ul>
+<li><p>构造函数调用表达式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量 = 类名([参数])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说明</p>
+<ul>
+<li>变量存储的是实例化后的对象地址 </li>
+<li>类参数按照<strong>初始化方法</strong>的形参传递<ul>
+<li>对象是类的实例，具有类定义的属性和方法。</li>
+<li>通过调用类的构造函数来创建对象。</li>
+<li>每个对象有自己的状态，但共享方法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建第一个实例：</span></span><br><span class="line">dog1 = Dog()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(dog1))  <span class="comment"># 打印这个对象的ID</span></span><br><span class="line"><span class="comment"># 创建第二个实例对象</span></span><br><span class="line">dog2 = Dog()  <span class="comment"># dog2 绑定一个Dog类型的对象</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(dog2))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">introduce</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;My name is <span class="subst">&#123;self.name&#125;</span> and I am <span class="subst">&#123;self.age&#125;</span> years old.&quot;</span>)</span><br><span class="line">        </span><br><span class="line">person1 = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">25</span>)</span><br><span class="line">person2 = Person(<span class="string">&quot;Bob&quot;</span>, <span class="number">30</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-属性和方法"><a href="#2-属性和方法" class="headerlink" title="2. 属性和方法"></a>2. 属性和方法</h2><p>类的属性和方法是类的核心组成部分，它们用于定义类的状态和行为。</p>
+<h3 id="2-1-实例属性"><a href="#2-1-实例属性" class="headerlink" title="2.1 实例属性"></a>2.1 实例属性</h3><ul>
+<li><p>每个实例有自己的变量，称为实例变量(也叫属性)</p>
+</li>
+<li><p>属性的使用语法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">实例.属性名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属性使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self, food</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="variable language_">self</span>.color, <span class="string">&#x27;的&#x27;</span>, <span class="variable language_">self</span>.kinds, <span class="string">&#x27;正在吃&#x27;</span>, food)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个实例：</span></span><br><span class="line">dog1 = Dog()</span><br><span class="line">dog1.kinds = <span class="string">&quot;京巴&quot;</span>  <span class="comment"># 添加属性</span></span><br><span class="line">dog1.color = <span class="string">&quot;白色&quot;</span></span><br><span class="line">dog1.color = <span class="string">&quot;黄色&quot;</span>  <span class="comment"># 修改属性</span></span><br><span class="line"><span class="built_in">print</span>(dog1.color, <span class="string">&#x27;的&#x27;</span>, dog1.kinds)</span><br><span class="line"></span><br><span class="line">dog2 = Dog()</span><br><span class="line">dog2.kinds = <span class="string">&quot;藏獒&quot;</span></span><br><span class="line">dog2.color = <span class="string">&quot;棕色&quot;</span></span><br><span class="line"><span class="built_in">print</span>(dog2.color, <span class="string">&#x27;的&#x27;</span>, dog2.kinds)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>实例方法和实例属性(实例变量)结合在一起用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self, food</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="variable language_">self</span>.color, <span class="string">&#x27;的&#x27;</span>, <span class="variable language_">self</span>.kinds, <span class="string">&#x27;正在吃&#x27;</span>, food)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建第一个对象</span></span><br><span class="line">dog1 = Dog()</span><br><span class="line">dog1.kinds = <span class="string">&#x27;京巴&#x27;</span>  <span class="comment"># 添加属性kinds</span></span><br><span class="line">dog1.color = <span class="string">&#x27;白色&#x27;</span>  <span class="comment"># 添加属性color</span></span><br><span class="line">dog1.eat(<span class="string">&quot;骨头&quot;</span>)</span><br><span class="line"></span><br><span class="line">dog2 = Dog()</span><br><span class="line">dog2.kinds = <span class="string">&#x27;牧羊犬&#x27;</span></span><br><span class="line">dog2.color = <span class="string">&#x27;灰色&#x27;</span></span><br><span class="line">dog2.eat(<span class="string">&#x27;包子&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-实例方法"><a href="#2-2-实例方法" class="headerlink" title="2.2 实例方法"></a>2.2 实例方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">继承列表</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">实例方法名</span>(<span class="params">self, 参数<span class="number">1</span>, 参数<span class="number">2</span>, ...</span>):</span><br><span class="line">        <span class="string">&quot;文档字符串&quot;</span></span><br><span class="line">        语句块</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实例方法就是函数，至少有一个<strong>指向实例对象</strong>的形参<strong>self</strong></p>
+</li>
+<li><p>调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">实例.实例方法名(调用传参)</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">类名.实例方法名(实例, 调用传参)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带有实例方法的简单的Dog类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;这是一个种小动物的定义</span></span><br><span class="line"><span class="string">    这种动物是狗(犬)类，用于创建各种各样的小狗</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self, food</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;此方法用来描述小狗吃东西的行为&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;小狗正在吃&quot;</span>, food)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sleep</span>(<span class="params">self, hour</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;小狗睡了&quot;</span>, hour, <span class="string">&quot;小时!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">play</span>(<span class="params">self, obj</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;小狗正在玩&quot;</span>, obj)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog1 = Dog()</span><br><span class="line">dog1.eat(<span class="string">&quot;骨头&quot;</span>)</span><br><span class="line">dog1.sleep(<span class="number">1</span>)</span><br><span class="line">dog1.play(<span class="string">&#x27;球&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">help</span>(Dog)  <span class="comment"># 可以看到Dog类的文档信息</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-3-类属性"><a href="#2-3-类属性" class="headerlink" title="2.3 类属性"></a>2.3 类属性</h3><ul>
+<li><p>类属性是类的属性，此属性属于类，不属于此类的实例</p>
+</li>
+<li><p>作用：</p>
+<ul>
+<li>通常用来存储该类创建的对象的共有属性</li>
+</ul>
+</li>
+<li><p>类属性说明</p>
+<ul>
+<li>类属性,可以通过该类直接访问</li>
+<li>类属性,可以通过类的实例直接访问</li>
+</ul>
+</li>
+<li><p>类属性示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Human</span>:</span><br><span class="line">    total_count = <span class="number">0</span>  <span class="comment"># 创建类属性  self.name = name</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(Human.total_count)</span><br><span class="line">h1 = Human(<span class="string">&quot;小张&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(h1.total_count)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-4-类方法"><a href="#2-4-类方法" class="headerlink" title="2.4 类方法"></a>2.4 类方法</h3><ul>
+<li><p>类方法是用于描述类的行为的方法，类方法属于类，不属于该类创建的对象</p>
+</li>
+<li><p>说明</p>
+<ul>
+<li>类方法需要使用@classmethod装饰器定义</li>
+<li>类方法至少有一个形参用于绑定类，约定为 $cls$</li>
+<li>类和该类的实例都可以调用类方法</li>
+<li><strong>类方法不能访问此类创建的对象的实例属性</strong></li>
+</ul>
+</li>
+<li><p>类方法示例1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    v = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_v</span>(<span class="params">cls, value</span>):</span><br><span class="line">        cls.v = value</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_v</span>(<span class="params">cls</span>):</span><br><span class="line">        <span class="keyword">return</span> cls.v</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(A.get_v())</span><br><span class="line">A.set_v(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(A.get_v())</span><br><span class="line">a = A()</span><br><span class="line"><span class="built_in">print</span>(a.get_v())</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类方法示例2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    class_attr = <span class="number">0</span>  <span class="comment"># 类属性</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="variable language_">self</span>.instance_attr = value  <span class="comment"># 实例属性</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">modify_class_attr</span>(<span class="params">cls, new_value</span>):</span><br><span class="line">        cls.class_attr = new_value</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;类属性已修改为: <span class="subst">&#123;cls.class_attr&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">try_modify_instance_attr</span>(<span class="params">cls</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cls.instance_attr = <span class="number">10</span>  <span class="comment"># 事出反常必有妖</span></span><br><span class="line">        <span class="keyword">except</span> AttributeError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建类的实例</span></span><br><span class="line">obj = MyClass(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用类方法修改类属性</span></span><br><span class="line">MyClass.modify_class_attr(<span class="number">20</span>)  <span class="comment"># 输出: 类属性已修改为: 20</span></span><br><span class="line">MyClass.try_modify_instance_attr()	<span class="comment"># 事出反常必有妖</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-5-静态方法"><a href="#2-5-静态方法" class="headerlink" title="2.5 静态方法"></a>2.5 静态方法</h3><ul>
+<li><p>静态方法定义在类的内部，作用域是类内部</p>
+</li>
+<li><p>说明</p>
+<ul>
+<li>使用@staticmethod装饰器定义</li>
+<li><strong>不需要self和cls参数</strong></li>
+<li>通过类或类实例调用</li>
+<li>可以访问类属性，不能访问实例属性</li>
+</ul>
+</li>
+<li><p>静态方法示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    class_attr = <span class="number">42</span>  <span class="comment"># 类属性</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="variable language_">self</span>.instance_attr = value  <span class="comment"># 实例属性</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">myadd</span>(<span class="params">a, b</span>):</span><br><span class="line">        <span class="comment"># 只能访问传递的参数，不能访问实例属性</span></span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建类实例</span></span><br><span class="line">a = A(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用静态方法</span></span><br><span class="line"><span class="built_in">print</span>(A.myadd(<span class="number">100</span>, <span class="number">200</span>))  <span class="comment"># 输出: 300</span></span><br><span class="line"><span class="built_in">print</span>(a.myadd(<span class="number">300</span>, <span class="number">400</span>))  <span class="comment"># 输出: 700</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-6-构造方法"><a href="#2-6-构造方法" class="headerlink" title="2.6 构造方法"></a>2.6 构造方法</h3><p>构造方法**<code>__new__()</code>**：</p>
+<ul>
+<li>负责对象的 <strong>创建</strong> 和内存分配的。</li>
+<li>在对象实例化时被调用，负责返回一个新的对象实例。</li>
+<li>通常<strong>不需要</strong>显式地定义 <code>__new__()</code> 方法，Python会调用基类 $object$ 的 <code>__new__()</code> 方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;调用 __new__ 方法，创建对象&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().__new__(cls)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;调用 __init__ 方法，初始化对象&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.value = value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建对象</span></span><br><span class="line">obj = MyClass(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-7-初始化方法"><a href="#2-7-初始化方法" class="headerlink" title="2.7 初始化方法"></a>2.7 初始化方法</h3><ul>
+<li><p>一旦对象被创建，Python会调用 <code>__init__()</code> 来初始化对象的属性。</p>
+</li>
+<li><p>语法格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>(<span class="title class_ inherited__">继承列表</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self[, 形参列表]</span>):</span><br><span class="line">        语句块</span><br><span class="line"><span class="comment"># [] 代表其中的内容可省略</span></span><br></pre></td></tr></table></figure>
+
+<p>接收实参到 <code>__init__</code>方法中</p>
+</li>
+<li><p>代码示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;调用 __new__ 方法，创建对象&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().__new__(cls)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;调用 __init__ 方法，初始化对象&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.value = value</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建对象</span></span><br><span class="line">obj = MyClass(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">调用 __new__ 方法，创建对象</span><br><span class="line">调用 __init__ 方法，初始化对象</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-8-魔术方法"><a href="#2-8-魔术方法" class="headerlink" title="2.8 魔术方法"></a>2.8 魔术方法</h3><p>魔术方法是一种特殊的方法，用双下划线包裹，例如<code>__init__</code>，<code>__str__</code>，<code>__add__</code>等。这些方法允许您自定义类的行为，以便与内置Python功能（如+运算符、迭代、字符串表示等）交互。</p>
+<h4 id="2-8-1-常用方法"><a href="#2-8-1-常用方法" class="headerlink" title="2.8.1 常用方法"></a>2.8.1 常用方法</h4><ol>
+<li><code>__init__(self, ...)</code>: 初始化对象，通常用于设置对象的属性。</li>
+<li><code>__str__(self)</code>: 定义对象的字符串表示形式，可通过<code>str(object)</code>或<code>print(object)</code>调用。例如，您可以返回一个字符串，描述对象的属性。</li>
+<li><code>__repr__(self)</code>: 定义对象的“官方”字符串表示形式，通常用于调试。可通过<code>repr(object)</code>调用。</li>
+<li><code>__len__(self)</code>: 定义对象的长度，可通过<code>len(object)</code>调用。通常在自定义容器类中使用。</li>
+<li><code>__getitem__(self, key)</code>: 定义对象的索引操作，使对象可被像列表或字典一样索引。例如，<code>object[key]</code>。</li>
+<li><code>__setitem__(self, key, value)</code>: 定义对象的赋值操作，使对象可像列表或字典一样赋值。例如，<code>object[key] = value</code>。</li>
+<li><code>__delitem__(self, key)</code>: 定义对象的删除操作，使对象可像列表或字典一样删除元素。例如，<code>del object[key]</code>。</li>
+<li><code>__iter__(self)</code>: 定义迭代器，使对象可迭代，可用于<code>for</code>循环。</li>
+<li><code>__next__(self)</code>: 定义迭代器的下一个元素，通常与<code>__iter__</code>一起使用。</li>
+<li><code>__add__(self, other)</code>: 定义对象相加的行为，使对象可以使用<code>+</code>运算符相加。例如，<code>object1 + object2</code>。</li>
+<li><code>__sub__(self, other)</code>: 定义对象相减的行为，使对象可以使用<code>-</code>运算符相减。</li>
+<li><code>__eq__(self, other)</code>: 定义对象相等性的行为，使对象可以使用<code>==</code>运算符比较。</li>
+<li><code>__lt__(self, other)</code>: 定义对象小于其他对象的行为，使对象可以使用<code>&lt;</code>运算符比较。</li>
+<li><code>__gt__(self, other)</code>: 定义对象大于其他对象的行为，使对象可以使用<code>&gt;</code>运算符比较。</li>
+<li><code>__call__(self, other)</code> 是一个特殊的方法（也称为“魔法方法”），它允许一个对象像函数一样被调用。</li>
+</ol>
+<h4 id="2-8-2-案例参考"><a href="#2-8-2-案例参考" class="headerlink" title="2.8.2 案例参考"></a>2.8.2 案例参考</h4><ol>
+<li><p><strong><code>__str__()</code></strong>：定义 <code>print()</code> 或 <code>str()</code> 函数调用时的输出字符串表示。</p>
+<ul>
+<li><code>__str__()</code> 方法用来定义当你调用 <code>print()</code> 或 <code>str()</code> 时对象应该返回的字符串。</li>
+<li>该方法必须返回一个字符串，通常用于给用户可读的对象描述。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Person: <span class="subst">&#123;self.name&#125;</span>, Age: <span class="subst">&#123;self.age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">p = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(p)  <span class="comment"># 输出: Person: Alice, Age: 30</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>使得你的对象在打印时更加友好和可读。</li>
+<li>提供更好的调试输出。</li>
+</ul>
+</li>
+<li><p><strong><code>__repr__()</code></strong>：定义 <code>repr()</code> 函数的输出，通常用于开发和调试，给出对象的正式字符串表示。</p>
+<ul>
+<li><code>__repr__()</code> 方法用于返回一个可以用来重新创建对象的字符串，理想情况下，返回的字符串应当是合法的 Python 表达式。</li>
+<li>如果你没有定义 <code>__str__()</code>，那么 <code>__repr__()</code> 会被用来替代 <code>str()</code> 和 <code>print()</code>。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Person(&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, <span class="subst">&#123;self.age&#125;</span>)&quot;</span></span><br><span class="line"></span><br><span class="line">p = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">repr</span>(p))  <span class="comment"># 输出: Person(&#x27;Alice&#x27;, 30)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li><code>__repr__()</code> 是供开发人员使用的，输出的字符串应该尽可能接近于可以创建该对象的代码。</li>
+<li>在调试时使用 <code>repr()</code> 更加方便，它提供了一个清晰的对象表示。</li>
+</ul>
+</li>
+<li><p><strong><code>__add__()</code></strong>：定义 $+$ 运算符的行为。</p>
+<ul>
+<li>该方法允许你重载加法操作符 <code>+</code>，使其在两个对象之间执行加法时能够自定义行为。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, x, y</span>):</span><br><span class="line">        <span class="variable language_">self</span>.x = x</span><br><span class="line">        <span class="variable language_">self</span>.y = y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__add__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> Point(<span class="variable language_">self</span>.x + other.x, <span class="variable language_">self</span>.y + other.y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Point(<span class="subst">&#123;self.x&#125;</span>, <span class="subst">&#123;self.y&#125;</span>)&quot;</span></span><br><span class="line"></span><br><span class="line">p1 = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">p2 = Point(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">p3 = p1 + p2</span><br><span class="line"><span class="built_in">print</span>(p3)  <span class="comment"># 输出: Point(4, 6)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>允许你自定义 $+$ 运算符的行为。</li>
+</ul>
+</li>
+<li><p><strong><code>__len__()</code></strong>：定义 <code>len()</code> 函数的行为。</p>
+<ul>
+<li><code>__len__()</code> 方法允许你自定义 <code>len()</code> 函数的行为，返回对象的长度。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, items</span>):</span><br><span class="line">        <span class="variable language_">self</span>.items = items</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.items)</span><br><span class="line"></span><br><span class="line">my_list = MyList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(my_list))  <span class="comment"># 输出: 3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>使得你的对象能够与 <code>len()</code> 函数兼容，返回对象的长度。</li>
+</ul>
+</li>
+<li><p><strong><code>__getitem__()</code></strong>：定义对象支持索引（<code>[]</code>）操作。</p>
+<ul>
+<li><code>__getitem__()</code> 方法使得对象能够支持类似列表、元组那样的索引操作。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, items</span>):</span><br><span class="line">        <span class="variable language_">self</span>.items = items</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, index</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.items[index]</span><br><span class="line"></span><br><span class="line">my_list = MyList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(my_list[<span class="number">2</span>])  <span class="comment"># 输出: 3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>使对象能够支持索引操作，类似于内置的数据结构（如列表、字典）。</li>
+</ul>
+</li>
+<li><p><strong><code>__setitem__()</code></strong>：定义对象支持索引赋值操作（<code>[] =</code>）。</p>
+<ul>
+<li><code>__setitem__()</code> 方法允许你定义如何通过索引给对象赋值。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, items</span>):</span><br><span class="line">        <span class="variable language_">self</span>.items = items</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__setitem__</span>(<span class="params">self, index, value</span>):</span><br><span class="line">        <span class="variable language_">self</span>.items[index] = value</span><br><span class="line"></span><br><span class="line">my_list = MyList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">my_list[<span class="number">1</span>] = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(my_list.items)  <span class="comment"># 输出: [1, 10, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>使对象能够支持索引赋值操作。</li>
+</ul>
+</li>
+<li><p><strong><code>__del__()</code></strong>：定义对象的析构方法，通常用于资源清理。</p>
+<ul>
+<li>这个方法在对象销毁时调用，通常用于清理资源（如关闭文件、数据库连接等）。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;对象 <span class="subst">&#123;name&#125;</span> 创建&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__del__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;对象 <span class="subst">&#123;self.name&#125;</span> 被销毁&quot;</span>)</span><br><span class="line"></span><br><span class="line">obj = MyClass(<span class="string">&quot;Test&quot;</span>)</span><br><span class="line"><span class="keyword">del</span> obj  <span class="comment"># 输出: 对象 Test 被销毁</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>用于对象销毁时进行资源清理。</li>
+</ul>
+</li>
+<li><p><strong><code>__eq__()</code></strong>：定义 $&#x3D;&#x3D;$ 运算符的行为。</p>
+<ul>
+<li>该方法允许你自定义对象的相等比较行为，默认情况下，Python 会比较对象的内存地址。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, x, y</span>):</span><br><span class="line">        <span class="variable language_">self</span>.x = x</span><br><span class="line">        <span class="variable language_">self</span>.y = y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.x == other.x <span class="keyword">and</span> <span class="variable language_">self</span>.y == other.y</span><br><span class="line"></span><br><span class="line">p1 = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">p2 = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(p1 == p2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
+<ul>
+<li>使你能够自定义如何比较对象的相等性。</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-OOP基本特性"><a href="#3-OOP基本特性" class="headerlink" title="3. OOP基本特性"></a>3. OOP基本特性</h2><p>OOP的四大基本特性是<strong>封装</strong>、<strong>继承</strong>、<strong>多态</strong>和<strong>抽象</strong>。</p>
+<h3 id="3-1-封装"><a href="#3-1-封装" class="headerlink" title="3.1 封装"></a>3.1 封装</h3><ul>
+<li>封装是指将对象的属性和方法包装在一起，对外隐藏实现细节，只提供必要的接口给外部访问。</li>
+<li>在Python中，通过<code>__init__</code>方法初始化属性，并通过方法来操作这些属性。</li>
+<li>以<code>__</code>开头的属性或方法是私有的，在<strong>子类和类外部</strong>无法直接使用</li>
+<li>可使用“私有”属性和“公有”方法控制外部访问。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__name = name  <span class="comment"># 私有属性</span></span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.__name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_name</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__name = name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog = Dog(<span class="string">&#x27;泰迪&#x27;</span>, <span class="number">20</span>)</span><br><span class="line"><span class="built_in">print</span>(dog.get_name())</span><br><span class="line">dog.set_name(<span class="string">&#x27;哈士奇&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(dog._Dog__name) <span class="comment"># 知道就好了，永远不要在代码中出现，除非是外包项目^_^</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-继承-派生"><a href="#3-2-继承-派生" class="headerlink" title="3.2 继承&#x2F;派生"></a>3.2 继承&#x2F;派生</h3><p>儿子继承了父亲，父亲派生了儿子~</p>
+<p>Python中所有的类最终都继承自内置的<strong>object</strong>类。</p>
+<h4 id="3-2-1-基础概念"><a href="#3-2-1-基础概念" class="headerlink" title="3.2.1 基础概念"></a>3.2.1 基础概念</h4><ul>
+<li>继承／派生<ul>
+<li>继承是从已有的类中派生出新的类，新类具有原类的数据属性和行为，并能扩展新的能力。</li>
+<li>派生类就是从一个已有类中衍生出新类，在新的类上可以添加新的属性和行为</li>
+</ul>
+</li>
+<li>继承&#x2F;派生的作用<ul>
+<li>用继承派生机制，可以将一些共有功能加在基类中。实现代码的共享。</li>
+<li>在不改变基类的代码的基础上改变原有类的功能</li>
+</ul>
+</li>
+<li>继承&#x2F;派生名词：<ul>
+<li>基类(base class)&#x2F;超类(super class)&#x2F;父类(father class)</li>
+<li>派生类(derived class)&#x2F;子类(child class)</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-2-继承的实现"><a href="#3-2-2-继承的实现" class="headerlink" title="3.2.2 继承的实现"></a>3.2.2 继承的实现</h4><p>继承语法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DerivedClassName</span>(Base1, Base2, Base3):</span><br><span class="line">    &lt;statement-<span class="number">1</span>&gt;</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    &lt;statement-N&gt;</span><br></pre></td></tr></table></figure>
+
+<p>只有一个基类是单继承，有多个基类是多继承。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Animal is speaking&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Woof!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Meow!&quot;</span>)</span><br><span class="line"></span><br><span class="line">dog = Dog()</span><br><span class="line">dog.speak()  <span class="comment"># 输出 &quot;Woof!&quot;</span></span><br><span class="line"></span><br><span class="line">cat = Cat()</span><br><span class="line">cat.speak()  <span class="comment"># 输出 &quot;Meow!&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2-3-覆盖"><a href="#3-2-3-覆盖" class="headerlink" title="3.2.3 覆盖"></a>3.2.3 覆盖</h4><ul>
+<li><p>在子类中实现与基类同名的方法，我们叫覆盖</p>
+</li>
+<li><p>作用：</p>
+<ul>
+<li>实现和父类同名，但功能不同的方法</li>
+</ul>
+</li>
+<li><p>覆盖示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">work</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;A.work 被调用!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;B类继承自A类&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">work</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;B.work 被调用!!!&quot;</span>)</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line">b.work()  <span class="comment"># 请问调用谁?  B</span></span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">a.work()  <span class="comment"># 请问调用谁?  A</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-2-4-课堂练习"><a href="#3-2-4-课堂练习" class="headerlink" title="3.2.4 课堂练习"></a>3.2.4 课堂练习</h4><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">写一个类Bicycle类， 有run方法，调用时显示骑行里程km</span><br><span class="line">    class Bicycle:</span><br><span class="line">        def run(self, km):</span><br><span class="line">            print(&quot;自行车骑行了&quot;, km, &quot;公里&quot;)</span><br><span class="line"></span><br><span class="line">再写一个类EBicycle，在Bicycle类的基础上，添加电池电量volume属性，有两个方法：</span><br><span class="line">  1. fill<span class="built_in">_</span>charge(vol) 用来充电, vol 为电量</span><br><span class="line">  2. run(km)方法每骑行10km消耗电量1度,同时显示当前电量,当电量耗尽则，则调用Bicycle的run方法</span><br><span class="line">class EBicyle(Bicycle):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bicycle</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self, km</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;自行车骑行了&quot;</span>, km, <span class="string">&quot;公里&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EBicycle</span>(<span class="title class_ inherited__">Bicycle</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, vol</span>):</span><br><span class="line">        <span class="variable language_">self</span>.cur_volume = vol  <span class="comment"># 当前电量</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self, km</span>):</span><br><span class="line">        e_km = <span class="built_in">min</span>(km, <span class="variable language_">self</span>.cur_volume * <span class="number">10</span>)  <span class="comment"># 求km和 乘余电量能行走的最小里程</span></span><br><span class="line">        <span class="variable language_">self</span>.cur_volume -= e_km / <span class="number">10</span></span><br><span class="line">        <span class="keyword">if</span> e_km &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;电动车骑行了 %d km&quot;</span> % e_km,</span><br><span class="line">                  <span class="string">&quot;剩余电量:&quot;</span>, <span class="variable language_">self</span>.cur_volume)</span><br><span class="line">        <span class="keyword">if</span> km &gt; e_km:</span><br><span class="line">            <span class="built_in">super</span>().run(km - e_km)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fill_charge</span>(<span class="params">self, vol</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;电动自行车充电&quot;</span>, vol, <span class="string">&quot;度&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.cur_volume += vol</span><br><span class="line"></span><br><span class="line">b = EBicycle(<span class="number">5</span>)  <span class="comment"># 新买的电动车内有5度电</span></span><br><span class="line">b.run(<span class="number">10</span>)  <span class="comment"># 电动骑行了10km 还剩 4度电</span></span><br><span class="line">b.run(<span class="number">100</span>)  <span class="comment"># 电动骑行了 40 km ，还剩 0 度电, 用脚登骑行了60km</span></span><br><span class="line">b.fill_charge(<span class="number">10</span>)  <span class="comment"># 电动自行车充电 10 度</span></span><br><span class="line">b.run(<span class="number">50</span>)  <span class="comment"># 骑行了50公里剩余 5度电</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-多态"><a href="#3-3-多态" class="headerlink" title="3.3 多态"></a>3.3 多态</h3><ul>
+<li>多态是指同一个方法在不同对象上具有不同的行为。</li>
+<li>通过多态，可以使得不同类型的对象以相同的接口表现出不同的行为。</li>
+<li>多态的实现通常通过继承和方法重写来实现。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Animal is speaking&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Woof!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Meow!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">animal_speak</span>(<span class="params">animal</span>):</span><br><span class="line">    animal.speak()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog = Dog()</span><br><span class="line">cat = Cat()</span><br><span class="line"></span><br><span class="line">animal_speak(dog)  <span class="comment"># 输出 &quot;Woof!&quot;</span></span><br><span class="line">animal_speak(cat)  <span class="comment"># 输出 &quot;Meow!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-重写"><a href="#3-4-重写" class="headerlink" title="3.4 重写"></a>3.4 重写</h3><p>如果父类方法的功能不能满足需求，可以在子类重写父类的方法</p>
+<h4 id="3-4-1-对象转字符串重写"><a href="#3-4-1-对象转字符串重写" class="headerlink" title="3.4.1 对象转字符串重写"></a>3.4.1 对象转字符串重写</h4><ul>
+<li><p>对象转字符串函数重写方法</p>
+<ul>
+<li>str() 函数的重载方法:<ul>
+<li><code>def __str__(self)</code><ul>
+<li>如果没有 <code>__str__(self)</code> 方法，则返回repr(obj)函数结果代替</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>str&#x2F;repr函数重写示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;此类用于定义一个自定义的类，用于演示str/repr函数重写&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;构造函数,初始化MyNumber对象&quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.data = value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;转换为普通字符串&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;%s&quot;</span> % <span class="variable language_">self</span>.data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n1 = MyNumber(<span class="string">&quot;一只猫&quot;</span>)</span><br><span class="line">n2 = MyNumber(<span class="string">&quot;一只狗&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;str(n2) ===&gt;&quot;</span>, <span class="built_in">str</span>(n2))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-4-2-内建函数重写"><a href="#3-4-2-内建函数重写" class="headerlink" title="3.4.2 内建函数重写"></a>3.4.2 内建函数重写</h4><ul>
+<li><p><code>__abs__</code>        abs(obj) 函数调用</p>
+</li>
+<li><p><code>__len__</code>        len(obj) 函数调用</p>
+</li>
+<li><p><code>__reversed__</code>   reversed(obj) 函数调用</p>
+</li>
+<li><p><code>__round__</code>      round(obj) 函数调用</p>
+</li>
+<li><p>内建函数 重写示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># file : len_overwrite.py</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, iterable=(<span class="params"></span>)</span>):</span><br><span class="line">        <span class="variable language_">self</span>.data = [x <span class="keyword">for</span> x <span class="keyword">in</span> iterable]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr_</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;MyList(%s)&quot;</span> % <span class="variable language_">self</span>.data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__len__(self) 被调用!&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__abs__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__len__(self) 被调用!&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> MyList((<span class="built_in">abs</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="variable language_">self</span>.data))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">myl = MyList([<span class="number">1</span>, -<span class="number">2</span>, <span class="number">3</span>, -<span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(myl.data)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(myl))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">abs</span>(myl).data)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-4-2-运算符重载"><a href="#3-4-2-运算符重载" class="headerlink" title="3.4.2 运算符重载"></a>3.4.2 运算符重载</h4><ul>
+<li><p>运算符重载是指让自定义的类生成的对象(实例)能够使用运算符进行操作</p>
+</li>
+<li><p>运算符重载的作用</p>
+<ul>
+<li>让自定义类的实例像内建对象一样进行运算符操作</li>
+<li>让程序简洁易读</li>
+<li>对自定义对象将运算符赋予新的运算规则</li>
+</ul>
+</li>
+<li><p>运算符重载说明：</p>
+<ul>
+<li>运算符重载方法的参数已经有固定的含义,不建议改变原有的意义</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">运算符和表达式</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>__add__(self, rhs)</code></td>
+<td align="center">self + rhs</td>
+<td align="center">加法</td>
+</tr>
+<tr>
+<td align="center"><code>__sub__(self, rhs)</code></td>
+<td align="center">self - rhs</td>
+<td align="center">减法</td>
+</tr>
+<tr>
+<td align="center"><code>__mul__(self, rhs)</code></td>
+<td align="center">self * rhs</td>
+<td align="center">乘法</td>
+</tr>
+<tr>
+<td align="center"><code>__truediv__(self, rhs)</code></td>
+<td align="center">self &#x2F; rhs</td>
+<td align="center">除法</td>
+</tr>
+<tr>
+<td align="center"><code>__floordiv__(self, rhs)</code></td>
+<td align="center">self &#x2F;&#x2F; rhs</td>
+<td align="center">地板除</td>
+</tr>
+<tr>
+<td align="center"><code>__mod__(self, rhs)</code></td>
+<td align="center">self % rhs</td>
+<td align="center">取模(求余)</td>
+</tr>
+<tr>
+<td align="center"><code>__pow__(self, rhs)</code></td>
+<td align="center">self ** rhs</td>
+<td align="center">幂</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rhs (right hand side) 右手边</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>二元运算符重载方法格式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__xxx__</span>(<span class="params">self, other</span>):</span><br><span class="line">    ....</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>算术运算符重载示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;此类用于定义一个自定义的类，用于演示运算符重载&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;构造函数,初始化MyNumber对象&quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.data = value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;转换为表达式字符串&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;MyNumber(%d)&quot;</span> % <span class="variable language_">self</span>.data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__add__</span>(<span class="params">self, rhs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;加号运算符重载&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__add__ is called&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> MyNumber(<span class="variable language_">self</span>.data + rhs.data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__sub__</span>(<span class="params">self, rhs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;减号运算符重载&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__sub__ is called&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> MyNumber(<span class="variable language_">self</span>.data - rhs.data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n1 = MyNumber(<span class="number">100</span>)</span><br><span class="line">n2 = MyNumber(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">print</span>(n1 + n2)</span><br><span class="line">n = n1 - n2</span><br><span class="line"><span class="built_in">print</span>(n.data)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="4-super函数"><a href="#4-super函数" class="headerlink" title="4. super函数"></a>4. super函数</h2><p><strong>super()</strong> 函数是用于调用父类(超类)的一个方法。</p>
+<h3 id="4-1-基本使用"><a href="#4-1-基本使用" class="headerlink" title="4.1 基本使用"></a>4.1 基本使用</h3><ul>
+<li><p>在子类方法中使用 $super().add()$ 调用父类中已被覆盖的方法</p>
+</li>
+<li><p>使用 $super(Child, obj).myMethod()$ 用于子类对象调用父类已被覆盖的方法</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">     <span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">self, x</span>):</span><br><span class="line">         y = x+<span class="number">1</span></span><br><span class="line">         <span class="built_in">print</span>(y)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;子类方法&quot;</span>)</span><br><span class="line">        <span class="built_in">super</span>().add(x)</span><br><span class="line">b = B()</span><br><span class="line">b.add(<span class="number">2</span>)  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span>:  <span class="comment"># 定义父类</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">myMethod</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用父类方法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span>(<span class="title class_ inherited__">Parent</span>):        <span class="comment"># 定义子类</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">myMethod</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用子类方法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c = Child()                 <span class="comment"># 子类实例</span></span><br><span class="line">c.myMethod()                <span class="comment"># 子类调用重写方法</span></span><br><span class="line"><span class="built_in">super</span>(Child, c).myMethod()  <span class="comment"># 用子类对象调用父类已被覆盖的方法</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-super-init"><a href="#4-2-super-init" class="headerlink" title="4.2 super()._init_()"></a>4.2 super()._<em>init</em>_()</h3><p>通过 $super().__init__()$ 调用父类构造函数，以确保父类的构造函数被正确调用和初始化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Parent class constructor called&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.parent_attribute = <span class="string">&quot;I am a parent attribute&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span>(<span class="title class_ inherited__">Parent</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Child class constructor called&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.child_attribute = <span class="string">&quot;I am a child attribute&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 Child 类的实例</span></span><br><span class="line">child_instance = Child()</span><br><span class="line"><span class="built_in">print</span>(child_instance.parent_attribute)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="comment"># Parent class constructor called</span></span><br><span class="line"><span class="comment"># Child class constructor called</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么使用 <code>super().__init__()</code>？</strong></p>
+<ul>
+<li><strong>代码重用</strong>：避免在子类中重复父类的初始化代码。</li>
+<li><strong>正确初始化</strong>：确保父类的初始化逻辑（如设置属性、分配资源等）被执行。</li>
+</ul>
+<h1 id="三、迭代器和生成器"><a href="#三、迭代器和生成器" class="headerlink" title="三、迭代器和生成器"></a>三、迭代器和生成器</h1><h2 id="1-迭代器"><a href="#1-迭代器" class="headerlink" title="1. 迭代器"></a>1. 迭代器</h2><p>Iterator</p>
+<p><strong>迭代器</strong>是一种对象，实现了Python的迭代协议（<code>__iter__()</code> 和 <code>__next__()</code> 方法）。通过迭代器，可以逐个访问容器中的元素。</p>
+<h3 id="1-1-特点"><a href="#1-1-特点" class="headerlink" title="1.1 特点"></a>1.1 特点</h3><ol>
+<li><strong>惰性计算</strong>：按需生成数据，节省内存。</li>
+<li><strong>实现协议</strong>：<ul>
+<li><code>__iter__()</code>：返回自身。</li>
+<li><code>__next__()</code>：返回下一个元素；如果没有更多元素，则抛出 <code>StopIteration</code> 异常。</li>
+</ul>
+</li>
+<li>**可迭代对象（Iterable）**与迭代器不同：<ul>
+<li>可迭代对象实现 <code>__iter__()</code> 方法，返回一个迭代器。</li>
+<li>迭代器既实现 <code>__iter__()</code> 又实现 <code>__next__()</code>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-2-迭代器的创建"><a href="#1-2-迭代器的创建" class="headerlink" title="1.2 迭代器的创建"></a>1.2 迭代器的创建</h3><ul>
+<li>迭代器只能往前取值,不会后退</li>
+<li>用iter函数可以返回一个可迭代对象的迭代器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例 可迭代对象</span></span><br><span class="line">L = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line">it = <span class="built_in">iter</span>(L)  <span class="comment"># 从L对象中获取迭代器</span></span><br><span class="line"><span class="built_in">next</span>(it)  <span class="comment"># 1  从迭代器中提取一个数据</span></span><br><span class="line"><span class="built_in">next</span>(it)  <span class="comment"># 3</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(it))   <span class="comment"># 5</span></span><br><span class="line"><span class="built_in">next</span>(it)  <span class="comment"># 7</span></span><br><span class="line"><span class="comment"># 示例2 生成器函数</span></span><br><span class="line">It = <span class="built_in">iter</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line"><span class="built_in">next</span>(It)  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(It))  <span class="comment"># 4</span></span><br><span class="line"><span class="built_in">next</span>(It)  <span class="comment"># 7</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-自定义迭代器"><a href="#1-3-自定义迭代器" class="headerlink" title="1.3 自定义迭代器"></a>1.3 自定义迭代器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自定义迭代器类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyIterator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="variable language_">self</span>.data = data</span><br><span class="line">        <span class="variable language_">self</span>.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>  <span class="comment"># 迭代器返回自身</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.index &lt; <span class="built_in">len</span>(<span class="variable language_">self</span>.data):</span><br><span class="line">            result = <span class="variable language_">self</span>.data[<span class="variable language_">self</span>.index]</span><br><span class="line">            <span class="variable language_">self</span>.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration  <span class="comment"># 数据迭代结束</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用自定义迭代器</span></span><br><span class="line">my_iter = MyIterator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_iter:</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-生成器"><a href="#2-生成器" class="headerlink" title="2. 生成器"></a>2. 生成器</h2><p>Generator</p>
+<p><strong>生成器</strong>是一种特殊的迭代器，通过函数定义，用 $yield$ 语句生成值。生成器可以自动实现迭代协议，无需手动实现 <code>__iter__()</code> 和 <code>__next__()</code>。</p>
+<h3 id="2-1-特点"><a href="#2-1-特点" class="headerlink" title="2.1 特点"></a>2.1 特点</h3><ol>
+<li><strong>简洁</strong>：比手动实现迭代器更易写。</li>
+<li><strong>惰性计算</strong>：生成器在每次调用 $next()$ 时生成一个值，而不是一次性生成所有值。</li>
+<li><strong>yield</strong>：暂停函数执行并返回值，保留函数的状态，以便下一次继续执行。</li>
+</ol>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成器函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_generator</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Start&quot;</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Continue&quot;</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;End&quot;</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用生成器</span></span><br><span class="line">gen = my_generator()</span><br><span class="line"><span class="keyword">for</span> val <span class="keyword">in</span> gen:</span><br><span class="line">    <span class="built_in">print</span>(val)</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Start</span><br><span class="line">1</span><br><span class="line">Continue</span><br><span class="line">2</span><br><span class="line">End</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>案例参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Descendorder</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">yield</span> n</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建生成器对象</span></span><br><span class="line">generator = Descendorder(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过迭代生成器获取值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(generator))  <span class="comment">#5</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(generator))  <span class="comment">#4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 for 循环迭代生成器</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> generator:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;for循环：&#x27;</span>, i)  <span class="comment">#3  2  1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-生成器表达式"><a href="#2-2-生成器表达式" class="headerlink" title="2.2 生成器表达式"></a>2.2 生成器表达式</h3><p>生成器可以用表达式形式定义，类似列表推导式，但使用小括号 <code>()</code>。</p>
+<ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(表达式 <span class="keyword">for</span> 变量 <span class="keyword">in</span> 可迭代对象 [<span class="keyword">if</span> 真值表达式])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[] 内容代表可以省略</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成器表达式</span></span><br><span class="line">gen_expr = (x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen_expr))  <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen_expr))  <span class="comment"># 1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-课堂练习"><a href="#2-3-课堂练习" class="headerlink" title="2.3 课堂练习"></a>2.3 课堂练习</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">代码实现斐波那契数列（最少十个数）</span><br></pre></td></tr></table></figure>
+
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    a, b = <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> b</span><br><span class="line">        a, b = b, a + b</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fib_seq = fibonacci(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> fib_seq:</span><br><span class="line">    <span class="built_in">print</span>(i, end=<span class="string">&quot; &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果</span></span><br><span class="line"><span class="comment"># 1 1 2 3 5 8 13 21 34 55</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-4-应用场景"><a href="#2-4-应用场景" class="headerlink" title="2.4 应用场景"></a>2.4 应用场景</h3><ul>
+<li>数据流处理：处理大文件或流式数据，避免内存耗尽。</li>
+<li>无限序列生成：如斐波那契数列、素数序列。</li>
+<li>管道化数据处理：与 <code>itertools</code> 模块结合使用。</li>
+</ul>
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">read_large_file</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> file:</span><br><span class="line">            <span class="keyword">yield</span> line.strip()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> read_large_file(<span class="string">&#x27;large_file.txt&#x27;</span>):</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-区别对比"><a href="#3-区别对比" class="headerlink" title="3. 区别对比"></a>3. 区别对比</h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>迭代器</strong></th>
+<th><strong>生成器</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>实现</strong></td>
+<td>通过类实现，手动定义方法</td>
+<td>使用函数和 <code>yield</code> 定义，自动实现迭代协议</td>
+</tr>
+<tr>
+<td><strong>代码简洁性</strong></td>
+<td>代码较复杂</td>
+<td>代码简单</td>
+</tr>
+<tr>
+<td><strong>状态管理</strong></td>
+<td>手动管理状态</td>
+<td>自动保存函数的运行状态</td>
+</tr>
+<tr>
+<td><strong>惰性计算</strong></td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td><strong>示例应用</strong></td>
+<td>自定义复杂的迭代逻辑</td>
+<td>简单的数据流生成</td>
+</tr>
+</tbody></table>
+<h1 id="四、异常处理"><a href="#四、异常处理" class="headerlink" title="四、异常处理"></a>四、异常处理</h1><p>用作信号通知，通知上层调用者有错误产生需要处理</p>
+<h2 id="1-try-语句"><a href="#1-try-语句" class="headerlink" title="1. try 语句"></a>1. try 语句</h2><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    可能发生异常的语句块</span><br><span class="line"><span class="keyword">except</span> 错误类型<span class="number">1</span> [<span class="keyword">as</span> 变量名<span class="number">1</span>]:</span><br><span class="line">    异常处理语句块<span class="number">1</span></span><br><span class="line"><span class="keyword">except</span> 错误类型<span class="number">2</span> [<span class="keyword">as</span> 变量名<span class="number">2</span>]:</span><br><span class="line">    异常处理语句块<span class="number">2</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">except</span> 错误类型n [<span class="keyword">as</span> 变量名n]:</span><br><span class="line">    异常处理语句块n</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    异常处理语句块other</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    未发生异常的语句</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    最终的处理语句</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>作用</p>
+<p>尝试捕获异常，得到异常通知，将程序由异常状态变为正常状态</p>
+</li>
+<li><p>说明</p>
+<ul>
+<li><p>except 子句可以有 1个或多个</p>
+</li>
+<li><p>except: 不给错误类型，可以匹配全部的错误类型</p>
+</li>
+<li><p>else 子句在没有错误发生时执行，当处于异常时不执行</p>
+</li>
+<li><p>finally 子句里的语句，无论何时都执行</p>
+</li>
+</ul>
+</li>
+<li><p>示例</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    x = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入一个整数：&quot;</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;x=&#x27;</span>, x)</span><br><span class="line"><span class="keyword">except</span> ValueError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;您的输入不能转成整数&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;程序结束&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-raise-语句"><a href="#2-raise-语句" class="headerlink" title="2. raise 语句"></a>2. raise 语句</h2><ul>
+<li><p>问题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写一个函数, get_score 函数，读取用户输入的整数成绩, </span></span><br><span class="line"><span class="comment"># 成绩的正常值是0~100 之间， 要求, 如果不在0~100 之间</span></span><br><span class="line"><span class="comment"># 报 ValueError类型的错误</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_score</span>():</span><br><span class="line">    x = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;请输入成绩:&#x27;</span>))</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> &lt;= x &lt;= <span class="number">100</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="keyword">raise</span> ValueError</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">raise</span> 异常类型</span><br><span class="line">或</span><br><span class="line"><span class="keyword">raise</span> 异常对象</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>作用</p>
+<ul>
+<li>抛出一个错误，让程序进入异常状态</li>
+<li>发送错误通知给调用者</li>
+</ul>
+</li>
+<li><p>示例:</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写一个函数, get_score 函数，读取用户输入的整数成绩,</span></span><br><span class="line"><span class="comment"># 成绩的正常值是0~100 之间， </span></span><br><span class="line"><span class="comment"># 如果不在0~100之间报ValueError类型的错误</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_score</span>():</span><br><span class="line">    x = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;请输入成绩:&#x27;</span>))</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> &lt;= x &lt;= <span class="number">100</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="comment"># raise ValueError</span></span><br><span class="line">    <span class="keyword">raise</span> ValueError(<span class="string">&#x27;用户输入的成绩不在 0～100 之间&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    score = get_score()</span><br><span class="line">    <span class="built_in">print</span>(score)</span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;成绩输入有误 err=&quot;</span>, err)</span><br></pre></td></tr></table></figure>
+
+<p><strong>err的作用就是接收raise ValueError(‘用户输入的成绩不在 0～100 之间’)给出的提示信息</strong></p>
+<ul>
+<li><p>异常类型的可选种类</p>
+<blockquote>
+<p>详见：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">help</span>(__builtins__)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>课后练习1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">写一个猜拳游戏: 石头，剪刀，布， </span><br><span class="line">让电脑随机生成一个，</span><br><span class="line">你的输入如下:</span><br><span class="line">    <span class="number">0</span>)  石头</span><br><span class="line">    <span class="number">1</span>)  剪刀</span><br><span class="line">    <span class="number">2</span>)  布</span><br><span class="line">    q)  退出</span><br><span class="line">    请选择: <span class="number">0</span></span><br><span class="line">   电脑出的是 布 ，你输了</span><br><span class="line">循环输入，知道输入q 为止</span><br></pre></td></tr></table></figure>
+
+<p><strong>参考答案1</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">signal = [<span class="string">&#x27;石头&#x27;</span>, <span class="string">&#x27;剪刀&#x27;</span>, <span class="string">&#x27;布&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_menu</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 0)  石头 &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 1)  剪刀 &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 2)  布  &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; q)  退出 &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">begin_compare</span>(<span class="params">computer, your</span>):</span><br><span class="line">    comp_s = signal[computer]  <span class="comment"># 电脑的字符串</span></span><br><span class="line">    your_s = signal[your]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;电脑出的是&#x27;</span>, comp_s, <span class="string">&#x27;你出的是&#x27;</span>, your_s)</span><br><span class="line">    <span class="keyword">if</span> comp_s == your_s:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;平局！&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> comp_s == <span class="string">&#x27;石头&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> your_s == <span class="string">&#x27;剪刀&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你输了！&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> your_s == <span class="string">&#x27;布&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你赢了！&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> comp_s == <span class="string">&#x27;剪刀&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> your_s == <span class="string">&#x27;布&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你输了！&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> your_s == <span class="string">&#x27;石头&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你赢了！&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> comp_s == <span class="string">&#x27;布&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> your_s == <span class="string">&#x27;石头&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你输了！&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> your_s == <span class="string">&#x27;剪刀&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;你赢了！&#x27;</span>)</span><br><span class="line">    <span class="comment"># time.sleep(5)</span></span><br><span class="line">    <span class="built_in">input</span>(<span class="string">&#x27;请输入回车键，继续下一次猜拳:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>():</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;开始猜拳游戏&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        show_menu()</span><br><span class="line">        s = <span class="built_in">input</span>(<span class="string">&#x27;请选择:&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> s == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        your = <span class="built_in">int</span>(s)  <span class="comment"># 你的选项</span></span><br><span class="line">        computer = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">        begin_compare(computer, your)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+<p><strong>参考答案2</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">signal = [<span class="string">&#x27;石头&#x27;</span>, <span class="string">&#x27;剪刀&#x27;</span>, <span class="string">&#x27;布&#x27;</span>]</span><br><span class="line">result = [<span class="string">&#x27;平局！&#x27;</span>, <span class="string">&#x27;你赢了！&#x27;</span>, <span class="string">&#x27;你输了！&#x27;</span>]</span><br><span class="line">        <span class="comment">#   0         1          -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个二维列表， 行代表 电脑的选择， 列代表我的选择</span></span><br><span class="line"><span class="built_in">map</span> = [</span><br><span class="line">  <span class="comment"># 用户: 0  1  2</span></span><br><span class="line">    [ <span class="number">0</span>, -<span class="number">1</span>,  <span class="number">1</span>],  <span class="comment"># 电脑出的是0---&gt; 石头</span></span><br><span class="line">    [ <span class="number">1</span>,  <span class="number">0</span>, -<span class="number">1</span>],  <span class="comment"># 电脑出的是1---&gt; 剪刀</span></span><br><span class="line">    [-<span class="number">1</span>,  <span class="number">1</span>,  <span class="number">0</span>],  <span class="comment"># 电脑出的是2---&gt; 布</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_menu</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 0)  石头 &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 1)  剪刀 &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 2)  布  &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; q)  退出 &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">begin_compare</span>(<span class="params">computer, your</span>):</span><br><span class="line">    comp_s = signal[computer]  <span class="comment"># 电脑的字符串</span></span><br><span class="line">    your_s = signal[your]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;电脑出的是&#x27;</span>, comp_s, <span class="string">&#x27;你出的是&#x27;</span>, your_s)</span><br><span class="line">    result_index = <span class="built_in">map</span>[computer][your]</span><br><span class="line">    r = result[result_index]</span><br><span class="line">    <span class="built_in">print</span>(r)</span><br><span class="line">    <span class="comment"># time.sleep(5)</span></span><br><span class="line">    <span class="built_in">input</span>(<span class="string">&#x27;请输入回车键，继续下一次猜拳:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>():</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;开始猜拳游戏&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        show_menu()</span><br><span class="line">        s = <span class="built_in">input</span>(<span class="string">&#x27;请选择:&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> s == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        your = <span class="built_in">int</span>(s)  <span class="comment"># 你的选项</span></span><br><span class="line">        computer = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">        begin_compare(computer, your)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>课后练习2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">写一个猜数字游戏 让电脑随机生成一个 0 ~ 100 的整数让用来猜</span><br><span class="line">如果 您输入的数大于电脑生产的数，提示：“您猜大了”， 继续猜</span><br><span class="line">如果 您输入的数小于电脑生产的数，提示：“您猜小了”， 继续猜</span><br><span class="line">当 您输入的数等于电脑生产的数，提示：&quot;恭喜您猜对了&quot; 打印猜的次数后退出程序</span><br></pre></td></tr></table></figure>
+
+<p><strong>参考答案</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>():</span><br><span class="line">    <span class="comment"># 1. 让电脑生成一个整数，用 x 变量绑定</span></span><br><span class="line">    x = random.randint(<span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    count = <span class="number">0</span>  <span class="comment"># 记次数</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        y = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;请输入: &#x27;</span>))</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> y &gt; x:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;您猜大了！&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> y &lt; x:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;您猜小了！&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;恭喜您猜对了！&#x27;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;您共猜了&#x27;</span>, count, <span class="string">&#x27;次&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-错误类型"><a href="#3-错误类型" class="headerlink" title="3. 错误类型"></a>3. 错误类型</h2><table>
+<thead>
+<tr>
+<th>错误类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZeroDivisionError</td>
+<td>除(或取模)零 (所有数据类型)</td>
+</tr>
+<tr>
+<td>ValueError</td>
+<td>传入无效的参数</td>
+</tr>
+<tr>
+<td>AssertionError</td>
+<td>断言语句失败</td>
+</tr>
+<tr>
+<td>StopIteration</td>
+<td>迭代器没有更多的值</td>
+</tr>
+<tr>
+<td>IndexError</td>
+<td>序列中没有此索引(index)</td>
+</tr>
+<tr>
+<td>IndentationError</td>
+<td>缩进错误</td>
+</tr>
+<tr>
+<td>OSError</td>
+<td>输入&#x2F;输出操作失败</td>
+</tr>
+<tr>
+<td>ImportError</td>
+<td>导入模块&#x2F;对象失败</td>
+</tr>
+<tr>
+<td>NameError</td>
+<td>未声明&#x2F;初始化对象 (没有属性)</td>
+</tr>
+<tr>
+<td>AttributeError</td>
+<td>对象没有这个属性</td>
+</tr>
+<tr>
+<td></td>
+<td><!-- 以下不常用 --></td>
+</tr>
+<tr>
+<td>GeneratorExit</td>
+<td>生成器(generator)发生异常来通知退出</td>
+</tr>
+<tr>
+<td>TypeError</td>
+<td>对类型无效的操作</td>
+</tr>
+<tr>
+<td>KeyboardInterrupt</td>
+<td>用户中断执行(通常是输入^C)</td>
+</tr>
+<tr>
+<td>OverflowError</td>
+<td>数值运算超出最大限制</td>
+</tr>
+<tr>
+<td>FloatingPointError</td>
+<td>浮点计算错误</td>
+</tr>
+<tr>
+<td>BaseException</td>
+<td>所有异常的基类</td>
+</tr>
+<tr>
+<td>SystemExit</td>
+<td>解释器请求退出</td>
+</tr>
+<tr>
+<td>Exception</td>
+<td>常规错误的基类</td>
+</tr>
+<tr>
+<td>StandardError</td>
+<td>所有的内建标准异常的基类</td>
+</tr>
+<tr>
+<td>ArithmeticError</td>
+<td>所有数值计算错误的基类</td>
+</tr>
+<tr>
+<td>EOFError</td>
+<td>没有内建输入,到达EOF 标记</td>
+</tr>
+<tr>
+<td>EnvironmentError</td>
+<td>操作系统错误的基类</td>
+</tr>
+<tr>
+<td>WindowsError</td>
+<td>系统调用失败</td>
+</tr>
+<tr>
+<td>LookupError</td>
+<td>无效数据查询的基类</td>
+</tr>
+<tr>
+<td>KeyError</td>
+<td>映射中没有这个键</td>
+</tr>
+<tr>
+<td>MemoryError</td>
+<td>内存溢出错误(对于Python 解释器不是致命的)</td>
+</tr>
+<tr>
+<td>UnboundLocalError</td>
+<td>访问未初始化的本地变量</td>
+</tr>
+<tr>
+<td>ReferenceError</td>
+<td>弱引用(Weak reference)试图访问已经垃圾回收了的对象</td>
+</tr>
+<tr>
+<td>RuntimeError</td>
+<td>一般的运行时错误</td>
+</tr>
+<tr>
+<td>NotImplementedError</td>
+<td>尚未实现的方法</td>
+</tr>
+<tr>
+<td>SyntaxError Python</td>
+<td>语法错误</td>
+</tr>
+<tr>
+<td>TabError</td>
+<td>Tab 和空格混用</td>
+</tr>
+<tr>
+<td>SystemError</td>
+<td>一般的解释器系统错误</td>
+</tr>
+<tr>
+<td>UnicodeError</td>
+<td>Unicode 相关的错误</td>
+</tr>
+<tr>
+<td>UnicodeDecodeError</td>
+<td>Unicode 解码时的错误</td>
+</tr>
+<tr>
+<td>UnicodeEncodeError</td>
+<td>Unicode 编码时错误</td>
+</tr>
+<tr>
+<td>UnicodeTranslateError</td>
+<td>Unicode 转换时错误</td>
+</tr>
+<tr>
+<td>以下为警告类型</td>
+<td></td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>警告的基类</td>
+</tr>
+<tr>
+<td>DeprecationWarning</td>
+<td>关于被弃用的特征的警告</td>
+</tr>
+<tr>
+<td>FutureWarning</td>
+<td>关于构造将来语义会有改变的警告</td>
+</tr>
+<tr>
+<td>OverflowWarning</td>
+<td>旧的关于自动提升为长整型(long)的警告</td>
+</tr>
+<tr>
+<td>PendingDeprecationWarning</td>
+<td>关于特性将会被废弃的警告</td>
+</tr>
+<tr>
+<td>RuntimeWarning</td>
+<td>可疑的运行时行为(runtime behavior)的警告</td>
+</tr>
+<tr>
+<td>SyntaxWarning</td>
+<td>可疑的语法的警告</td>
+</tr>
+<tr>
+<td>UserWarning</td>
+<td>用户代码生成的警告</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>详见：help(<strong>builtins</strong>) </p>
+</blockquote>
+<p>课后练习</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">写一个函数 get_age() 用来获取一个人的年龄信息</span><br><span class="line">    此函数规定用户只能输入<span class="number">1</span>~<span class="number">140</span>之间的整数，如果用户输入其它的数则直接触发ValueError类型的错误！</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_age</span>():</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    age = get_age()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;用户输入的年龄是:&quot;</span>, age)</span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;用户输入的不是1~140的整数，获取年龄失败!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>参考答案</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_age</span>():</span><br><span class="line">    age = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;请输入: &#x27;</span>))</span><br><span class="line">    <span class="keyword">if</span> age &lt; <span class="number">0</span> <span class="keyword">or</span> age &gt; <span class="number">140</span>:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;年龄范围错误&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> age</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/03/16/03-%E5%9F%BA%E7%A1%80%E8%A1%A5%E4%B9%A0-Python-%E5%B7%A5%E7%A8%8B%E5%8C%96%E8%AF%AD%E6%B3%95/">03.基础补习.Python.工程化语法</a>
+            
+            
+            <a class="next" rel="next" href="/2025/03/16/01-%E5%9F%BA%E7%A1%80%E8%A1%A5%E4%B9%A0-Python-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">01.基础补习.Python.基础语法</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

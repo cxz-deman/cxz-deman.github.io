@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>03.基础补习.Python.工程化语法 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">03.基础补习.Python.工程化语法</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 16, 2025&nbsp;&nbsp;18:41:17</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、包和模块"><a href="#一、包和模块" class="headerlink" title="一、包和模块"></a>一、包和模块</h1><p>在Python中，包和模块是代码组织和管理的重要概念。它们将代码分割成易于维护和复用的结构。</p>
+<hr>
+<h2 id="1-模块"><a href="#1-模块" class="headerlink" title="1. 模块"></a>1. 模块</h2><p>Module，模块</p>
+<h3 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h3><ul>
+<li><strong>定义</strong>：模块是一个Python文件，每个 $.py$ 文件就是一个模块。</li>
+<li><strong>作用</strong>：用于组织代码，避免代码重复，提高复用性。</li>
+<li><strong>使用</strong>：通过 $import$ 语句导入模块中的内容。</li>
+</ul>
+<h3 id="1-2-快速上手"><a href="#1-2-快速上手" class="headerlink" title="1.2 快速上手"></a>1.2 快速上手</h3><h4 id="1-2-1-定义模块"><a href="#1-2-1-定义模块" class="headerlink" title="1.2.1 定义模块"></a>1.2.1 定义模块</h4><p>定义一个名为 $math_utils.py$ 的模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">subtract</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a - b</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-导入模块"><a href="#1-2-2-导入模块" class="headerlink" title="1.2.2 导入模块"></a>1.2.2 导入模块</h4><ul>
+<li>语法</li>
+</ul>
+<ol>
+<li><pre><code class="language-python">import 模块名  [as 模块新名字1]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   &gt; 导入一个模块到当前程序</span><br><span class="line"></span><br><span class="line">2. ```python</span><br><span class="line">   from 模块名 import 模块属性名 [as 属性新名]</span><br></pre></td></tr></table></figure>
+
+&gt; 导入一个模块内部的部分属性到当前程序
+</code></pre>
+</li>
+<li><pre><code class="language-python">from 模块名 import *
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   &gt; 导入一个模块内部的全部属性到当前程序</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">import math_utils</span><br><span class="line"></span><br><span class="line">print(math_utils.add(3, 5))  # 输出: 8</span><br><span class="line">print(math_utils.subtract(10, 4))  # 输出: 6</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+<p>也可以使用 $from … import$ 导入特定内容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math_utils <span class="keyword">import</span> add</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">3</span>, <span class="number">5</span>))  <span class="comment"># 输出: 8</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-内部属性"><a href="#1-2-3-内部属性" class="headerlink" title="1.2.3 内部属性"></a>1.2.3 内部属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__file__  绑定模块的路径</span><br><span class="line">__name__  绑定模块的名称</span><br><span class="line">       如果是主模块（首先启动的模块）则绑定 <span class="string">&#x27;__main__&#x27;</span></span><br><span class="line">       如果不是主模块则 绑定 xxx.py 中的 xxx 这个模块名</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-模块分类"><a href="#1-3-模块分类" class="headerlink" title="1.3 模块分类"></a>1.3 模块分类</h3><p>Python 的模块可以分为系统模块、自定义模块和第三方模块</p>
+<hr>
+<h4 id="1-3-1-系统模块"><a href="#1-3-1-系统模块" class="headerlink" title="1.3.1 系统模块"></a>1.3.1 系统模块</h4><p>Pytho内置的模块，安装Python时已包含，提供基础功能，比如数学运算、文件操作、网络通信等。</p>
+<p><strong>特点</strong></p>
+<ul>
+<li><strong>即用即导入</strong>：直接<code>import</code>即可使用。</li>
+<li><strong>性能高效</strong>：通常使用 C 语言实现。</li>
+</ul>
+<h5 id="1-3-1-1-常见模块"><a href="#1-3-1-1-常见模块" class="headerlink" title="1.3.1.1 常见模块"></a>1.3.1.1 常见模块</h5><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>官方文档</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>math</code></td>
+<td>数学运算</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.12/library/math.html">https://docs.python.org/zh-cn/3.12/library/math.html</a></td>
+</tr>
+<tr>
+<td><code>os</code></td>
+<td>操作系统接口</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.13/library/os.html">https://docs.python.org/zh-cn/3.13/library/os.html</a></td>
+</tr>
+<tr>
+<td><code>os.path</code></td>
+<td>路径相关</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.13/library/os.path.html">https://docs.python.org/zh-cn/3.13/library/os.path.html</a></td>
+</tr>
+<tr>
+<td><code>datetime</code></td>
+<td>日期和时间</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.13/library/datetime.html">https://docs.python.org/zh-cn/3.13/library/datetime.html</a></td>
+</tr>
+<tr>
+<td><code>random</code></td>
+<td>随机数生成</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.13/library/random.html">https://docs.python.org/zh-cn/3.13/library/random.html</a></td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>时间</td>
+<td><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.13/library/time.html">https://docs.python.org/zh-cn/3.13/library/time.html</a></td>
+</tr>
+</tbody></table>
+<h5 id="1-3-1-2-方法示例"><a href="#1-3-1-2-方法示例" class="headerlink" title="1.3.1.2 方法示例"></a>1.3.1.2 方法示例</h5><p>random模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">random.randint(<span class="number">1</span>, <span class="number">6</span>)  <span class="comment"># random.randint(a,b) 生产 a~b的随机整数</span></span><br><span class="line">random.randint(<span class="number">1</span>, <span class="number">6</span>)</span><br><span class="line">random.random()   <span class="comment"># random.random  生成包含0 但不包含1 的浮点数</span></span><br><span class="line">random.choice(<span class="string">&quot;ABCD&quot;</span>)    <span class="comment"># 从一个序列中，随机返回一个元素</span></span><br><span class="line">random.choice(<span class="string">&quot;ABCD&quot;</span>)</span><br><span class="line">L = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>]</span><br><span class="line">random.choice(L)</span><br><span class="line">random.shuffle(L)   <span class="comment"># random.shuffer(x)  # 把列表X 打乱</span></span><br><span class="line"><span class="built_in">print</span>(L)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>随机生成密码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成 n 位的数字密码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_random_password</span>(<span class="params">n</span>):</span><br><span class="line">    r_str = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        r_str += <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> r_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成 n 位的数字和字母组成的密码</span></span><br><span class="line">charactors = <span class="string">&#x27;0123456789abcdefghijklmnopqrstwuxyz&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_random_password2</span>(<span class="params">n</span>):</span><br><span class="line">    r_str = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        r_str += random.choice(charactors)</span><br><span class="line">    <span class="keyword">return</span> r_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(get_random_password(<span class="number">6</span>))</span><br><span class="line"><span class="built_in">print</span>(get_random_password(<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(get_random_password2(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+<p>time模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">time.time()  <span class="comment"># 返回当前时间的时间戳</span></span><br><span class="line">time.ctime()  <span class="comment">#返回当前的UTC 时间的字符串</span></span><br><span class="line">t1 = time.localtime()  <span class="comment"># 返回当前的本地时间元组</span></span><br><span class="line">time.sleep(<span class="number">3</span>)  <span class="comment"># 让程序睡眠 n 秒</span></span><br><span class="line">time.strftime(<span class="string">&quot;%Y-%m-%d&quot;</span>, t1)  <span class="comment"># 格式化时间</span></span><br><span class="line">time.strftime(<span class="string">&quot;%y-%m-%d&quot;</span>, t1)</span><br><span class="line">time.strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>, t1)</span><br></pre></td></tr></table></figure>
+
+<p>os模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. os.getcwd(): 获取当前工作目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">current_directory = os.getcwd()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前工作目录:&quot;</span>, current_directory)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. os.chdir(path): 改变当前工作目录</span></span><br><span class="line">new_directory = <span class="string">&quot;F:\\01.AI07.深度学习框架\\00.上课课件&quot;</span></span><br><span class="line">os.chdir(new_directory)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;工作目录已更改为:&quot;</span>, os.getcwd())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. os.listdir(path=&#x27;.&#x27;): 返回指定目录下的所有文件和目录列表</span></span><br><span class="line">directory_path = <span class="string">&quot;.&quot;</span></span><br><span class="line">files_and_dirs = os.listdir(directory_path)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;指定目录下的文件和目录列表:&quot;</span>, files_and_dirs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. os.mkdir(path): 创建目录</span></span><br><span class="line">new_directory = <span class="string">&quot;new_folder&quot;</span></span><br><span class="line">os.mkdir(new_directory)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;目录 &#x27;<span class="subst">&#123;new_directory&#125;</span>&#x27; 已创建&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. os.rmdir(path): 删除目录</span></span><br><span class="line">directory_to_remove = <span class="string">&quot;new_folder&quot;</span></span><br><span class="line">os.rmdir(directory_to_remove)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;目录 &#x27;<span class="subst">&#123;directory_to_remove&#125;</span>&#x27; 已删除&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. os.remove(path): 删除文件</span></span><br><span class="line">file_to_remove = <span class="string">&quot;example.txt&quot;</span></span><br><span class="line">os.remove(file_to_remove)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;文件 &#x27;<span class="subst">&#123;file_to_remove&#125;</span>&#x27; 已删除&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3-2-第三方模块"><a href="#1-3-2-第三方模块" class="headerlink" title="1.3.2 第三方模块"></a>1.3.2 第三方模块</h4><p>由社区或公司开发，通过包管理工具（如<code>pip</code> ）安装，用于实现更高级或更具体的功能，如数据科学、图像处理、网络爬虫等。</p>
+<h5 id="1-3-2-1-常见模块"><a href="#1-3-2-1-常见模块" class="headerlink" title="1.3.2.1 常见模块"></a>1.3.2.1 常见模块</h5><p>那这可就太多了~这里随便举的例子</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>numpy</code></td>
+<td>数值计算</td>
+<td>科学运算、矩阵操作</td>
+</tr>
+<tr>
+<td><code>pandas</code></td>
+<td>数据分析</td>
+<td>数据清洗与处理</td>
+</tr>
+<tr>
+<td><code>matplotlib</code></td>
+<td>数据可视化</td>
+<td>绘制图表</td>
+</tr>
+<tr>
+<td><code>requests</code></td>
+<td>HTTP请求处理</td>
+<td>爬取网页内容，调用API</td>
+</tr>
+<tr>
+<td><code>flask</code></td>
+<td>Web应用框架</td>
+<td>快速搭建Web服务</td>
+</tr>
+</tbody></table>
+<h5 id="1-3-2-2-使用示例"><a href="#1-3-2-2-使用示例" class="headerlink" title="1.3.2.2 使用示例"></a>1.3.2.2 使用示例</h5><ol>
+<li><p>安装模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install numpy pandas requests</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># numpy 模块</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">array = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(array.mean())  <span class="comment"># 输出: 平均值 2.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pandas 模块</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">&quot;Name&quot;</span>: [<span class="string">&quot;Alice&quot;</span>, <span class="string">&quot;Bob&quot;</span>], <span class="string">&quot;Age&quot;</span>: [<span class="number">25</span>, <span class="number">30</span>]&#125;)</span><br><span class="line"><span class="built_in">print</span>(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># requests 模块</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">response = requests.get(<span class="string">&quot;https://jsonplaceholder.typicode.com/posts/1&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(response.json())</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="1-3-3-自定义模块"><a href="#1-3-3-自定义模块" class="headerlink" title="1.3.3 自定义模块"></a>1.3.3 自定义模块</h4><ul>
+<li>用户自己编写的模块，用于复用代码。</li>
+<li>文件名以 $.py$ 结尾，存放自定义的函数、类等。</li>
+</ul>
+<h5 id="1-3-3-1-创建模块"><a href="#1-3-3-1-创建模块" class="headerlink" title="1.3.3.1 创建模块"></a>1.3.3.1 创建模块</h5><p>创建一个<code>utils.py</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils.py</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-3-2-使用模块"><a href="#1-3-3-2-使用模块" class="headerlink" title="1.3.3.2 使用模块"></a>1.3.3.2 使用模块</h5><p>创建一个<code>main.py</code>文件，并导入自定义模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="keyword">import</span> utils</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(utils.add(<span class="number">3</span>, <span class="number">5</span>))  <span class="comment"># 输出: 8</span></span><br><span class="line"><span class="built_in">print</span>(utils.greet(<span class="string">&quot;Alice&quot;</span>))  <span class="comment"># 输出: Hello, Alice!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-3-3-跨文件夹使用"><a href="#1-3-3-3-跨文件夹使用" class="headerlink" title="1.3.3.3 跨文件夹使用"></a>1.3.3.3 跨文件夹使用</h5><p>假设目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">project/</span><br><span class="line">    utils/</span><br><span class="line">        __init__.py</span><br><span class="line">        math_utils.py</span><br><span class="line">    main.py</span><br></pre></td></tr></table></figure>
+
+<p>在<code>main.py</code>中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.math_utils <span class="keyword">import</span> add</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">3</span>, <span class="number">5</span>))  <span class="comment"># 输出: 8</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="1-3-4-总结对比"><a href="#1-3-4-总结对比" class="headerlink" title="1.3.4 总结对比"></a>1.3.4 总结对比</h4><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>获取方式</th>
+<th>使用场景</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统模块</td>
+<td>随Python自带</td>
+<td>常用功能，性能高效</td>
+<td><code>math</code>, <code>os</code>, <code>random</code></td>
+</tr>
+<tr>
+<td>第三方模块</td>
+<td>pip 安装</td>
+<td>高级功能，特定领域</td>
+<td><code>numpy</code>, <code>requests</code></td>
+</tr>
+<tr>
+<td>自定义模块</td>
+<td>自己编写</td>
+<td>项目特定需求，灵活控制</td>
+<td><code>utils.py</code></td>
+</tr>
+</tbody></table>
+<h2 id="2-包"><a href="#2-包" class="headerlink" title="2. 包"></a>2. 包</h2><p>Package</p>
+<h3 id="2-1-基本概念"><a href="#2-1-基本概念" class="headerlink" title="2.1 基本概念"></a>2.1 基本概念</h3><ul>
+<li><p><strong>定义</strong>：</p>
+<ul>
+<li>包是包含多个模块的目录。</li>
+<li>包的本质是一个包含 $__init__.py$ 文件的文件夹。</li>
+<li>文件 $__init__.py$  可为空，也可以包含初始化代码。</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：用于组织模块的集合，形成层次化的结构，便于管理大型项目。</p>
+</li>
+<li><p><strong>结构</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my_package/</span><br><span class="line">    __init__.py</span><br><span class="line">    module1.py</span><br><span class="line">    module2.py</span><br><span class="line">    subpackage/</span><br><span class="line">        __init__.py</span><br><span class="line">        module3.py</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-导入包和子包"><a href="#2-2-导入包和子包" class="headerlink" title="2.2 导入包和子包"></a>2.2 导入包和子包</h3><ul>
+<li>使用<code>import</code>关键字可以导入包和子包，以访问其中的模块和内容。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同模块的导入规则</span></span><br><span class="line"><span class="keyword">import</span> 包名 [<span class="keyword">as</span> 包别名]</span><br><span class="line"><span class="keyword">import</span>  包名.模块名 [<span class="keyword">as</span> 模块新名]</span><br><span class="line"><span class="keyword">import</span>  包名.子包名.模块名 [<span class="keyword">as</span> 模块新名]</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> 模块名 [<span class="keyword">as</span> 模块新名]</span><br><span class="line"><span class="keyword">from</span> 包名.子包名 <span class="keyword">import</span> 模块名 [<span class="keyword">as</span> 模块新名]</span><br><span class="line"><span class="keyword">from</span> 包名.子包名.模块名 <span class="keyword">import</span> 属性名 [<span class="keyword">as</span> 属性新名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入包内的所有子包和模块</span></span><br><span class="line"><span class="keyword">from</span> 包名 <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> 包名.模块名 <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+
+<p><strong>参考案例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入包中的模块</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入子包中的模块</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-4-init-py"><a href="#2-4-init-py" class="headerlink" title="2.4 __init__.py"></a>2.4 __init__.py</h3><p>$__init__.py$ 用于初始化Python包或模块，作用有：</p>
+<ol>
+<li><strong>标识包目录：</strong> 告诉Python解释器当前目录应被视为一个包。</li>
+<li><strong>执行初始化代码：</strong> 可以包含任何代码，通常用于包的初始化操作，如变量初始化、导入模块等。这些代码在包被导入时执行。</li>
+<li><strong>控制包的导入行为：</strong> 通过 <code>__all__</code> 变量明确指定从包中可以导入哪些模块，从而限制包的公开接口。</li>
+<li><strong>提供包级别的命名空间：</strong> <code>__init__.py</code> 中定义的变量和函数可以在包的模块中共享。</li>
+<li><strong>批量导入模块：</strong> 可以在 <code>__init__.py</code> 文件中批量导入模块，这些模块可以更方便地使用。</li>
+</ol>
+<p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># __init__.py 文件示例</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 批量导入系统模块</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义包级别的变量</span></span><br><span class="line">package_variable = <span class="string">&quot;This is a package variable&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 控制包的导入行为</span></span><br><span class="line">__all__ = [<span class="string">&#x27;module1&#x27;</span>, <span class="string">&#x27;module2&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 执行初始化代码</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Initializing mypackage&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：这个代码会在包被导入时执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 导入包内的模块</span></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> module1</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> module2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-模块与包的区别"><a href="#3-模块与包的区别" class="headerlink" title="3. 模块与包的区别"></a>3. 模块与包的区别</h2><table>
+<thead>
+<tr>
+<th><strong>模块</strong></th>
+<th><strong>包</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一个Python文件</td>
+<td>一个包含<code>__init__.py</code>的文件夹</td>
+</tr>
+<tr>
+<td>提供基本功能单元</td>
+<td>用于组织多个模块</td>
+</tr>
+<tr>
+<td>文件名为<code>.py</code></td>
+<td>目录名</td>
+</tr>
+</tbody></table>
+<h1 id="二、正则表达式"><a href="#二、正则表达式" class="headerlink" title="二、正则表达式"></a>二、正则表达式</h1><p>正则表达式是一个特殊的字符序列，它能帮助你方便的检查一个字符串是否与某种模式匹配。re模块使Python拥有正则表达式功能。</p>
+<h2 id="1-字符匹配"><a href="#1-字符匹配" class="headerlink" title="1. 字符匹配"></a>1. 字符匹配</h2><p>正则表达式在网络爬虫、数据分析中有着广泛使用，掌握正则表达式能够达到事半功倍的效果。</p>
+<h3 id="1-1-方法和功能"><a href="#1-1-方法和功能" class="headerlink" title="1.1 方法和功能"></a>1.1 方法和功能</h3><table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>match()</td>
+<td>判断一个正则表达式是否从开始处匹配一个字符串</td>
+</tr>
+<tr>
+<td>search()</td>
+<td>遍历字符串，找到正则表达式匹配的第一个位置，返回匹配对象</td>
+</tr>
+<tr>
+<td><strong>findall()</strong></td>
+<td>遍历字符串，找到正则表达式匹配的所有位置，并以<strong>列表</strong>的形式返回。如果给出的正则表达式中包含子组，就会把子组的内容单独返回，如果有多个子组就会以元组的形式返回。</td>
+</tr>
+<tr>
+<td>finditer()</td>
+<td>遍历字符串，找到正则表达式匹配的所有位置，并以迭代器的形式返回</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>hqyj匹配文本中的hqyj</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;hqyj&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;hqyj&#x27;, &#x27;hqyj&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>[hqyj]匹配h或者q或者y或者j字符</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;[hqyj]&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;h&#x27;, &#x27;q&#x27;, &#x27;y&#x27;, &#x27;j&#x27;, &#x27;h&#x27;, &#x27;q&#x27;, &#x27;y&#x27;, &#x27;j&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;[hqyj]牛&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;j牛&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>[^hqyj]匹配除了hqyj以外的其他字符</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;[^hqyj]&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;牛&#x27;, &#x27;皮&#x27;, &#x27;6&#x27;, &#x27;6&#x27;, &#x27;6&#x27;, &#x27;6&#x27;, &#x27;,&#x27;, &#x27;有&#x27;, &#x27;个&#x27;, &#x27;老&#x27;, &#x27;师&#x27;, &#x27;也&#x27;, &#x27;牛&#x27;, &#x27;皮&#x27;, &#x27;6&#x27;, &#x27;6&#x27;, &#x27;6&#x27;]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>[a-z]匹配a~z的任意字符([0-9]也可以)</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;hqyj牛皮6666,hqyj有个老师abchqyj也牛皮666&quot;</span></span><br><span class="line">data = re.findall(<span class="string">&quot;[a-z]hqyj&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;chqyj&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>.匹配除了换行符以外的任意字符</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师abchqyj也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;.hqyj&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;,hqyj&#x27;, &#x27;chqyj&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师abchqyj也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;.+hqyj&quot;</span>,text) <span class="comment">#贪婪匹配(匹配最长的)</span></span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;hqyj牛皮6666,hqyj有个老师abchqyj&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj牛皮6666,hqyj有个老师abchqyj也牛皮666&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;.?hqyj&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;hqyj&#x27;, &#x27;,hqyj&#x27;, &#x27;chqyj&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-特殊字符"><a href="#1-2-特殊字符" class="headerlink" title="1.2 特殊字符"></a>1.2 特殊字符</h3><table>
+<thead>
+<tr>
+<th><strong>特殊字符</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\d</td>
+<td>匹配任何十进制数字；相当于类 [0-9]</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>与 \d 相反，匹配任何非十进制数字的字符；相当于类 [^0-9]</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任何空白字符（包含空格、换行符、制表符等）；相当于类 [  \t\n\r\f\v]</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>与 \s 相反，匹配任何非空白字符；相当于类 [^  \t\n\r\f\v]</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配任意一个文字字符，包括大小写字母、数字、下划线，等价于表达式[a-zA-Z0-9_]</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>于 \w 相反  (注：re.ASCII 标志使得 \w 只能匹配 ASCII 字符)</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配单词的开始或结束</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>与 \b 相反</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>\w 匹配字母数字下划线(汉字)</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;华清_远见abc 华清hqyj远见 华清牛皮远见&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;华清\w+远见&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;华清_远见&#x27;, &#x27;华清hqyj远见&#x27;, &#x27;华清牛皮远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>\d匹配数字</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;hqyj66d6 a1h43d3fd43s43d4 &quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;d\d&quot;</span>, text)  <span class="comment"># 只匹配一个数字</span></span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;d6&#x27;, &#x27;d3&#x27;, &#x27;d4&#x27;, &#x27;d4&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;hqyj66d6 a1h43d3fd43s43d4 &quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;d\d+&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;d6&#x27;, &#x27;d3&#x27;, &#x27;d43&#x27;, &#x27;d4&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>\s匹配任意空白符 包括空格,制表符等等</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;hqyj666  jack karen 666&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;\sj\w+\s&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27; jack &#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-数量控制"><a href="#2-数量控制" class="headerlink" title="2. 数量控制"></a>2. 数量控制</h2><p>控制匹配规则的重复次数~</p>
+<h3 id="2-1-重复0次或多次"><a href="#2-1-重复0次或多次" class="headerlink" title="2.1 *重复0次或多次"></a>2.1 *重复0次或多次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6*远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清远见&#x27;, &#x27;华清666远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-重复1次或多次"><a href="#2-2-重复1次或多次" class="headerlink" title="2.2 +重复1次或多次"></a>2.2 +重复1次或多次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见 华清6远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6+远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清666远见&#x27;, &#x27;华清6远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-重复1次或0次"><a href="#2-3-重复1次或0次" class="headerlink" title="2.3 ?重复1次或0次"></a>2.3 ?重复1次或0次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见 华清6远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6?远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清远见&#x27;, &#x27;华清6远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-n-重复n次"><a href="#2-4-n-重复n次" class="headerlink" title="2.4 {n}重复n次"></a>2.4 {n}重复n次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见 华清6远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6&#123;3&#125;远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清666远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-n-重复n次或多次"><a href="#2-5-n-重复n次或多次" class="headerlink" title="2.5 {n,}重复n次或多次"></a>2.5 {n,}重复n次或多次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见 华清6远见 华清66远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6&#123;2,&#125;远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清666远见&#x27;, &#x27;华清66远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-n-m-重复n到m次"><a href="#2-6-n-m-重复n到m次" class="headerlink" title="2.6 {n,m}重复n到m次"></a>2.6 {n,m}重复n到m次</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;华清远见 华清666远见 华清6远见 华清66远见&quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;华清6&#123;0,2&#125;远见&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;华清远见&#x27;, &#x27;华清6远见&#x27;, &#x27;华清66远见&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-分组"><a href="#3-分组" class="headerlink" title="3. 分组"></a>3. 分组</h2><ul>
+<li><strong>()提取兴趣区域</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;谢帝谢帝,我要迪士尼,我的电话号码18282832341,qq号码1817696843&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;号码(\d&#123;10,&#125;)&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;18282832341&#x27;, &#x27;1817696843&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;谢帝谢帝,我要迪士尼,我的电话号码18282832341,qq号码1817696843&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;(\w&#123;2&#125;号码(\d&#123;10,&#125;))&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;18282832341&#x27;, &#x27;1817696843&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>(|)提取兴趣区域(| &#x3D; or)</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;第一名张三 第一名物理149分 第一名数学150分 第一名英语148分 第一名总分740分&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;第一名(\w&#123;2,&#125;|\w&#123;2,&#125;\d&#123;2,&#125;分)&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;张三&#x27;, &#x27;物理149分&#x27;, &#x27;数学150分&#x27;, &#x27;英语148分&#x27;, &#x27;总分740分&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-开始和结束"><a href="#4-开始和结束" class="headerlink" title="4. 开始和结束"></a>4. 开始和结束</h2><ul>
+<li><strong>^开始</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text = <span class="string">&quot;hqyj66abc hqyj123&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;^hqyj\d+&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;hqyj66&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$结尾</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text = <span class="string">&quot;hqyj66abc hqyj123&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;hqyj\d+$&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;hqyj123&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-特殊字符"><a href="#5-特殊字符" class="headerlink" title="5. 特殊字符"></a>5. 特殊字符</h2><p>由于正则表达式中* . \  {} () 等等符号具有特殊含义,如果你指定的字符正好就是这些符号,需要用\进行转义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text = <span class="string">&quot;数学中集合的写法是&#123;2&#125;&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;\&#123;2\&#125;&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;&#123;2&#125;&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-常用方法"><a href="#6-常用方法" class="headerlink" title="6. 常用方法"></a>6. 常用方法</h2><h3 id="6-1-re-findall"><a href="#6-1-re-findall" class="headerlink" title="6.1 re.findall"></a>6.1 re.findall</h3><p>获取匹配到的所有数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&quot;hqyj66d6 a1h43d3fd43s43d4 &quot;</span></span><br><span class="line">data=re.findall(<span class="string">&quot;d\d+&quot;</span>,text)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#[&#x27;d6&#x27;, &#x27;d3&#x27;, &#x27;d43&#x27;, &#x27;d4&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-2-re-match"><a href="#6-2-re-match" class="headerlink" title="6.2 re.match"></a>6.2 re.match</h3><p>从字符串的起始位置匹配，成功返回一个对象否则返回none。</p>
+<p>匹配成功返回对象,对象的方法:</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>group()</td>
+<td>返回匹配的字符串</td>
+</tr>
+<tr>
+<td>start()</td>
+<td>返回匹配的开始位置</td>
+</tr>
+<tr>
+<td>end()</td>
+<td>返回匹配的结束位置</td>
+</tr>
+<tr>
+<td>span()</td>
+<td>返回一个元组表示匹配位置（开始，结束）</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在起始位置匹配，并返回一个包含匹配 (开始,结束) 的位置的元组</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;www&#x27;</span>, <span class="string">&quot;www.python.com&quot;</span>).span())     <span class="comment"># (0, 3)</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;www&#x27;</span>, <span class="string">&quot;www.python.com&quot;</span>).start())    <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;www&#x27;</span>, <span class="string">&quot;www.python.com&quot;</span>).end())      <span class="comment"># 3</span></span><br><span class="line"><span class="comment"># 不在起始位置匹配</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;com&#x27;</span>, <span class="string">&quot;www.python.com&quot;</span>))            <span class="comment"># None</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-3-re-search"><a href="#6-3-re-search" class="headerlink" title="6.3 re.search"></a>6.3 re.search</h3><p>扫描整个字符串并返回第一个成功匹配的字符串。成功返回一个对象否则返回none</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在起始位置匹配</span></span><br><span class="line"><span class="built_in">print</span>(re.search(<span class="string">&#x27;www&#x27;</span>, <span class="string">&#x27;www.hqyj.com&#x27;</span>).span())  <span class="comment"># (0, 3)</span></span><br><span class="line"><span class="comment"># 不在起始位置匹配</span></span><br><span class="line"><span class="built_in">print</span>(re.search(<span class="string">&#x27;com&#x27;</span>, <span class="string">&#x27;www.hqyj.com&#x27;</span>).span())  <span class="comment"># (9, 12)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-re-sub"><a href="#6-4-re-sub" class="headerlink" title="6.4 re.sub"></a>6.4 re.sub</h3><p>替换匹配成功的字符</p>
+<p>类似与字符串的replace函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;以前华清远见在四川大学旁边,现在华清远见在西南交大旁边&quot;</span></span><br><span class="line">data = re.sub(<span class="string">&quot;华清远见&quot;</span>, <span class="string">&quot;北京华清远见科技集团成都中心&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># 以前北京华清远见科技集团成都中心在四川大学旁边,现在北京华清远见科技集团成都中心在西南交大旁边</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-5-re-split"><a href="#6-5-re-split" class="headerlink" title="6.5 re.split"></a>6.5 re.split</h3><p>根据匹配成功的位置对字符串进行分割</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;python is   very easy&quot;</span></span><br><span class="line">data = re.split(<span class="string">r&quot;\s&#123;1,&#125;&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;python&#x27;, &#x27;is&#x27;, &#x27;very&#x27;, &#x27;easy&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-6-re-finditer"><a href="#6-6-re-finditer" class="headerlink" title="6.6 re.finditer"></a>6.6 re.finditer</h3><p>类似findall 但是不会全部返回出来 而是返回迭代器(比如匹配成功了10万个  全部返回就很吃内存了)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;python is   very easy&quot;</span></span><br><span class="line">data = re.findall(<span class="string">r&quot;\w+&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)  <span class="comment"># [&#x27;python&#x27;, &#x27;is&#x27;, &#x27;very&#x27;, &#x27;easy&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">text = <span class="string">&quot;python is   very easy&quot;</span></span><br><span class="line">data = re.finditer(<span class="string">r&quot;\w+&quot;</span>, text)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"><span class="keyword">for</span> el <span class="keyword">in</span> data:</span><br><span class="line">    <span class="built_in">print</span>(el.group())</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-常见正则"><a href="#7-常见正则" class="headerlink" title="7. 常见正则"></a>7. 常见正则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">QQ</span>号：[<span class="number">1</span> - <span class="number">9</span>][<span class="number">0</span> - <span class="number">9</span>]&#123;<span class="number">4</span>, &#125;(腾讯<span class="variable constant_">QQ</span>号从<span class="number">10000</span>开始)</span><br><span class="line">帐号(字母开头，允许<span class="number">5</span>-<span class="number">16</span>字节，允许字母数字下划线)：^[a-zA-Z][a-zA-<span class="variable constant_">Z0</span>-9_]&#123;<span class="number">4</span>,<span class="number">15</span>&#125;$</span><br><span class="line">手机号码：^(<span class="number">13</span>[<span class="number">0</span>-<span class="number">9</span>]|<span class="number">14</span>[<span class="number">5</span>|<span class="number">7</span>]|<span class="number">15</span>[<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>|<span class="number">3</span>|<span class="number">5</span>|<span class="number">6</span>|<span class="number">7</span>|<span class="number">8</span>|<span class="number">9</span>]|<span class="number">18</span>[<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>|<span class="number">3</span>|<span class="number">5</span>|<span class="number">6</span>|<span class="number">7</span>|<span class="number">8</span>|<span class="number">9</span>])\d&#123;<span class="number">8</span>&#125;$</span><br><span class="line"><span class="title class_">Email</span>地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$</span><br><span class="line">密码(以字母开头，长度在<span class="number">6</span>~<span class="number">18</span>之间，只能包含字母、数字和下划线)：^[a-zA-Z]\w&#123;<span class="number">5</span>,<span class="number">17</span>&#125;$</span><br><span class="line">身份证号(<span class="number">15</span>位、<span class="number">18</span>位数字)：^\d&#123;<span class="number">15</span>&#125;|\d&#123;<span class="number">18</span>&#125;$</span><br><span class="line">短身份证号码(数字、字母x结尾)：^([<span class="number">0</span>-<span class="number">9</span>])&#123;<span class="number">7</span>,<span class="number">18</span>&#125;(x|X)?$ 或 ^\d&#123;<span class="number">8</span>,<span class="number">18</span>&#125;|[<span class="number">0</span>-9x]&#123;<span class="number">8</span>,<span class="number">18</span>&#125;|[<span class="number">0</span>-9X]&#123;<span class="number">8</span>,<span class="number">18</span>&#125;?$</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/03/16/02-%E5%9F%BA%E7%A1%80%E8%A1%A5%E4%B9%A0-Python-%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95/">02.基础补习.Python.高级语法</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
