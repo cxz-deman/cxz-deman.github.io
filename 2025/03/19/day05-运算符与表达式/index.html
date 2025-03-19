@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>day05 运算符与表达式 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">day05 运算符与表达式</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 19, 2025&nbsp;&nbsp;17:40:11</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h1><h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><h3 id="加法运算"><a href="#加法运算" class="headerlink" title="加法运算"></a>加法运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">10</span></span><br><span class="line">y=<span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(x+y)</span><br><span class="line"></span><br><span class="line">x=(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">y=(<span class="number">20</span>,<span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(x+y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="减法"><a href="#减法" class="headerlink" title="减法"></a>减法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">30</span></span><br><span class="line">y=<span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(x-y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">4</span></span><br><span class="line">y=<span class="number">90</span></span><br><span class="line"><span class="built_in">print</span>(x*y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">90</span></span><br><span class="line">y=<span class="number">60</span></span><br><span class="line"><span class="built_in">print</span>(x/y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="求余数运算"><a href="#求余数运算" class="headerlink" title="求余数运算"></a>求余数运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">100</span></span><br><span class="line">y=<span class="number">9</span></span><br><span class="line"><span class="built_in">print</span>(x%y)</span><br><span class="line"><span class="comment">#表达式结果不会超过y</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="乘方运算"><a href="#乘方运算" class="headerlink" title="乘方运算"></a>乘方运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">10</span></span><br><span class="line">y=<span class="number">9</span></span><br><span class="line"><span class="built_in">print</span>(x**y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="取整运算"><a href="#取整运算" class="headerlink" title="取整运算"></a>取整运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">188</span></span><br><span class="line">y=<span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(x//y)</span><br></pre></td></tr></table></figure>
+
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><h3 id="等于"><a href="#等于" class="headerlink" title="等于"></a>等于</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">1</span></span><br><span class="line">y=<span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(x==y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="不等于"><a href="#不等于" class="headerlink" title="不等于"></a>不等于</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">2</span></span><br><span class="line">y=<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(x!=y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="大于与小于"><a href="#大于与小于" class="headerlink" title="大于与小于"></a>大于与小于</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">2</span></span><br><span class="line">y=<span class="number">3</span></span><br><span class="line"><span class="built_in">print</span>(x&gt;y)</span><br><span class="line"><span class="built_in">print</span>(x&lt;y)</span><br><span class="line"></span><br><span class="line">x1=<span class="number">4</span></span><br><span class="line">y1=<span class="number">4</span></span><br><span class="line"><span class="built_in">print</span>(x1&gt;y1)</span><br><span class="line"><span class="built_in">print</span>(x1&lt;y1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="大于等于与小于等于"><a href="#大于等于与小于等于" class="headerlink" title="大于等于与小于等于"></a>大于等于与小于等于</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">2</span></span><br><span class="line">y=<span class="number">3</span></span><br><span class="line"><span class="built_in">print</span>(x&gt;=y)</span><br><span class="line"><span class="built_in">print</span>(x&lt;=y)</span><br><span class="line"></span><br><span class="line">x1=<span class="number">4</span></span><br><span class="line">y1=<span class="number">4</span></span><br><span class="line"><span class="built_in">print</span>(x1&gt;=y1)</span><br><span class="line"><span class="built_in">print</span>(x1&lt;=y1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><h3 id="and"><a href="#and" class="headerlink" title="and"></a>and</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">1</span></span><br><span class="line">y=<span class="number">2</span></span><br><span class="line">z=<span class="number">3</span></span><br><span class="line"><span class="built_in">print</span>(x&lt;z <span class="keyword">and</span> y&gt;z)</span><br></pre></td></tr></table></figure>
+
+<h3 id="or"><a href="#or" class="headerlink" title="or"></a>or</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(x&lt;z <span class="keyword">or</span> y&gt;z)</span><br></pre></td></tr></table></figure>
+
+<h3 id="not"><a href="#not" class="headerlink" title="not"></a>not</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span>(x&lt;z <span class="keyword">and</span> y&gt;z))</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#逻辑运算符(or 运算符)</span></span><br><span class="line"><span class="comment"># A and B</span></span><br><span class="line"><span class="comment"># A是一个表达式 B也是一个表达式</span></span><br><span class="line"><span class="comment">#如果A表达运行完毕后的结果拿来转换为布尔值boo1(A)</span></span><br><span class="line"><span class="comment">#结果为False那么B表达式就不运行整个表达式A and B的结果就为A表达式</span></span><br><span class="line"><span class="comment">#结果为True 整个表达式A and B的结果就为B表达式</span></span><br><span class="line">x=<span class="number">100</span></span><br><span class="line">y=<span class="number">200</span></span><br><span class="line"><span class="built_in">print</span>(x <span class="keyword">and</span> y)</span><br><span class="line"><span class="built_in">print</span>(x <span class="keyword">and</span> y&gt;x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x+=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x-=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x*=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x/=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x%=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x//=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">x**=<span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><h3 id="按位与"><a href="#按位与" class="headerlink" title="按位与"></a>按位与</h3><p>按位与运算：对于每一位，如果a和b的相应位都是1，则结果位为1，否则为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x1=<span class="number">0o106</span></span><br><span class="line">x2=<span class="number">0o117</span></span><br><span class="line"><span class="built_in">print</span>(x2&amp;x1,<span class="built_in">oct</span>(x2&amp;x1))</span><br><span class="line">x1=<span class="number">0b101</span></span><br><span class="line">x2=<span class="number">0b110</span></span><br><span class="line"><span class="built_in">print</span>(x2&amp;x1,<span class="built_in">bin</span>(x2&amp;x1))<span class="comment">#按位与运算：对于每一位，如果a和b的相应位都是1，则结果位为1，否则为0。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按位或"><a href="#按位或" class="headerlink" title="按位或"></a>按位或</h3><p>按位或运算：对于每一位，如果a和b的相应位有一个为1，则结果位为1，否则为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x1=<span class="number">0b101</span></span><br><span class="line">x2=<span class="number">0b110</span></span><br><span class="line"><span class="built_in">print</span>(x1|x2,<span class="built_in">bin</span>(x1|x2))</span><br><span class="line">x1=<span class="number">0o106</span></span><br><span class="line">x2=<span class="number">0o117</span></span><br><span class="line"><span class="built_in">print</span>(x2|x1,<span class="built_in">oct</span>(x2|x1))<span class="comment">#按位或运算：对于每一位，如果a和b的相应位有一个为1，则结果位为1，否则为0。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按位异或"><a href="#按位异或" class="headerlink" title="按位异或"></a>按位异或</h3><p>按位异或：对于每一位，如果a和b的相应位不同（一个为1，另一个为0），则结果位为1，否则为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x1=<span class="number">0b101</span></span><br><span class="line">x2=<span class="number">0b110</span></span><br><span class="line"><span class="built_in">print</span>(x1^x2,<span class="built_in">bin</span>(x1^x2))</span><br><span class="line">x1=<span class="number">0o106</span></span><br><span class="line">x2=<span class="number">0o117</span></span><br><span class="line"><span class="built_in">print</span>(x1^x2,<span class="built_in">bin</span>(x1^x2))<span class="comment">#按位异或：对于每一位，如果a和b的相应位不同（一个为1，另一个为0），则结果位为1，否则为0。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按位取反"><a href="#按位取反" class="headerlink" title="按位取反"></a>按位取反</h3><p>按位取反：对操作数a的每一个二进制位进行取反，即将1变为0，0变为1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">0b1011</span></span><br><span class="line"><span class="built_in">print</span>(a,<span class="built_in">bin</span>(a))</span><br><span class="line"><span class="built_in">print</span>(~a,<span class="built_in">bin</span>(~a))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;==================================&quot;</span>)</span><br><span class="line">a=-<span class="number">0b1011</span></span><br><span class="line"><span class="built_in">print</span>(a,<span class="built_in">bin</span>(a))</span><br><span class="line"><span class="built_in">print</span>(~a,<span class="built_in">bin</span>(~a))</span><br></pre></td></tr></table></figure>
+
+<h3 id="左移运算符"><a href="#左移运算符" class="headerlink" title="左移运算符"></a>左移运算符</h3><p>将a的二进制表示向左移动b位，左边移出的部分会被丢弃，右边空出的位置补零。<strong>相当于乘以$2^n$次方</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例：将一个二进制数向左移动两位</span></span><br><span class="line">a = <span class="number">0b1011</span></span><br><span class="line">result_left_shift = a &lt;&lt; <span class="number">2</span>  <span class="comment"># 将a向左移动两位</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bin</span>(result_left_shift))  <span class="comment"># 输出：0b101100 （十进制为44）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="右移运算符"><a href="#右移运算符" class="headerlink" title="右移运算符"></a>右移运算符</h3><ul>
+<li>将a的二进制表示向右移动b位</li>
+<li>对于无符号整数，右边移出的部分会被丢弃，左边空出的位置补零（通常补0）；</li>
+<li>对于有符号整数，右移时取决于具体实现，可能是算术右移（符号位扩展）或者逻辑右移（补0）。</li>
+<li><strong>同理，相当于除以2^n</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例：将一个有符号二进制数向右移动一位</span></span><br><span class="line">a = -<span class="number">0b1000</span>  <span class="comment"># 十进制为-8</span></span><br><span class="line">result_right_shift = a &gt;&gt; <span class="number">1</span>  <span class="comment"># 将a向右移动一位</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bin</span>(result_right_shift))  <span class="comment"># 输出：-0b100 （十进制为-4）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于无符号数的例子</span></span><br><span class="line">unsigned_a = <span class="number">0b1000</span></span><br><span class="line">unsigned_result_right_shift = unsigned_a &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bin</span>(unsigned_result_right_shift))  <span class="comment"># 输出：0b100 （十进制为4）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="身份运算符"><a href="#身份运算符" class="headerlink" title="身份运算符"></a>身份运算符</h2><p>主要是比较地址</p>
+<h3 id="is"><a href="#is" class="headerlink" title="is"></a>is</h3><p>是不是同一个对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(a), <span class="built_in">id</span>(b))<span class="comment">#作用：输出a和b的内存地址</span></span><br><span class="line"><span class="built_in">print</span>(a == b)  <span class="comment">#True, 比较的是值</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> b)  <span class="comment">#True, 比较的是内存地址，同一个值放在一个内存里面</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="is-not"><a href="#is-not" class="headerlink" title="is not"></a>is not</h3><p>判断是不是不同对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">1.0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(a), <span class="built_in">id</span>(b))<span class="comment">#作用：输出a和b的内存地址</span></span><br><span class="line"><span class="built_in">print</span>(a == b)  <span class="comment">#True, 比较的是值</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> <span class="keyword">not</span> b)  <span class="comment">#True, 比较的是内存地址，同一个值放在一个内存里面</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="成员运算符"><a href="#成员运算符" class="headerlink" title="成员运算符"></a>成员运算符</h2><ul>
+<li><code>in</code>：判断值是否存在于序列中</li>
+<li><code>not in</code>：判断值是否不存在于序列中</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> <span class="keyword">in</span>  [<span class="number">2</span>, <span class="number">34</span>, <span class="number">5</span>, <span class="number">67</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="三目运算符"><a href="#三目运算符" class="headerlink" title="三目运算符"></a>三目运算符</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">max</span>=<span class="number">8</span> <span class="keyword">if</span> <span class="number">10</span>&gt;<span class="number">2</span> <span class="keyword">else</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">max</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例子</span></span><br><span class="line">b = <span class="number">3</span> + <span class="number">1</span>, <span class="string">&quot;3 &gt; 2&quot;</span>,<span class="built_in">print</span>(<span class="string">&#x27;AAA&#x27;</span>) <span class="keyword">if</span> <span class="number">1</span> &gt; <span class="number">2</span> <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">&quot;BBB&quot;</span>),<span class="number">2</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span> (b)</span><br></pre></td></tr></table></figure>
+
+<h1 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h1><p>表达式（expression）是由一个或多个操作数和运算符组成的。简单来说，表达式可以是任何会产生一个值的代码片段。</p>
+<h2 id="算术表达式"><a href="#算术表达式" class="headerlink" title="算术表达式"></a>算术表达式</h2><p>涉及数学运算的表达式。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">5</span></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line">result = a + b  <span class="comment"># 加法</span></span><br><span class="line">result = a / b  <span class="comment"># 除法</span></span><br><span class="line">result = a // b  <span class="comment"># 地板除</span></span><br><span class="line">result = a % b  <span class="comment"># 取余</span></span><br><span class="line">result = a ** b  <span class="comment"># 幂运算</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="比较表达式"><a href="#比较表达式" class="headerlink" title="比较表达式"></a>比较表达式</h2><p>用于比较两个值，通常返回布尔值 <code>True</code> 或 <code>False</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">5</span></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line">result = a &gt; b  <span class="comment"># 大于</span></span><br><span class="line">result = a &lt;= b  <span class="comment"># 小于等于</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="逻辑表达式"><a href="#逻辑表达式" class="headerlink" title="逻辑表达式"></a>逻辑表达式</h2><p>用于连接布尔值，返回布尔值 <code>True</code> 或 <code>False</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="literal">True</span></span><br><span class="line">b = <span class="literal">False</span></span><br><span class="line">result = a <span class="keyword">and</span> b  <span class="comment"># 逻辑与</span></span><br><span class="line">result = a <span class="keyword">or</span> b  <span class="comment"># 逻辑或</span></span><br><span class="line">result = <span class="keyword">not</span> a  <span class="comment"># 逻辑非</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值表达式"><a href="#赋值表达式" class="headerlink" title="赋值表达式"></a>赋值表达式</h2><p>将一个值赋给一个变量，通常用 <code>=</code> 运算符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">5</span>  <span class="comment"># 赋值表达式</span></span><br><span class="line">b = a + <span class="number">3</span>  <span class="comment"># 计算并赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>Python 3.8+ 引入了 <strong>海象运算符</strong>（<code>:=</code>），这是一种新的赋值表达式，允许在表达式中直接给变量赋值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (n := <span class="built_in">len</span>(data)) &gt; <span class="number">10</span>:  <span class="comment"># 给n赋值并使用</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;列表长度大于10，长度为<span class="subst">&#123;n&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="成员表达式"><a href="#成员表达式" class="headerlink" title="成员表达式"></a>成员表达式</h2><p>用于检查一个值是否在序列、集合或字典中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">result = <span class="number">2</span> <span class="keyword">in</span> a  <span class="comment"># 检查2是否在列表a中</span></span><br><span class="line">result = <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> a  <span class="comment"># 检查4是否不在列表a中</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="身份表达式"><a href="#身份表达式" class="headerlink" title="身份表达式"></a>身份表达式</h2><p>用于比较两个对象的身份（即是否是同一个对象），返回布尔值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">b = a</span><br><span class="line">result = a <span class="keyword">is</span> b  <span class="comment"># 判断a和b是否是同一个对象</span></span><br><span class="line">result = a <span class="keyword">is</span> <span class="keyword">not</span> b  <span class="comment"># 判断a和b是否不是同一个对象</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三元表达式"><a href="#三元表达式" class="headerlink" title="三元表达式"></a>三元表达式</h2><p>简化的 <code>if-else</code> 表达式，根据条件选择两个值之一。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">5</span></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line">result = a <span class="keyword">if</span> a &gt; b <span class="keyword">else</span> b  <span class="comment"># 如果a &gt; b，result为a，否则为b</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数调用表达式"><a href="#函数调用表达式" class="headerlink" title="函数调用表达式"></a>函数调用表达式</h2><p>调用函数并返回结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">result = add(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 函数调用表达式</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="推导式"><a href="#推导式" class="headerlink" title="推导式"></a>推导式</h2><p>用更简洁的方式创建列表、字典和集合。是 Python 特有的一种表达式形式。</p>
+<h3 id="列表推导式"><a href="#列表推导式" class="headerlink" title="列表推导式"></a>列表推导式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">result = [x * <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> a]  <span class="comment"># 创建一个新列表，元素是原列表每个元素的两倍</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字典推导式"><a href="#字典推导式" class="headerlink" title="字典推导式"></a>字典推导式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line">result = &#123;x: <span class="built_in">ord</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> a&#125;  <span class="comment"># 创建一个字典，将字母映射到对应的ASCII值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="集合推导式"><a href="#集合推导式" class="headerlink" title="集合推导式"></a>集合推导式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">result = &#123;x * <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> a&#125;  <span class="comment"># 创建一个集合，元素是原列表每个元素的两倍</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="课后练习"><a href="#课后练习" class="headerlink" title="课后练习"></a>课后练习</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">生成1—10之间的数字，将其平方存入list01中。</span><br><span class="line">将list01中所有偶数存入list02中。</span><br><span class="line">将list01中所有大于5的奇数增加1后存入list03中。</span><br><span class="line">要求都用列表推导式</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h2><p>匿名函数的简化表达式，用于创建小型、一次性的函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="keyword">lambda</span> x, y: x + y  <span class="comment"># 创建一个匿名函数</span></span><br><span class="line">result = f(<span class="number">2</span>, <span class="number">3</span>)  <span class="comment"># 调用匿名函数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="生成器表达式"><a href="#生成器表达式" class="headerlink" title="生成器表达式"></a>生成器表达式</h2><p>类似于列表推导式，但是返回的是一个生成器对象，而不是一个完整的列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">result = (x * <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> a)  <span class="comment"># 创建一个生成器，元素是原列表每个元素的两倍</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="调用运算符"><a href="#调用运算符" class="headerlink" title="调用运算符()"></a>调用运算符()</h2><p>在 Python 中，圆括号也可以用来创建表达式，通常用于控制运算顺序或者在函数调用时传递参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (<span class="number">5</span> + <span class="number">3</span>) * <span class="number">2</span>  <span class="comment"># 使用括号改变运算顺序</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="表达式的求值顺序"><a href="#表达式的求值顺序" class="headerlink" title="表达式的求值顺序"></a>表达式的求值顺序</h2><p>Python 中的表达式按照运算符优先级规则求值。运算符优先级的规则决定了不同类型的运算在计算时的顺序。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/03/19/day06%E8%AF%AD%E5%8F%A5%E4%B8%8E%E5%BE%AA%E7%8E%AF%E4%BD%93/">day06语句与循环体</a>
+            
+            
+            <a class="next" rel="next" href="/2025/03/19/python%E5%9F%BA%E7%A1%80%E5%90%88%E9%9B%86/">python基础合集</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

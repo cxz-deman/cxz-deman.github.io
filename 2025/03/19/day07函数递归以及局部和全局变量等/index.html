@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>day07函数递归以及局部和全局变量等 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">day07函数递归以及局部和全局变量等</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 19, 2025&nbsp;&nbsp;17:44:27</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="上接语句"><a href="#上接语句" class="headerlink" title="上接语句"></a>上接语句</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 海象运算符边赋值边进行判断</span></span><br><span class="line"><span class="keyword">if</span> (n := <span class="number">1</span>) &gt; <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="with-语句"><a href="#with-语句" class="headerlink" title="with 语句"></a>with 语句</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&quot;D:\华清补习文件\代码\test.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:  <span class="comment"># with语句 with(文件路径，打开方式：读写方式) as 变量名</span></span><br><span class="line">    content = f.read()</span><br><span class="line">    <span class="built_in">print</span>(content)</span><br><span class="line"><span class="comment"># with在执行完打开操作后自动关闭</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="基础认知"><a href="#基础认知" class="headerlink" title="基础认知"></a>基础认知</h2><p>编程中的函数大抵如此，描述了一种“输入-输出”的关系。</p>
+<h3 id="函数的概念"><a href="#函数的概念" class="headerlink" title="函数的概念"></a>函数的概念</h3><ul>
+<li><p>概念</p>
+<p>函数是可以重复执行的语句块，可以重复调用。</p>
+</li>
+<li><p>作用</p>
+<p>用于封装语句块，提高代码的重用性。</p>
+</li>
+<li><p>定位</p>
+<p>函数是面向过程编程的最小单位。</p>
+</li>
+</ul>
+<h2 id="函数的使用"><a href="#函数的使用" class="headerlink" title="函数的使用"></a>函数的使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># def function_name(parameters):</span></span><br><span class="line"><span class="comment">#     # 函数体</span></span><br><span class="line"><span class="comment">#     # 进行一些操作</span></span><br><span class="line"><span class="comment">#     return result  # 可选的返回值</span></span><br></pre></td></tr></table></figure>
+
+<p>说明</p>
+<ol>
+<li><strong>def</strong>：用于声明一个函数，告诉 Python 这是一个函数的定义。</li>
+<li><strong>function_name</strong>：函数名，一个有效的标识符，规则和变量名一致。</li>
+<li><strong>parameters</strong>：形参，可以是0 ~ n 个，参数之间用逗号分隔。</li>
+<li><strong>函数体</strong>：定义函数执行的具体操作。</li>
+<li><strong>return</strong>：指定函数的返回值，没有则返回None。</li>
+<li>return之后的代码不会执行。</li>
+</ol>
+<h2 id="函数编写及调用"><a href="#函数编写及调用" class="headerlink" title="函数编写及调用"></a>函数编写及调用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fn1</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fn1正在运行函数&quot;</span>)  <span class="comment"># 编写</span></span><br><span class="line">fn1()  <span class="comment"># 调用函数</span></span><br><span class="line">fn1()  <span class="comment"># 调用一次运行一次</span></span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn2</span>(<span class="params">x1, x2</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fn2正在运行函数&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> x1 + x2</span><br><span class="line"><span class="built_in">print</span>(fn2(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">fn2(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 函数调用是个表达式可以参与运算</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn2</span>(<span class="params">x1, x2</span>):</span><br><span class="line">    <span class="keyword">return</span> x1 + x2</span><br><span class="line"><span class="built_in">print</span>(fn2(<span class="number">2</span>, <span class="number">3</span>) + <span class="number">1</span>)</span><br><span class="line"><span class="comment"># a = fn2(2, 3) + 100</span></span><br><span class="line"><span class="comment"># print(a)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="调用传参"><a href="#调用传参" class="headerlink" title="调用传参"></a>调用传参</h3><h4 id="位置传参"><a href="#位置传参" class="headerlink" title="位置传参"></a>位置传参</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name, age</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>. You are <span class="subst">&#123;age&#125;</span> years old.&quot;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">num</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line">    <span class="built_in">print</span>(b)</span><br><span class="line"></span><br><span class="line">greet(<span class="string">&quot;Alice&quot;</span>, <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">num(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line">num(<span class="number">20</span>, <span class="number">10</span>)  <span class="comment"># 传入的实参与形参的顺序一一对应</span></span><br><span class="line"><span class="comment"># 参数顺序和数量和形参顺序和数量都要一致，多了少了都不可以</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="关键字传参"><a href="#关键字传参" class="headerlink" title="关键字传参"></a>关键字传参</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">num</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b)</span><br><span class="line">num(a=<span class="number">100</span>, b=<span class="number">300</span>)  <span class="comment"># 关键字传入参数不用可以不用按照顺序</span></span><br><span class="line">num(b=<span class="number">300</span>, a=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># num(1, b=300)  # 位置参数+关键字参数混用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># num(a=100, 10)  # 关键字参数+位置参数不能混用,报错：SyntaxError: positional argument follows keyword argument</span></span><br><span class="line"><span class="comment"># 总结：关键字参数必须放在位置参数后面</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fn3</span>(<span class="params">a, b=<span class="number">20</span>, c=<span class="number">30</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b, c)</span><br><span class="line"><span class="built_in">print</span>(fn3(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="可变位置参数"><a href="#可变位置参数" class="headerlink" title="可变位置参数"></a>可变位置参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_args</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line"></span><br><span class="line">print_args(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_args</span>(<span class="params">a, b, c, *args</span>):  <span class="comment"># 前三个参数是必要的，最后一个可填入可不填入，多余的保存元组，可使用函数转化为其他模式</span></span><br><span class="line">    <span class="built_in">print</span>(a, b, c)</span><br><span class="line">    <span class="built_in">print</span>(args)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">type</span>(args))</span><br><span class="line"></span><br><span class="line">print_args(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="可变关键字参数"><a href="#可变关键字参数" class="headerlink" title="可变关键字参数"></a>可变关键字参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_keyargs</span>(<span class="params">a, b, **keyargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b, keyargs)</span><br><span class="line">print_keyargs(<span class="number">1</span>, <span class="number">2</span>, c=<span class="number">3</span>, d=<span class="number">4</span>)</span><br><span class="line"><span class="comment"># 多余的参数返回为字典</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="可变关键字混用"><a href="#可变关键字混用" class="headerlink" title="可变关键字混用"></a>可变关键字混用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">a, b, *args, **kwargs</span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b, args, kwargs)</span><br><span class="line">func(<span class="number">10</span>, <span class="number">20</span>, <span class="number">20</span>, <span class="number">40</span>, x1=<span class="number">20</span>, x2=<span class="number">10</span>)</span><br><span class="line">func(<span class="number">10</span>, <span class="number">20</span>, x1=<span class="number">20</span>, x2=<span class="number">10</span>)</span><br><span class="line">func(<span class="number">10</span>, <span class="number">20</span>, <span class="number">20</span>, <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="传入解包"><a href="#传入解包" class="headerlink" title="传入解包"></a>传入解包</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fn4</span>(<span class="params">a, b, c</span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b, c)</span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">fn4(*x)  <span class="comment"># 等效于fn4(x[1], x[2], x[3])</span></span><br><span class="line"></span><br><span class="line">x4 = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">fn4(*x4)</span><br><span class="line"><span class="comment"># 只要是由下标的序列都可以</span></span><br><span class="line"></span><br><span class="line">x5 = <span class="built_in">range</span>(<span class="number">2</span>, <span class="number">5</span>)</span><br><span class="line">fn4(*x5)</span><br><span class="line"></span><br><span class="line"><span class="comment"># **解包字典</span></span><br><span class="line">S = &#123;<span class="string">&#x27;c&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;a&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">3</span>&#125;  <span class="comment"># 函数名必须一致</span></span><br><span class="line">fn4(**S)</span><br><span class="line"></span><br><span class="line">fn4(**&#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">10</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">20</span>, <span class="string">&#x27;c&#x27;</span>: <span class="number">30</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="可变与不可变参数"><a href="#可变与不可变参数" class="headerlink" title="可变与不可变参数"></a>可变与不可变参数</h2><h3 id="不可变类型"><a href="#不可变类型" class="headerlink" title="不可变类型"></a>不可变类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不可变类型有：int, float, str, tuple, frozenset</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>(<span class="params">a</span>):</span><br><span class="line">    a = <span class="number">20</span></span><br><span class="line">x = <span class="number">10</span></span><br><span class="line">fn(x)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<h3 id="可变类型"><a href="#可变类型" class="headerlink" title="可变类型"></a>可变类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可变类型有访问下标的数据容器</span></span><br><span class="line"><span class="comment"># 通过设计函数的时候可以看出来传入一个可以访问下标的数据容器函数运行的时候才不会报错</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>(<span class="params">arr</span>):</span><br><span class="line">    arr[<span class="number">0</span>] = <span class="number">100</span></span><br><span class="line">arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">fn(arr)</span><br><span class="line"><span class="built_in">print</span>(arr)</span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><h3 id="基本语法-1"><a href="#基本语法-1" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><strong>arguments</strong>：一个或多个输入参数，可以是位置参数或关键词参数。</li>
+<li><strong>expression</strong>：一个单一的表达式，它的值将作为返回值返回。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lambda arguments: expression</span></span><br><span class="line">add = <span class="keyword">lambda</span> x: x + <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">add2 = <span class="keyword">lambda</span> a, b: a + b</span><br><span class="line"><span class="built_in">print</span>(add2(<span class="number">1</span>, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">or_0 = <span class="keyword">lambda</span> x: <span class="string">f&quot;<span class="subst">&#123;x&#125;</span>是0&quot;</span> <span class="keyword">if</span> x == <span class="number">0</span> <span class="keyword">else</span> <span class="string">f&quot;<span class="subst">&#123;x&#125;</span>不是0&quot;</span></span><br><span class="line"><span class="built_in">print</span>(or_0(<span class="number">0</span>))</span><br><span class="line"><span class="built_in">print</span>(or_0(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数的作用"><a href="#函数的作用" class="headerlink" title="函数的作用"></a>函数的作用</h1><ol>
+<li>封装逻辑，功能代码，方便重复使用</li>
+<li>减少代码量，提高代码可读性</li>
+<li>官方函数，自定义函数，第三方函数</li>
+</ol>
+<h1 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h1><h2 id="官方内置函数"><a href="#官方内置函数" class="headerlink" title="官方内置函数"></a>官方内置函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># all函数：判断列表中是否有False，只要有一个为False，则返回False</span></span><br><span class="line">x = [<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">re1 = <span class="built_in">all</span>(x)</span><br><span class="line"><span class="built_in">print</span>(re1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># any函数：判断列表中是否有True，只要有一个为True，则返回True</span></span><br><span class="line">re2 = <span class="built_in">any</span>(x)</span><br><span class="line"><span class="built_in">print</span>(re2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sum函数：传入可迭代对象的总和</span></span><br><span class="line">re3 = <span class="built_in">sum</span>(x)</span><br><span class="line"><span class="built_in">print</span>(re3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sorted函数：对可迭代对象进行排序，并返回一个列表</span></span><br><span class="line">x = [<span class="number">0</span>, -<span class="number">2</span>, <span class="number">3</span>, -<span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">re4 = <span class="built_in">sorted</span>(x)  <span class="comment"># 默认升序</span></span><br><span class="line"><span class="built_in">print</span>(re4)</span><br><span class="line"></span><br><span class="line">re5 = <span class="built_in">sorted</span>(x, reverse=<span class="literal">True</span>)  <span class="comment"># 降序</span></span><br><span class="line"><span class="built_in">print</span>(re5)</span><br><span class="line"></span><br><span class="line">re6 = <span class="built_in">sorted</span>(x, key=<span class="keyword">lambda</span> x: x**<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(re6)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例</span></span><br><span class="line"><span class="comment"># 生成一个离80最近降序排序</span></span><br><span class="line">x = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">100</span>, <span class="number">10</span>)]</span><br><span class="line">re7 = <span class="built_in">sorted</span>(x, key=<span class="keyword">lambda</span> x: <span class="built_in">abs</span>(x - <span class="number">50</span>), reverse=<span class="literal">True</span>)</span><br><span class="line">re7 = <span class="built_in">sorted</span>(x[::-<span class="number">1</span>], key=<span class="keyword">lambda</span> x: <span class="built_in">abs</span>(x - <span class="number">50</span>), reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(re7)</span><br><span class="line"></span><br><span class="line"><span class="comment"># reversed函数：对可迭代对象进行倒序排列，并返回一个列表</span></span><br><span class="line"><span class="comment"># 随机取100个数字</span></span><br><span class="line">x = [<span class="number">3</span>, <span class="number">2</span>, <span class="number">10</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">7</span>]</span><br><span class="line">re8 = <span class="built_in">reversed</span>(x)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(re8))</span><br><span class="line"></span><br><span class="line"><span class="comment"># callable函数：判断一个对象是否可调用</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">callable</span>(<span class="built_in">print</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># zip函数：将多个可迭代对象组合成一个可迭代对象</span></span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">y = [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line">re9 = <span class="built_in">zip</span>(x, y)</span><br><span class="line"><span class="built_in">print</span>(re9, <span class="built_in">type</span>(re9))</span><br><span class="line"><span class="built_in">print</span>(re9, <span class="built_in">list</span>(re9))</span><br><span class="line"></span><br><span class="line"><span class="comment"># exec函数：执行代码</span></span><br><span class="line"><span class="built_in">exec</span>(<span class="string">&#x27;print(&quot;hello world&quot;)&#x27;</span>)</span><br><span class="line"><span class="built_in">exec</span>(<span class="string">&#x27;print(1 + 2)&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># eval函数：执行代码并返回结果</span></span><br><span class="line">re10 = <span class="built_in">eval</span>(<span class="string">&#x27;1 + 2&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(re10)</span><br><span class="line">re11 = <span class="built_in">eval</span>(<span class="string">&#x27;print(&quot;hello world&quot;)&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(re11)</span><br><span class="line"></span><br><span class="line"><span class="comment"># globals函数：返回全局变量的字典</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">globals</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment"># locals函数：返回局部变量的字典</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">locals</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment"># filter函数：对可迭代对象进行过滤，并返回一个迭代器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_even</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line">re12 = <span class="built_in">filter</span>(is_even, nums)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(re12))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例</span></span><br><span class="line"><span class="comment"># 从1到100随机取10个数字</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">numbers = random.sample(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">10000</span>), <span class="number">1000</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leap</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> x % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> x % <span class="number">100</span> != <span class="number">0</span> <span class="keyword">or</span> x % <span class="number">400</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">leap_years = <span class="built_in">filter</span>(leap, numbers)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(leap_years))</span><br></pre></td></tr></table></figure>
+
+<h2 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 递归函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fact</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> n * fact(n - <span class="number">1</span>)</span><br><span class="line">n = <span class="number">4</span></span><br><span class="line">fact(n)</span><br><span class="line"><span class="built_in">print</span>(fact(n))</span><br></pre></td></tr></table></figure>
+
+<h1 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span>  <span class="comment"># 全局变量：能在任何地方使用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>():</span><br><span class="line">    q = <span class="number">10</span>  <span class="comment"># 局部变量：只能在函数内部使用</span></span><br><span class="line">    <span class="built_in">print</span>(q)</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="comment"># print(q)  # 不能访问报错</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域修改变量的值"><a href="#作用域修改变量的值" class="headerlink" title="作用域修改变量的值"></a>作用域修改变量的值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用域修改变量的值</span></span><br><span class="line"><span class="comment"># 变量有作用域：使用变量的代码范围</span></span><br><span class="line"><span class="comment"># 使用：获取值，修改值</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">10</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>():</span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line">    a = <span class="number">20</span></span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局变量与局部变量"><a href="#全局变量与局部变量" class="headerlink" title="全局变量与局部变量"></a>全局变量与局部变量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">40</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>():</span><br><span class="line">    a = <span class="number">10</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fm</span>():</span><br><span class="line">        <span class="keyword">global</span> a</span><br><span class="line">        <span class="built_in">print</span>(a)</span><br><span class="line">        a = <span class="number">30</span></span><br><span class="line">    fm()</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=====================&quot;</span>)</span><br><span class="line">a = <span class="number">40</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>():</span><br><span class="line">    a = <span class="number">10</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fm</span>():</span><br><span class="line">        <span class="keyword">nonlocal</span> a</span><br><span class="line">        <span class="built_in">print</span>(a)</span><br><span class="line">        a = <span class="number">30</span></span><br><span class="line">    fm()</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数调用与作用域"><a href="#函数调用与作用域" class="headerlink" title="函数调用与作用域"></a>函数调用与作用域</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作用域-函数的调用</span></span><br><span class="line"><span class="comment"># 函数调用在A作用域中，函数定义在B作用域中，函数执行代码的时候再哪里</span></span><br><span class="line"><span class="comment"># 函数无论在那个作用域指定一定在它定义的作用域下执行代码</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">100</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fm</span>():</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fn</span>():</span><br><span class="line">    a = <span class="number">200</span></span><br><span class="line">    fm()</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数参数传递"><a href="#函数参数传递" class="headerlink" title="函数参数传递"></a>函数参数传递</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">a, b</span>):</span><br><span class="line">    a = <span class="number">20</span></span><br><span class="line">    b[<span class="number">0</span>] = <span class="number">20</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">10</span></span><br><span class="line">b = [<span class="number">10</span>, <span class="number">12</span>, <span class="number">30</span>]</span><br><span class="line">func(a, b)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 10</span></span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># [20]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="递归函数与闭包"><a href="#递归函数与闭包" class="headerlink" title="递归函数与闭包"></a>递归函数与闭包</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>(<span class="params">n=<span class="literal">None</span>, o=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(o)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;fun&quot;</span>: <span class="keyword">lambda</span> m: fun(m, n)&#125;</span><br><span class="line">a = fun(<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line">a[<span class="string">&quot;fun&quot;</span>](<span class="number">1</span>)</span><br><span class="line">a[<span class="string">&quot;fun&quot;</span>](<span class="number">2</span>)</span><br><span class="line">a[<span class="string">&quot;fun&quot;</span>](<span class="number">3</span>)</span><br><span class="line">b = fun(<span class="number">0</span>)[<span class="string">&quot;fun&quot;</span>](<span class="number">1</span>)[<span class="string">&quot;fun&quot;</span>](<span class="number">2</span>)[<span class="string">&quot;fun&quot;</span>](<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">c = fun(<span class="number">0</span>)[<span class="string">&quot;fun&quot;</span>](<span class="number">1</span>)</span><br><span class="line">c[<span class="string">&quot;fun&quot;</span>](<span class="number">2</span>)</span><br><span class="line">c[<span class="string">&quot;fun&quot;</span>](<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/03/19/day08%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%92%8C%E9%97%AD%E5%8C%85/">day08回调函数和闭包</a>
+            
+            
+            <a class="next" rel="next" href="/2025/03/19/day06%E8%AF%AD%E5%8F%A5%E4%B8%8E%E5%BE%AA%E7%8E%AF%E4%BD%93/">day06语句与循环体</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
