@@ -148,12 +148,269 @@
     style="width: 100%; height: 100%; object-fit: cover"
   >
     <source src="/video/7233x3100 (4).mp4" type="video/mp4" />
-    <!-- 如果浏览器不支持视频，可以显示后备图片 -->
     <img src="/img/fallback-image.jpg" alt="背景图片" />
   </video>
 </div>
 
-<div class="container profile-container">
+<!-- 右侧侧边栏容器 - 向中间调整 -->
+<div
+  class="right-sidebar"
+  style="float: right; width: 300px; margin-right: 200px"
+>
+  <!-- 时间组件模块 -->
+  <div
+    class="clock-module"
+    style="
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    "
+  >
+    <div class="clock-widget" style="text-align: center">
+      <div
+        id="digital-clock"
+        style="
+          font-family: 'Courier New', monospace;
+          font-size: 24px;
+          font-weight: bold;
+          letter-spacing: 2px;
+          color: #333;
+        "
+      >
+        00:00:00
+      </div>
+      <div
+        id="current-date"
+        style="font-size: 14px; margin-top: 5px; color: #666"
+      >
+        Loading...
+      </div>
+    </div>
+  </div>
+  <!-- 日历组件 -->
+  <div
+    class="calendar-module"
+    style="
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(238, 235, 235, 0.1);
+    "
+  >
+    <div id="calendar" style="text-align: center">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+        "
+      >
+        <button
+          id="prev-month"
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+          "
+        >
+          &lt;
+        </button>
+        <h3 id="calendar-month" style="margin: 0; font-size: 16px; color: #333">
+          2023年10月
+        </h3>
+        <button
+          id="next-month"
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+          "
+        >
+          &gt;
+        </button>
+      </div>
+      <table style="width: 100%; border-collapse: collapse">
+        <thead>
+          <tr>
+            <th style="padding: 5px; font-size: 12px; color: #666">日</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">一</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">二</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">三</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">四</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">五</th>
+            <th style="padding: 5px; font-size: 12px; color: #666">六</th>
+          </tr>
+        </thead>
+        <tbody id="calendar-body" style="font-size: 14px">
+          <!-- 日历内容由JS动态生成 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 最新文章模块 -->
+  <div
+    class="posts-module"
+    style="
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    "
+  >
+    <h3
+      style="
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+      "
+    >
+      最新文章
+    </h3>
+    <ul style="list-style: none; padding-left: 0; margin: 0">
+      
+      <li
+        style="
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px dashed #eee;
+        "
+      >
+        <a
+          href="/2025/03/30/%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%89%E6%96%B9%E5%BA%93/"
+          style="
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+          "
+          onmouseover="this.style.textDecoration='underline'"
+          onmouseout="this.style.textDecoration='none'"
+        >
+          常用的三方库
+        </a>
+        <span style="font-size: 12px; color: #999">
+          2025-03-30
+        </span>
+      </li>
+      
+      <li
+        style="
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px dashed #eee;
+        "
+      >
+        <a
+          href="/2025/03/19/day09%E8%A3%85%E9%A5%B0%E5%99%A8%E5%87%BD%E6%95%B0%E5%92%8C%E4%BE%8B%E9%A2%98%E8%A7%A3%E6%9E%90/"
+          style="
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+          "
+          onmouseover="this.style.textDecoration='underline'"
+          onmouseout="this.style.textDecoration='none'"
+        >
+          day09装饰器函数和例题解析
+        </a>
+        <span style="font-size: 12px; color: #999">
+          2025-03-19
+        </span>
+      </li>
+      
+      <li
+        style="
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px dashed #eee;
+        "
+      >
+        <a
+          href="/2025/03/19/day08%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%92%8C%E9%97%AD%E5%8C%85/"
+          style="
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+          "
+          onmouseover="this.style.textDecoration='underline'"
+          onmouseout="this.style.textDecoration='none'"
+        >
+          day08回调函数和闭包
+        </a>
+        <span style="font-size: 12px; color: #999">
+          2025-03-19
+        </span>
+      </li>
+      
+      <li
+        style="
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px dashed #eee;
+        "
+      >
+        <a
+          href="/2025/03/19/day07%E5%87%BD%E6%95%B0%E9%80%92%E5%BD%92%E4%BB%A5%E5%8F%8A%E5%B1%80%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%AD%89/"
+          style="
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+          "
+          onmouseover="this.style.textDecoration='underline'"
+          onmouseout="this.style.textDecoration='none'"
+        >
+          day07函数递归以及局部和全局变量等
+        </a>
+        <span style="font-size: 12px; color: #999">
+          2025-03-19
+        </span>
+      </li>
+      
+      <li
+        style="
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px dashed #eee;
+        "
+      >
+        <a
+          href="/2025/03/19/day06%E8%AF%AD%E5%8F%A5%E4%B8%8E%E5%BE%AA%E7%8E%AF%E4%BD%93/"
+          style="
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+          "
+          onmouseover="this.style.textDecoration='underline'"
+          onmouseout="this.style.textDecoration='none'"
+        >
+          day06语句与循环体
+        </a>
+        <span style="font-size: 12px; color: #999">
+          2025-03-19
+        </span>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<!-- 原有个人资料部分 -->
+<div
+  style="width: 100%; max-width: 1200px; padding: 20px; margin-bottom: 100px"
+>
+  <div class="container profile-container">
   <div class="intro">
     <div class="avatar">
       <a href="/archives"
@@ -207,7 +464,140 @@
     </div>
   </div>
 </div>
- 
+
+  <!-- 主内容 -->
+  <div class="right-sidebar">...</div>
+  <!-- 侧边栏 -->
+</div>
+
+<!-- 脚本部分 -->
+<script>
+  // 动态时钟功能
+  function updateClock() {
+    const now = new Date();
+
+    // 数字时钟
+    const timeStr = now.toLocaleTimeString("zh-CN", { hour12: false });
+    document.getElementById("digital-clock").textContent = timeStr;
+
+    // 日期显示
+    const dateOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    document.getElementById("current-date").textContent =
+      now.toLocaleDateString("zh-CN", dateOptions);
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock(); // 立即执行一次
+
+  // 日历功能
+  function generateCalendar(year, month) {
+    const calendarBody = document.getElementById("calendar-body");
+    const monthDisplay = document.getElementById("calendar-month");
+    const date = new Date(year, month);
+
+    // 设置月份显示
+    monthDisplay.textContent = `${year}年${month + 1}月`;
+
+    // 清空日历
+    calendarBody.innerHTML = "";
+
+    // 获取当月第一天是星期几（0-6，0代表星期日）
+    const firstDay = date.getDay();
+
+    // 获取当月天数
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // 获取上月天数
+    const daysInLastMonth = new Date(year, month, 0).getDate();
+
+    // 获取当月最后一天是星期几
+    date.setDate(daysInMonth);
+    const lastDay = date.getDay();
+
+    let day = 1;
+    let nextMonthDay = 1;
+
+    // 生成日历行
+    for (let i = 0; i < 6; i++) {
+      if (day > daysInMonth && i > 0) break;
+
+      const row = document.createElement("tr");
+
+      // 生成日历单元格
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement("td");
+        cell.style.padding = "5px";
+        cell.style.textAlign = "center";
+
+        if (i === 0 && j < firstDay) {
+          // 上个月的日期
+          cell.textContent = daysInLastMonth - (firstDay - j - 1);
+          cell.style.color = "#ccc";
+        } else if (day > daysInMonth) {
+          // 下个月的日期
+          cell.textContent = nextMonthDay++;
+          cell.style.color = "#ccc";
+        } else {
+          // 当月的日期
+          cell.textContent = day;
+          const today = new Date();
+          if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+          ) {
+            cell.style.fontWeight = "bold";
+            cell.style.color = "#ff6b6b";
+          }
+          day++;
+        }
+
+        row.appendChild(cell);
+      }
+
+      calendarBody.appendChild(row);
+    }
+  }
+
+  // 初始化日历
+  const currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  let currentMonth = currentDate.getMonth();
+
+  generateCalendar(currentYear, currentMonth);
+
+  // 上月/下月按钮事件
+  document.getElementById("prev-month").addEventListener("click", () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+    generateCalendar(currentYear, currentMonth);
+  });
+
+  document.getElementById("next-month").addEventListener("click", () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    generateCalendar(currentYear, currentMonth);
+  });
+
+  // 自定义背景颜色函数
+  function setModuleBgColor(moduleClass, color) {
+    document.querySelectorAll(moduleClass).forEach((el) => {
+      el.style.background = color;
+    });
+  }
+</script>
+
 
             </div>
             <footer id="footer" class="footer">
