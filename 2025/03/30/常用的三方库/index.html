@@ -1456,7 +1456,348 @@
 <h4 id="2-1-4创建一个画布用索引进行绘制"><a href="#2-1-4创建一个画布用索引进行绘制" class="headerlink" title="2.1.4创建一个画布用索引进行绘制"></a>2.1.4创建一个画布用索引进行绘制</h4><p> subplots创建多个绘图区域，子图区域不能超过数组下标</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def test5():#创建一个分区画布</span><br><span class="line">            x=np.linspace(-10,10,100)</span><br><span class="line">            y1=np.sin(x)</span><br><span class="line">            y2=np.cos(x)</span><br><span class="line">            y3=np.tan(x)</span><br><span class="line">            #subplots创建多个绘图区域</span><br><span class="line">            #子图区域不能超过数组下标</span><br><span class="line">            fig,axs=plt.subplots(2,3,figsize=(18,6))</span><br><span class="line">            axs[0,0].plot(x,y1,&#x27;r&#x27;,label=&#x27;sin&#x27;)</span><br><span class="line">            axs[0,0].legend()</span><br><span class="line">            axs[0,1].plot(x,y2,&#x27;y&#x27;,label=&#x27;cos&#x27;)</span><br><span class="line">            axs[0,1].legend()</span><br><span class="line">            axs[0,2].plot(x,y3,label=&#x27;tan&#x27;)</span><br><span class="line">            axs[0,2].legend()</span><br><span class="line">            axs[1,0].plot(x,y1,&#x27;r&#x27;,label=&#x27;sin&#x27;)</span><br><span class="line">            axs[1,0].legend()</span><br><span class="line">            axs[1,1].plot(x,y2,&#x27;y&#x27;,label=&#x27;cos&#x27;)</span><br><span class="line">            axs[1,1].legend()</span><br><span class="line">            axs[1,2].plot(x,y3,label=&#x27;tan&#x27;)</span><br><span class="line">            axs[1,2].legend()</span><br><span class="line">            plt.show()     </span><br><span class="line">            </span><br></pre></td></tr></table></figure>
 
-<p>输出：<img src="/img_mat%5Cway4.png" alt="way4"></p>
+<p>输出：<img src="/img_mat%5Cway4.png" alt="way4">   </p>
+<h2 id="3-其他图表绘制"><a href="#3-其他图表绘制" class="headerlink" title="3.其他图表绘制"></a>3.其他图表绘制</h2><h3 id="3-1柱状图"><a href="#3-1柱状图" class="headerlink" title="3.1柱状图"></a>3.1柱状图</h3><p>柱状图（Bar Chart）是一种常用的数据可视化工具，用于展示分类数据的分布情况。</p>
+<p><strong>语法</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax.bar(x, height, width=0.8, bottom=None, align=&#x27;center&#x27;, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>x: 柱状图的 X 轴位置。</li>
+<li>height: 柱状图的高度。</li>
+<li>width: 柱状图的宽度，默认为 0.8。</li>
+<li>bottom: 柱状图的底部位置，默认为 0。</li>
+<li>align: 柱状图的对齐方式，可以是 ‘center’（居中对齐）或 ‘edge’（边缘对齐）。</li>
+<li>**kwargs: 其他可选参数，用于定制柱状图的外观，如 color、edgecolor、linewidth 等。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">def bar():</span><br><span class="line">    x = [&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;]</span><br><span class="line">    y = [20,30,40,50]</span><br><span class="line">    plt.bar(x,y,width=0.5,align=&#x27;center&#x27;)</span><br><span class="line">    plt.show()</span><br><span class="line">def bar1():</span><br><span class="line">    x= [&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;]</span><br><span class="line">    y1= [20,30,40,50]</span><br><span class="line">    y2= [10,20,30,40]</span><br><span class="line">    plt.bar(x,y1,width=0.5,align=&#x27;center&#x27;,color=&#x27;red&#x27;,label=&#x27;y1&#x27;)</span><br><span class="line">    plt.bar(x,y2,width=0.5,align=&#x27;center&#x27;,color=&#x27;blue&#x27;,label=&#x27;y2&#x27;,bottom=y1)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.show()</span><br><span class="line">def bar2():</span><br><span class="line">            # 数据</span><br><span class="line">        categories = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]</span><br><span class="line">        values1 = [20, 35, 30, 25]</span><br><span class="line">        values2 = [15, 25, 20, 10]</span><br><span class="line"></span><br><span class="line">        # 创建图形和子图</span><br><span class="line">        fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">        # 计算柱状图的位置</span><br><span class="line">        x = np.arange(len(categories))</span><br><span class="line">        width = 0.35</span><br><span class="line"></span><br><span class="line">        # 绘制第一个数据集的柱状图</span><br><span class="line">        ax.bar(x - width/2, values1, width, color=&#x27;skyblue&#x27;, label=&#x27;Values 1&#x27;)</span><br><span class="line"></span><br><span class="line">        # 绘制第二个数据集的柱状图</span><br><span class="line">        ax.bar(x + width/2, values2, width, color=&#x27;lightgreen&#x27;, label=&#x27;Values 2&#x27;)</span><br><span class="line"></span><br><span class="line">        # 设置 X 轴标签</span><br><span class="line">        ax.set_xticks(x)</span><br><span class="line">        ax.set_xticklabels(categories)</span><br><span class="line"></span><br><span class="line">        # 设置标题和标签</span><br><span class="line">        ax.set_title(&#x27;Grouped Bar Chart&#x27;)</span><br><span class="line">        ax.set_xlabel(&#x27;Categories&#x27;)</span><br><span class="line">        ax.set_ylabel(&#x27;Values&#x27;)</span><br><span class="line"></span><br><span class="line">        # 添加图例</span><br><span class="line">        ax.legend()</span><br><span class="line"></span><br><span class="line">        # 显示图形</span><br><span class="line">        plt.show()</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    bar()</span><br><span class="line">    bar1()</span><br><span class="line">    bar2()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<table>
+<thead>
+<tr>
+<th><img src="/pymedia%5Cway5.png" alt="示例图片"></th>
+<th><img src="/pymedia%5Cway6.png" alt="示例图片"></th>
+<th><img src="/pymedia%5Cway7.png" alt="示例图片"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通柱状图bar()</td>
+<td>上下对比柱状图bar2()</td>
+<td>左右对比柱状图bar3()</td>
+</tr>
+</tbody></table>
+<h3 id="3-2直方图"><a href="#3-2直方图" class="headerlink" title="3.2直方图"></a>3.2直方图</h3><p>直方图（Histogram）是一种常用的数据可视化工具，用于展示数值数据的分布情况。</p>
+<p><strong>语法</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax.hist(x, bins=None, range=None, density=False, weights=None, cumulative=False, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>x: 数据数组。</li>
+<li>bins: 直方图的柱数，可以是整数或序列。</li>
+<li>range: 直方图的范围，格式为 (min, max)。</li>
+<li>density: 是否将直方图归一化，默认为 False。</li>
+<li>weights: 每个数据点的权重。</li>
+<li>cumulative: 是否绘制累积直方图，默认为 False。</li>
+<li>**kwargs: 其他可选参数，用于定制直方图的外观，如 color、edgecolor、linewidth 等。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">def hist():</span><br><span class="line">    x = np.random.randn(1000)</span><br><span class="line">    plt.hist(x, bins=100, color=&#x27;blue&#x27;, alpha=0.7)</span><br><span class="line">    plt.xlabel(&#x27;Value&#x27;)</span><br><span class="line">    plt.ylabel(&#x27;Frequency&#x27;)</span><br><span class="line">    plt.title(&#x27;Histogram of Random Numbers&#x27;)</span><br><span class="line">    plt.show()</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    hist()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p><img src="/pymedia%5Cway8.png" alt="示例图片"></p>
+<h3 id="3-3-饼状图"><a href="#3-3-饼状图" class="headerlink" title="3.3 饼状图"></a>3.3 饼状图</h3><p>饼图（Pie Chart）是一种常用的数据可视化工具，用于展示分类数据的占比情况。</p>
+<p><strong>语法</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax.pie(x, explode=None, labels=None, colors=None, autopct=None, shadow=False, startangle=0, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>x: 数据数组，表示每个扇区的占比。</li>
+<li>explode: 一个数组，表示每个扇区偏离圆心的距离，默认为 None。</li>
+<li>labels: 每个扇区的标签，默认为 None。</li>
+<li>colors: 每个扇区的颜色，默认为 None。</li>
+<li>autopct: 控制显示每个扇区的占比，可以是格式化字符串或函数，默认为 None。</li>
+<li>shadow: 是否显示阴影，默认为 False。</li>
+<li>startangle: 饼图的起始角度，默认为 0。</li>
+<li>**kwargs: 其他可选参数，用于定制饼图的外观。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def pie():</span><br><span class="line"></span><br><span class="line">    # 数据</span><br><span class="line">    labels = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]</span><br><span class="line">    sizes = [15, 30, 45, 10]</span><br><span class="line"></span><br><span class="line">    # 创建图形和子图</span><br><span class="line">    fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">    # 绘制饼图</span><br><span class="line">    ax.pie(sizes, labels=labels, autopct=&#x27;%1.1f%%&#x27;,shadow=True, startangle=90)</span><br><span class="line"></span><br><span class="line">    # 设置标题</span><br><span class="line">    ax.set_title(&#x27;Simple Pie Chart&#x27;)</span><br><span class="line"></span><br><span class="line">    # 显示图形</span><br><span class="line">    plt.show()</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    pie()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p><img src="/pymedia%5Cway9.png" alt="示例图片"></p>
+<h3 id="3-4散点图"><a href="#3-4散点图" class="headerlink" title="3.4散点图"></a>3.4散点图</h3><p>散点图（Scatter Plot）是一种常用的数据可视化工具，用于展示两个变量之间的关系。</p>
+<p><strong>语法</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax.scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None, alpha=None, linewidths=None, edgecolors=None, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>x: X 轴数据。</li>
+<li>y: Y 轴数据。</li>
+<li>s: 点的大小，可以是标量或数组。</li>
+<li>c: 点的颜色，可以是标量、数组或颜色列表。</li>
+<li>marker: 点的形状，默认为 ‘o’（圆圈）。</li>
+<li>cmap: 颜色映射，用于将颜色映射到数据。</li>
+<li>norm: 归一化对象，用于将数据映射到颜色映射。</li>
+<li>vmin, vmax: 颜色映射的最小值和最大值。</li>
+<li>alpha: 点的透明度，取值范围为 0 到 1。</li>
+<li>linewidths: 点的边框宽度。</li>
+<li>edgecolors: 点的边框颜色。</li>
+<li>**kwargs: 其他可选参数，用于定制散点图的外观。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def scatter():</span><br><span class="line">    x=np.linspace(0,10,10)</span><br><span class="line">    y=np.sin(x)</span><br><span class="line">    plt.scatter(x,y,marker=&#x27;&gt;&#x27;,cmap=&#x27;rainbow&#x27;)</span><br><span class="line">    plt.show()</span><br><span class="line">if __name__==&#x27;__main__&#x27;:</span><br><span class="line">    scatter()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p><img src="/pymedia%5Cway10.png" alt="示例图片"></p>
+<h3 id="3-5其他符号说明"><a href="#3-5其他符号说明" class="headerlink" title="3.5其他符号说明"></a>3.5其他符号说明</h3><p>marker常用参数</p>
+<table>
+<thead>
+<tr>
+<th align="center">Marker</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">o</td>
+<td align="center">圆圈</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">正方形</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">菱形</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">上三角形</td>
+</tr>
+<tr>
+<td align="center">v</td>
+<td align="center">下三角形</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="center">右三角形</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">左三角形</td>
+</tr>
+<tr>
+<td align="center">p</td>
+<td align="center">五边形</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">星形</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="center">加号</td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">叉号</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">点</td>
+</tr>
+<tr>
+<td align="center">,</td>
+<td align="center">像素</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">三叉戟下</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">三叉戟上</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">三叉戟右</td>
+</tr>
+<tr>
+<td align="center">h</td>
+<td align="center">六边形1</td>
+</tr>
+<tr>
+<td align="center">H</td>
+<td align="center">六边形2</td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">小菱形</td>
+</tr>
+<tr>
+<td align="center">_</td>
+<td align="center">横线</td>
+</tr>
+</tbody></table>
+<h2 id="4-图片读取"><a href="#4-图片读取" class="headerlink" title="4.图片读取"></a>4.图片读取</h2><p>plt.imread 是 Matplotlib 库中的一个函数，用于读取图像文件并将其转换为 NumPy 数组。这个函数非常方便，可以轻松地将图像加载到 Python 中进行处理或显示。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li><code>fname</code>: 图像文件的路径（字符串）。</li>
+<li><code>format</code>: 图像格式（可选）。如果未指定，<code>imread</code> 会根据文件扩展名自动推断格式。</li>
+</ul>
+<p><strong>返回值</strong></p>
+<ul>
+<li>返回一个 NumPy 数组，表示图像的像素数据。数组的形状取决于图像的格式：<ul>
+<li>对于灰度图像，返回一个二维数组 <code>(height, width)</code>。</li>
+<li>对于彩色图像，返回一个三维数组 <code>(height, width, channels)</code>，其中 <code>channels</code> 通常是 3（RGB）或 4（RGBA）</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">dirpath = os.path.dirname(__file__)</span><br><span class="line">print(dirpath)</span><br><span class="line">filepath = os.path.relpath(os.path.join(dirpath, &#x27;Apple (581).jpg&#x27;))#作用是获取当前文件所在的目录</span><br><span class="line">print(filepath)</span><br><span class="line">fig,axs=plt.subplots(1,4,figsize=(18,6))</span><br><span class="line">img = plt.imread(filepath)</span><br><span class="line">#图片的维度为什么是三维的？ 因为图片的维度是RGB</span><br><span class="line">axs[0].imshow(img)</span><br><span class="line">axs[0].set_title(&quot;原图&quot;)</span><br><span class="line">img1 = np.transpose(img, (2, 0, 1))</span><br><span class="line">print(len(img1))</span><br><span class="line">i=1</span><br><span class="line">for channel in range(len(img1)):</span><br><span class="line">    axs[channel+1].imshow(img1[channel])</span><br><span class="line">    axs[channel+1].set_title(f&quot;对比图&#123;i&#125;&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p><img src="/pymedia%5Cway11.png" alt="img"></p>
+<h1 id="三、pandas"><a href="#三、pandas" class="headerlink" title="三、pandas"></a>三、pandas</h1><h2 id="1-Series"><a href="#1-Series" class="headerlink" title="1.Series"></a>1.Series</h2><p>Pandas Series 类似表格中等一个列（column），类似于一维数组，可以保存任何数据类型 Series 由索引（index）和列组成，函数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">pandas.Series(data,index,dtype)</td>
+<td>data：一组数据（ndarray 类型）<br/>index：数据索引标签，如果不指定，默认从 0 开始<br/>dtype：数据类型，默认会自己判断<br/>copy：表示对 data 进行拷贝，默认为 False</td>
+</tr>
+</tbody></table>
+<p>0、1、2 表示行索引</p>
+<ul>
+<li>李四、王五、张三表示数据值</li>
+<li>dtype 表示数据值的类型</li>
+</ul>
+<h3 id="1-1创建-Series-对象的方式"><a href="#1-1创建-Series-对象的方式" class="headerlink" title="1 .1创建 Series 对象的方式"></a>1 .1创建 Series 对象的方式</h3><h4 id="1-1-1创建-Series-空对象"><a href="#1-1-1创建-Series-空对象" class="headerlink" title="1.1.1创建 Series 空对象"></a>1.1.1创建 Series 空对象</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">#Series 空对象</span><br><span class="line">def one():</span><br><span class="line">    series_one = pd.Series(dtype=&#x27;f8&#x27;)</span><br><span class="line">    print(&#x27;空对象：\n&#x27;, series_one)</span><br><span class="line">one()</span><br></pre></td></tr></table></figure>
+
+<p>输出一个空对象：</p>
+<p>空对象：<br> Series([], dtype: float64)</p>
+<h4 id="1-1-2创建一个一维数组"><a href="#1-1-2创建一个一维数组" class="headerlink" title="1.1.2创建一个一维数组"></a>1.1.2创建一个一维数组</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">series_one = pd.Series([1,2,3,4,5], dtype=&#x27;f8&#x27;)#参数：pf.Series(data, index, dtype, name, copy, fastpath)所有参数的中文解释是：</span><br><span class="line">                                                      # 1.data：数据，2.index：索引，3.dtype：数据类型，4.name：名称，5.copy：是否复制，6.fastpath：是否快速路径。</span><br><span class="line">print(&#x27;Series对象：\n&#x27;, series_one)</span><br><span class="line">#取一行数据：</span><br><span class="line">print(&#x27;取一行数据：\n&#x27;, series_one[0])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Series对象：</span><br><span class="line"> 0    1.0</span><br><span class="line">1    2.0</span><br><span class="line">2    3.0</span><br><span class="line">3    4.0</span><br><span class="line">4    5.0</span><br><span class="line">dtype: float64</span><br><span class="line">取一行数据：</span><br><span class="line"> 1.0</span><br><span class="line">0    1.0</span><br><span class="line">1    2.0</span><br><span class="line">2    3.0</span><br><span class="line">3    4.0</span><br><span class="line">4    5.0</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2遍历Series"><a href="#1-2遍历Series" class="headerlink" title="1.2遍历Series"></a>1.2遍历Series</h3><h4 id="1-2-1访问标签"><a href="#1-2-1访问标签" class="headerlink" title="1.2.1访问标签"></a>1.2.1访问标签</h4><p>对象名.index</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">a=&#123;&#x27;name&#x27;:&#x27;tom&#x27;,&#x27;age&#x27;:18,&#x27;sex&#x27;:&#x27;male&#x27;&#125;</span><br><span class="line">Series1=pd.Series(a)</span><br><span class="line">print(Series1)</span><br><span class="line"></span><br><span class="line">for i in Series1.index:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name     tom</span><br><span class="line">age       18</span><br><span class="line">sex     male</span><br><span class="line">dtype: object</span><br><span class="line">name</span><br><span class="line">age</span><br><span class="line">sex</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2访问值"><a href="#1-2-2访问值" class="headerlink" title="1.2.2访问值"></a>1.2.2访问值</h4><p>将print(i)改成对象变量名[i]即可输出对应值</p>
+<h3 id="1-3切片索引"><a href="#1-3切片索引" class="headerlink" title="1.3切片索引"></a>1.3切片索引</h3><p>s[‘a’]：输出标签为a的值</p>
+<p>s[‘a’:’c’]：输出标签为a到c的值，两边都取</p>
+<p>print(s[::-1])：跌倒列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s=pd.Series([1,2,3,4,5,6,7,8,9,10],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;,&#x27;f&#x27;,&#x27;g&#x27;,&#x27;h&#x27;,&#x27;i&#x27;,&#x27;j&#x27;])</span><br><span class="line">print(s[&#x27;a&#x27;])#索引</span><br><span class="line">print(s[&#x27;a&#x27;:&#x27;c&#x27;])#切片</span><br><span class="line">print(s[::-1])#倒序</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">a    1</span><br><span class="line">b    2</span><br><span class="line">c    3</span><br><span class="line">dtype: int64</span><br><span class="line">j    10</span><br><span class="line">i     9</span><br><span class="line">h     8</span><br><span class="line">g     7</span><br><span class="line">f     6</span><br><span class="line">e     5</span><br><span class="line">d     4</span><br><span class="line">c     3</span><br><span class="line">b     2</span><br><span class="line">a     1</span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-DataFrame"><a href="#2-DataFrame" class="headerlink" title="2.DataFrame"></a>2.DataFrame</h2><ul>
+<li><p>DataFrame 一个表格型的数据结构，既有行标签（index），又有列标签（columns），它也被称异构数据表，所谓异构，指的是表格中每列的数据类型可以不同，比如可以是字符串、整型或者浮点型等。其结构图示意图，如下所示：</p>
+<img src="./media/image-20241016171536818.png"/>
+</li>
+<li><p>DataFrame 的每一行或列数据都可以看成一个 Series 结构，只不过，DataFrame 为这些行中每个数据值增加了一个列或行标签</p>
+</li>
+<li><p>同 Series 一样，DataFrame 自带行标签索引，默认为“隐式索引”即从 0 开始依次递增，行标签与 DataFrame 中的数据项一一对应当然你也可以用“显式索引”的方式来设置行标签</p>
+</li>
+<li><p>DataFrame 构造方法如下：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">pd.DataFrame( data, index, columns, dtype, copy)</td>
+<td>data：一组数据（ndarray、series, map, lists, dict 等类型）<br/>index：索引值，或者可以称为行标签<br/>columns：列标签，默认为 RangeIndex （0, 1, 2, …, n）<br/>dtype：数据类型<br/>copy：默认为 False，表示复制数据 data</td>
+</tr>
+</tbody></table>
+<p><strong>Dataframe和Series的关系：</strong></p>
+<p>在 Pandas 中，<code>DataFrame</code> 的每一行或每一列都是一个 <code>Series</code>。</p>
+<p><code>DataFrame</code> 是一个二维表格，可以看作是由多个 <code>Series</code> 组成的。</p>
+<p><em><strong>在有数据传递需求的时候，尽量使用双引号</strong></em></p>
+<h3 id="2-1创建DataFrame"><a href="#2-1创建DataFrame" class="headerlink" title="2.1创建DataFrame"></a>2.1创建DataFrame</h3><h4 id="2-1-1Series创建"><a href="#2-1-1Series创建" class="headerlink" title="2.1.1Series创建"></a>2.1.1Series创建</h4><p><em><strong>index和data需要前后匹配</strong></em></p>
+<p>在某一列缺少值时会利用NAN来填补</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dict=&#123;&#x27;name&#x27;:pd.Series([&#x27;John&#x27;,&#x27;Anna&#x27;,&#x27;Peter&#x27;,&#x27;Linda&#x27;],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;]),</span><br><span class="line">      &#x27;age&#x27;:pd.Series([24,27,30,29],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;]),</span><br><span class="line">      &#x27;address&#x27;:pd.Series([&#x27;New York&#x27;,&#x27;Paris&#x27;,&#x27;Berlin&#x27;],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;])</span><br><span class="line">&#125;</span><br><span class="line">print(pd.DataFrame(dict))</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name  age   address</span><br><span class="line">a   John   24  New York</span><br><span class="line">b   Anna   27     Paris</span><br><span class="line">c  Peter   30    Berlin</span><br><span class="line">d  Linda   29       NaN</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-2字典创建"><a href="#2-1-2字典创建" class="headerlink" title="2.1.2字典创建"></a>2.1.2字典创建</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#也可直接写字典,但是如果不匹配上面的字典,会报错</span><br><span class="line">dict=&#123;</span><br><span class="line">    &#x27;name&#x27;:[&#x27;zhangsan&#x27;,&#x27;tom&#x27;],</span><br><span class="line">    &#x27;age&#x27;:[18,17],</span><br><span class="line">    &#x27;sex&#x27;:[&#x27;man&#x27;,&#x27;male&#x27;]</span><br><span class="line">&#125;</span><br><span class="line">print(pd.DataFrame(dict))</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name  age   sex</span><br><span class="line">0  zhangsan   18   man</span><br><span class="line">1       tom   17  male</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2索引，调用列索引"><a href="#2-2索引，调用列索引" class="headerlink" title="2.2索引，调用列索引"></a>2.2索引，调用列索引</h3><p>如需调用整行需要依赖其他函数 df.loc()等</p>
+<p>不能直接调用行索引</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df=pd.DataFrame(dict1)</span><br></pre></td></tr></table></figure>
+
+<p>2.2.1获取一列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data=&#123;&#x27;one&#x27;:pd.Series([1,2,3,4,5],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;two&#x27;:pd.Series([6,7,8,9,10],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;three&#x27;:pd.Series([11,12,13,14,15],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;four&#x27;:pd.Series([16,17,18,19,20],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;])#行标签)</span><br><span class="line">&#125;</span><br><span class="line">df_1=pd.DataFrame(data)</span><br><span class="line">print(df_1)</span><br><span class="line">print(df_1[&#x27;one&#x27;])#获取一列</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">one  two  three  four</span><br><span class="line">a    1    6     11    16</span><br><span class="line">b    2    7     12    17</span><br><span class="line">c    3    8     13    18</span><br><span class="line">d    4    9     14    19</span><br><span class="line">e    5   10     15    20</span><br><span class="line">a    1</span><br><span class="line">b    2</span><br><span class="line">c    3</span><br><span class="line">d    4</span><br><span class="line">e    5</span><br><span class="line">Name: one, dtype: int64</span><br></pre></td></tr></table></figure>
+
+<p>2.2.2获取某列某行的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#承接上一个函数</span></span><br><span class="line"><span class="built_in">print</span>(df_1[<span class="string">&#x27;one&#x27;</span>][<span class="string">&#x27;b&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(df_1[<span class="string">&#x27;one&#x27;</span>][<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3修改列表"><a href="#2-3修改列表" class="headerlink" title="2.3修改列表"></a>2.3修改列表</h3><h4 id="2-3-1链式调用"><a href="#2-3-1链式调用" class="headerlink" title="2.3.1链式调用"></a>2.3.1链式调用</h4><p>assign()用法：</p>
+<p>- assign()：参数是赋值语句，等号左边是要添加的列名，右边是要乔加的值</p>
+<p>- assign()是链式调用</p>
+<p>- 链式编程：方法返回的数据类型是对象本身，这种方式就是链式编程，连续调用链式编程的方法</p>
+<p>原表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    one  two  three  four</span><br><span class="line">a    1    6     11    16</span><br><span class="line">b    2    7     12    17</span><br><span class="line">c    3    8     13    18</span><br><span class="line">d    4    9     14    19</span><br><span class="line">e    5   10     15    20</span><br></pre></td></tr></table></figure>
+
+<p>使用函数后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_2=df_2.assign(six=[1,2,3,4,5]).assign(five=[1,2,3,4,5]).assign(seven=[1,2,3,4,5])# Adding two columns</span><br><span class="line">print(df_2)#按列插入制定列格式为：df.assign(列名=[值1,值2,值3,值4,值5])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    one  two  three  four  six  five  seven</span><br><span class="line">a    1    6     11    16    1     1      1</span><br><span class="line">b    2    7     12    17    2     2      2</span><br><span class="line">c    3    8     13    18    3     3      3</span><br><span class="line">d    4    9     14    19    4     4      4</span><br><span class="line">e    5   10     15    20    5     5      5</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-2insert-指定位置插入函数"><a href="#2-3-2insert-指定位置插入函数" class="headerlink" title="2.3.2insert()指定位置插入函数"></a>2.3.2insert()指定位置插入函数</h4><p>insert()的用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表变量名.insert(index, object)</span><br></pre></td></tr></table></figure>
+
+<p>index：插入的位置，从0开始；</p>
+<p>object：要插入的对象。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">df=&#123;</span><br><span class="line">    &quot;A&quot;:[1,2,3],</span><br><span class="line">    &quot;B&quot;:[4,5,6],</span><br><span class="line">    &quot;C&quot;:[7,8,9]</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(df)</span><br><span class="line">print(df)</span><br><span class="line">df.insert(1,&quot;D&quot;,[i for i in range(1,4)])</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   A  B  C</span><br><span class="line">0  1  4  7 </span><br><span class="line">1  2  5  8</span><br><span class="line">2  3  6  9</span><br><span class="line">   A  D  B  C</span><br><span class="line">0  1  1  4  7</span><br><span class="line">1  2  2  5  8</span><br><span class="line">2  3  3  6  9</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-3修改列值"><a href="#2-3-3修改列值" class="headerlink" title="2.3.3修改列值"></a>2.3.3修改列值</h4><h5 id="2-3-3-1直接修改"><a href="#2-3-3-1直接修改" class="headerlink" title="2.3.3.1直接修改"></a>2.3.3.1直接修改</h5><p>变量名.columns&#x3D;[改后变量名]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 修改列值</span><br><span class="line">data=&#123;</span><br><span class="line">    &quot;A&quot;:[1,2,3,4],</span><br><span class="line">    &quot;B&quot;:[5,6,7,8],</span><br><span class="line">    &quot;C&quot;:[9,10,11,12]</span><br><span class="line">&#125;</span><br><span class="line">data=pd.DataFrame(data)</span><br><span class="line">data[&quot;A&quot;]=data[&quot;A&quot;]+100</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>原表输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A  B   C</span><br><span class="line">0  101  5   9</span><br><span class="line">1  102  6  10</span><br><span class="line">2  103  7  11</span><br><span class="line">3  104  8  12</span><br></pre></td></tr></table></figure>
+
+<p>修改后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改列名</span><br><span class="line"># 提取列名直接修改</span><br><span class="line">data.columns = [&#x27;C&#x27;,&#x27;D&#x27;,&quot;E&quot;]</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    C  D   E</span><br><span class="line">0  101  5   9</span><br><span class="line">1  102  6  10</span><br><span class="line">2  103  7  11</span><br><span class="line">3  104  8  12</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-3-2rename函数修改"><a href="#2-3-3-2rename函数修改" class="headerlink" title="2.3.3.2rename函数修改"></a>2.3.3.2rename函数修改</h5><p>变量名.rename(cloumns&#x3D;{原名：改后名})</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 利用rename函数进行修改</span><br><span class="line">data.rename(columns=&#123;&#x27;C&#x27;:&#x27;cao&#x27;,&#x27;D&#x27;:&#x27;dao&#x27;,&#x27;E&#x27;:&#x27;eao&#x27;&#125;,inplace=True)</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">float64</span><br><span class="line">   cao  dao  eao</span><br><span class="line">0  5.0    5    9</span><br><span class="line">1  6.0    6   10</span><br><span class="line">2  7.0    7   11</span><br><span class="line">3  8.0    8   12</span><br></pre></td></tr></table></figure>
+
 
         </div>
 
