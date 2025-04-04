@@ -127,9 +127,9 @@
 </script>
             <div class="main">
                 
-<!-- 视频背景容器 -->
+<!-- 视频背景容器 - 添加淡入动画 -->
 <div
-  class="video-background"
+  class="video-background animate__animated animate__fadeIn"
   style="
     position: fixed;
     top: 0;
@@ -138,6 +138,9 @@
     height: 100%;
     z-index: -1;
     overflow: hidden;
+    opacity: 0;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
   "
 >
   <video
@@ -152,31 +155,37 @@
   </video>
 </div>
 
-<!-- 右侧悬浮侧边栏容器 -->
+<!-- 右侧悬浮侧边栏容器 - 添加滑入动画 -->
 <div
-  class="right-sidebar"
+  class="right-sidebar animate__animated animate__fadeInRight"
   style="
     position: fixed;
-    right: 50px;
-    top: 50%;
+    right: 20px;
+    top: 10%;
     transform: translateY(-50%);
     width: 250px;
     z-index: 100;
+    opacity: 0;
+    animation-delay: 0.8s;
+    animation-fill-mode: forwards;
   "
 >
-  <!-- 时间组件模块 -->
+  <!-- 时间组件模块 - 添加悬停动画和点击效果 -->
   <div
-    class="clock-module"
+    class="clock-module module-card"
     style="
-      background: white;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
       padding: 15px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      cursor: pointer;
+      backdrop-filter: blur(5px);
     "
-    onmouseover="this.style.transform='translateY(-5px)'"
-    onmouseout="this.style.transform='none'"
+    onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 12px 20px rgba(0, 0, 0, 0.15)'"
+    onmouseout="this.style.transform='none'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.1)'"
+    onclick="this.classList.toggle('animate__swing')"
   >
     <div class="clock-widget" style="text-align: center">
       <div
@@ -187,31 +196,39 @@
           font-weight: bold;
           letter-spacing: 2px;
           color: #333;
+          transition: all 0.3s ease;
         "
       >
         00:00:00
       </div>
       <div
         id="current-date"
-        style="font-size: 14px; margin-top: 5px; color: #666"
+        style="
+          font-size: 14px;
+          margin-top: 5px;
+          color: #666;
+          transition: all 0.3s ease;
+        "
       >
         Loading...
       </div>
     </div>
   </div>
-  <!-- 日历组件 -->
+
+  <!-- 日历组件 - 添加更流畅的月份切换动画 -->
   <div
-    class="calendar-module"
+    class="calendar-module module-card"
     style="
-      background: white;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
       padding: 15px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      backdrop-filter: blur(5px);
     "
-    onmouseover="this.style.transform='translateY(-5px)'"
-    onmouseout="this.style.transform='none'"
+    onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 12px 20px rgba(0, 0, 0, 0.15)'"
+    onmouseout="this.style.transform='none'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.1)'"
   >
     <div id="calendar" style="text-align: center">
       <div
@@ -224,26 +241,48 @@
       >
         <button
           id="prev-month"
+          class="month-nav-btn"
           style="
             background: none;
             border: none;
             cursor: pointer;
             font-size: 16px;
+            color: #555;
+            transition: all 0.2s ease;
+            padding: 5px 10px;
+            border-radius: 50%;
           "
+          onmouseover="this.style.color='#333'; this.style.background='rgba(0,0,0,0.05)'"
+          onmouseout="this.style.color='#555'; this.style.background='transparent'"
         >
           &lt;
         </button>
-        <h3 id="calendar-month" style="margin: 0; font-size: 16px; color: #333">
+        <h3
+          id="calendar-month"
+          style="
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+            transition: all 0.3s ease;
+          "
+        >
           2023年10月
         </h3>
         <button
           id="next-month"
+          class="month-nav-btn"
           style="
             background: none;
             border: none;
             cursor: pointer;
             font-size: 16px;
+            color: #555;
+            transition: all 0.2s ease;
+            padding: 5px 10px;
+            border-radius: 50%;
           "
+          onmouseover="this.style.color='#333'; this.style.background='rgba(0,0,0,0.05)'"
+          onmouseout="this.style.color='#555'; this.style.background='transparent'"
         >
           &gt;
         </button>
@@ -251,13 +290,13 @@
       <table style="width: 100%; border-collapse: collapse">
         <thead>
           <tr>
-            <th style="padding: 5px; font-size: 12px; color: #666">日</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">一</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">二</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">三</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">四</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">五</th>
-            <th style="padding: 5px; font-size: 12px; color: #666">六</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">日</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">一</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">二</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">三</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">四</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">五</th>
+            <th style="padding: 8px; font-size: 12px; color: #666">六</th>
           </tr>
         </thead>
         <tbody id="calendar-body" style="font-size: 14px">
@@ -267,18 +306,19 @@
     </div>
   </div>
 
-  <!-- 最新文章模块 -->
+  <!-- 最新文章模块 - 添加列表项动画 -->
   <div
-    class="posts-module"
+    class="posts-module module-card"
     style="
-      background: white;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
       padding: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      backdrop-filter: blur(5px);
     "
-    onmouseover="this.style.transform='translateY(-5px)'"
-    onmouseout="this.style.transform='none'"
+    onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 12px 20px rgba(0, 0, 0, 0.15)'"
+    onmouseout="this.style.transform='none'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.1)'"
   >
     <h3
       style="
@@ -287,6 +327,7 @@
         color: #333;
         border-bottom: 1px solid #eee;
         padding-bottom: 8px;
+        font-size: 18px;
       "
     >
       最新文章
@@ -294,10 +335,14 @@
     <ul style="list-style: none; padding-left: 0; margin: 0">
       
       <li
+        class="post-item animate__animated"
         style="
           margin-bottom: 10px;
           padding-bottom: 10px;
           border-bottom: 1px dashed #eee;
+          opacity: 0;
+          animation: fadeInUp 0.5s ease-out forwards;
+          animation-delay: 1.2s;
         "
       >
         <a
@@ -307,22 +352,30 @@
             text-decoration: none;
             font-size: 14px;
             display: block;
+            transition: all 0.2s ease;
           "
-          onmouseover="this.style.textDecoration='underline'"
-          onmouseout="this.style.textDecoration='none'"
+          onmouseover="this.style.textDecoration='underline'; this.style.color='#004499'"
+          onmouseout="this.style.textDecoration='none'; this.style.color='#0066cc'"
+          class="post-link"
         >
           常用的三方库
         </a>
-        <span style="font-size: 12px; color: #999">
+        <span
+          style="font-size: 12px; color: #999; display: block; margin-top: 3px"
+        >
           2025-03-30
         </span>
       </li>
       
       <li
+        class="post-item animate__animated"
         style="
           margin-bottom: 10px;
           padding-bottom: 10px;
           border-bottom: 1px dashed #eee;
+          opacity: 0;
+          animation: fadeInUp 0.5s ease-out forwards;
+          animation-delay: 1.3s;
         "
       >
         <a
@@ -332,22 +385,30 @@
             text-decoration: none;
             font-size: 14px;
             display: block;
+            transition: all 0.2s ease;
           "
-          onmouseover="this.style.textDecoration='underline'"
-          onmouseout="this.style.textDecoration='none'"
+          onmouseover="this.style.textDecoration='underline'; this.style.color='#004499'"
+          onmouseout="this.style.textDecoration='none'; this.style.color='#0066cc'"
+          class="post-link"
         >
           day09装饰器函数和例题解析
         </a>
-        <span style="font-size: 12px; color: #999">
+        <span
+          style="font-size: 12px; color: #999; display: block; margin-top: 3px"
+        >
           2025-03-19
         </span>
       </li>
       
       <li
+        class="post-item animate__animated"
         style="
           margin-bottom: 10px;
           padding-bottom: 10px;
           border-bottom: 1px dashed #eee;
+          opacity: 0;
+          animation: fadeInUp 0.5s ease-out forwards;
+          animation-delay: 1.4s;
         "
       >
         <a
@@ -357,22 +418,30 @@
             text-decoration: none;
             font-size: 14px;
             display: block;
+            transition: all 0.2s ease;
           "
-          onmouseover="this.style.textDecoration='underline'"
-          onmouseout="this.style.textDecoration='none'"
+          onmouseover="this.style.textDecoration='underline'; this.style.color='#004499'"
+          onmouseout="this.style.textDecoration='none'; this.style.color='#0066cc'"
+          class="post-link"
         >
           day08回调函数和闭包
         </a>
-        <span style="font-size: 12px; color: #999">
+        <span
+          style="font-size: 12px; color: #999; display: block; margin-top: 3px"
+        >
           2025-03-19
         </span>
       </li>
       
       <li
+        class="post-item animate__animated"
         style="
           margin-bottom: 10px;
           padding-bottom: 10px;
           border-bottom: 1px dashed #eee;
+          opacity: 0;
+          animation: fadeInUp 0.5s ease-out forwards;
+          animation-delay: 1.5s;
         "
       >
         <a
@@ -382,22 +451,30 @@
             text-decoration: none;
             font-size: 14px;
             display: block;
+            transition: all 0.2s ease;
           "
-          onmouseover="this.style.textDecoration='underline'"
-          onmouseout="this.style.textDecoration='none'"
+          onmouseover="this.style.textDecoration='underline'; this.style.color='#004499'"
+          onmouseout="this.style.textDecoration='none'; this.style.color='#0066cc'"
+          class="post-link"
         >
           day07函数递归以及局部和全局变量等
         </a>
-        <span style="font-size: 12px; color: #999">
+        <span
+          style="font-size: 12px; color: #999; display: block; margin-top: 3px"
+        >
           2025-03-19
         </span>
       </li>
       
       <li
+        class="post-item animate__animated"
         style="
           margin-bottom: 10px;
           padding-bottom: 10px;
           border-bottom: 1px dashed #eee;
+          opacity: 0;
+          animation: fadeInUp 0.5s ease-out forwards;
+          animation-delay: 1.6s;
         "
       >
         <a
@@ -407,13 +484,17 @@
             text-decoration: none;
             font-size: 14px;
             display: block;
+            transition: all 0.2s ease;
           "
-          onmouseover="this.style.textDecoration='underline'"
-          onmouseout="this.style.textDecoration='none'"
+          onmouseover="this.style.textDecoration='underline'; this.style.color='#004499'"
+          onmouseout="this.style.textDecoration='none'; this.style.color='#0066cc'"
+          class="post-link"
         >
           day06语句与循环体
         </a>
-        <span style="font-size: 12px; color: #999">
+        <span
+          style="font-size: 12px; color: #999; display: block; margin-top: 3px"
+        >
           2025-03-19
         </span>
       </li>
@@ -481,13 +562,44 @@
 
 <!-- 脚本部分 -->
 <script>
-  // 动态时钟功能
+  // 添加Animate.css动画定义（如果未引入CDN）
+  const style = document.createElement("style");
+  style.textContent = `
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .module-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+      }
+    `;
+  document.head.appendChild(style);
+
+  // 动态时钟功能 - 添加平滑过渡
   function updateClock() {
     const now = new Date();
 
     // 数字时钟
-    const timeStr = now.toLocaleTimeString("zh-CN", { hour12: false });
-    document.getElementById("digital-clock").textContent = timeStr;
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+    const timeStr = `${hours}:${minutes}:${seconds}`;
+
+    const clockElement = document.getElementById("digital-clock");
+    if (clockElement.textContent !== timeStr) {
+      clockElement.style.transform = "scale(1.1)";
+      setTimeout(() => {
+        clockElement.style.transform = "scale(1)";
+      }, 200);
+      clockElement.textContent = timeStr;
+    }
 
     // 日期显示
     const dateOptions = {
@@ -503,74 +615,98 @@
   setInterval(updateClock, 1000);
   updateClock(); // 立即执行一次
 
-  // 日历功能
+  // 日历功能 - 添加月份切换动画
   function generateCalendar(year, month) {
     const calendarBody = document.getElementById("calendar-body");
     const monthDisplay = document.getElementById("calendar-month");
     const date = new Date(year, month);
 
-    // 设置月份显示
-    monthDisplay.textContent = `${year}年${month + 1}月`;
+    // 添加月份切换动画
+    monthDisplay.style.opacity = "0";
+    monthDisplay.style.transform = "translateY(-10px)";
 
-    // 清空日历
-    calendarBody.innerHTML = "";
+    setTimeout(() => {
+      // 设置月份显示
+      monthDisplay.textContent = `${year}年${month + 1}月`;
 
-    // 获取当月第一天是星期几（0-6，0代表星期日）
-    const firstDay = date.getDay();
+      // 清空日历
+      calendarBody.innerHTML = "";
 
-    // 获取当月天数
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+      // 获取当月第一天是星期几（0-6，0代表星期日）
+      const firstDay = date.getDay();
 
-    // 获取上月天数
-    const daysInLastMonth = new Date(year, month, 0).getDate();
+      // 获取当月天数
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // 获取当月最后一天是星期几
-    date.setDate(daysInMonth);
-    const lastDay = date.getDay();
+      // 获取上月天数
+      const daysInLastMonth = new Date(year, month, 0).getDate();
 
-    let day = 1;
-    let nextMonthDay = 1;
+      // 获取当月最后一天是星期几
+      date.setDate(daysInMonth);
+      const lastDay = date.getDay();
 
-    // 生成日历行
-    for (let i = 0; i < 6; i++) {
-      if (day > daysInMonth && i > 0) break;
+      let day = 1;
+      let nextMonthDay = 1;
 
-      const row = document.createElement("tr");
+      // 生成日历行
+      for (let i = 0; i < 6; i++) {
+        if (day > daysInMonth && i > 0) break;
 
-      // 生成日历单元格
-      for (let j = 0; j < 7; j++) {
-        const cell = document.createElement("td");
-        cell.style.padding = "5px";
-        cell.style.textAlign = "center";
+        const row = document.createElement("tr");
 
-        if (i === 0 && j < firstDay) {
-          // 上个月的日期
-          cell.textContent = daysInLastMonth - (firstDay - j - 1);
-          cell.style.color = "#ccc";
-        } else if (day > daysInMonth) {
-          // 下个月的日期
-          cell.textContent = nextMonthDay++;
-          cell.style.color = "#ccc";
-        } else {
-          // 当月的日期
-          cell.textContent = day;
-          const today = new Date();
-          if (
-            day === today.getDate() &&
-            month === today.getMonth() &&
-            year === today.getFullYear()
-          ) {
-            cell.style.fontWeight = "bold";
-            cell.style.color = "#ff6b6b";
+        // 生成日历单元格
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement("td");
+          cell.style.padding = "8px";
+          cell.style.textAlign = "center";
+          cell.style.transition = "all 0.3s ease";
+
+          if (i === 0 && j < firstDay) {
+            // 上个月的日期
+            cell.textContent = daysInLastMonth - (firstDay - j - 1);
+            cell.style.color = "#ccc";
+          } else if (day > daysInMonth) {
+            // 下个月的日期
+            cell.textContent = nextMonthDay++;
+            cell.style.color = "#ccc";
+          } else {
+            // 当月的日期
+            cell.textContent = day;
+            const today = new Date();
+            if (
+              day === today.getDate() &&
+              month === today.getMonth() &&
+              year === today.getFullYear()
+            ) {
+              cell.style.fontWeight = "bold";
+              cell.style.color = "#ff6b6b";
+              cell.style.background = "rgba(255, 107, 107, 0.1)";
+              cell.style.borderRadius = "50%";
+            }
+            day++;
           }
-          day++;
+
+          // 添加悬停效果
+          cell.onmouseover = function () {
+            if (!this.style.color || this.style.color !== "#ccc") {
+              this.style.background = "rgba(0, 0, 0, 0.05)";
+              this.style.borderRadius = "50%";
+            }
+          };
+          cell.onmouseout = function () {
+            this.style.background = "";
+          };
+
+          row.appendChild(cell);
         }
 
-        row.appendChild(cell);
+        calendarBody.appendChild(row);
       }
 
-      calendarBody.appendChild(row);
-    }
+      // 显示月份
+      monthDisplay.style.opacity = "1";
+      monthDisplay.style.transform = "translateY(0)";
+    }, 150);
   }
 
   // 初始化日历
@@ -580,8 +716,13 @@
 
   generateCalendar(currentYear, currentMonth);
 
-  // 上月/下月按钮事件
-  document.getElementById("prev-month").addEventListener("click", () => {
+  // 上月/下月按钮事件 - 添加点击动画
+  document.getElementById("prev-month").addEventListener("click", function () {
+    this.classList.add("animate__animated", "animate__pulse");
+    setTimeout(() => {
+      this.classList.remove("animate__animated", "animate__pulse");
+    }, 500);
+
     currentMonth--;
     if (currentMonth < 0) {
       currentMonth = 11;
@@ -590,7 +731,12 @@
     generateCalendar(currentYear, currentMonth);
   });
 
-  document.getElementById("next-month").addEventListener("click", () => {
+  document.getElementById("next-month").addEventListener("click", function () {
+    this.classList.add("animate__animated", "animate__pulse");
+    setTimeout(() => {
+      this.classList.remove("animate__animated", "animate__pulse");
+    }, 500);
+
     currentMonth++;
     if (currentMonth > 11) {
       currentMonth = 0;
@@ -599,12 +745,16 @@
     generateCalendar(currentYear, currentMonth);
   });
 
-  // 自定义背景颜色函数
-  function setModuleBgColor(moduleClass, color) {
-    document.querySelectorAll(moduleClass).forEach((el) => {
-      el.style.background = color;
+  // 为文章链接添加点击动画
+  document.querySelectorAll(".post-link").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      this.closest("li").classList.add("animate__animated", "animate__fadeOut");
+      setTimeout(() => {
+        window.location.href = this.href;
+      }, 500);
     });
-  }
+  });
 </script>
 
 
