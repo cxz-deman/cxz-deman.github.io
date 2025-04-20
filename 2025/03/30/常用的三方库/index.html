@@ -1812,6 +1812,391 @@
 <p>输出：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">float64</span><br><span class="line">   cao  dao  eao</span><br><span class="line">0  5.0    5    9</span><br><span class="line">1  6.0    6   10</span><br><span class="line">2  7.0    7   11</span><br><span class="line">3  8.0    8   12</span><br></pre></td></tr></table></figure>
 
+<h4 id="2-3-4删除数据"><a href="#2-3-4删除数据" class="headerlink" title="2.3.4删除数据"></a>2.3.4删除数据</h4><p>.     通过drop方法删除 DataFrame 中的数据，默认情况下，drop() 不会修改原 DataFrame，而是返回一个新的 DataFrame。</p>
+<p><strong>语法</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors=&#x27;raise&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ol>
+<li><strong>labels</strong>：<ul>
+<li><strong>类型</strong>：单个标签或列表。</li>
+<li><strong>描述</strong>：要删除的行或列的标签。如果 axis&#x3D;0，则 labels 表示行标签；如果 axis&#x3D;1，则 labels 表示列标签。</li>
+</ul>
+</li>
+<li><strong>axis</strong>：<ul>
+<li><strong>类型</strong>：整数或字符串，默认为 0。</li>
+<li><strong>描述</strong>：指定删除的方向。axis&#x3D;0 或 axis&#x3D;’index’ 表示删除行，axis&#x3D;1 或 axis&#x3D;’columns’ 表示删除列。</li>
+</ul>
+</li>
+<li>index：<ul>
+<li><strong>类型</strong>：单个标签或列表，默认为 None。</li>
+<li><strong>描述</strong>：要删除的行的标签。如果指定，则忽略 labels 参数。</li>
+</ul>
+</li>
+<li>columns：<ul>
+<li><strong>类型</strong>：单个标签或列表，默认为 None。</li>
+<li><strong>描述</strong>：要删除的列的标签。如果指定，则忽略 labels 参数。</li>
+</ul>
+</li>
+<li>level：<ul>
+<li><strong>类型</strong>：整数或级别名称，默认为 None。</li>
+<li><strong>描述</strong>：用于多级索引（MultiIndex），指定要删除的级别。</li>
+</ul>
+</li>
+<li><strong>inplace</strong>：<ul>
+<li><strong>类型</strong>：布尔值，默认为 False。</li>
+<li><strong>描述</strong>：如果为 True，则直接修改原 DataFrame，而不是返回一个新的 DataFrame。</li>
+</ul>
+</li>
+<li>errors：<ul>
+<li><strong>类型</strong>：字符串，默认为 ‘raise’。</li>
+<li><strong>描述</strong>：指定如何处理不存在的标签。’raise’ 表示抛出错误，’ignore’ 表示忽略错误。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data=&#123;&#x27;A&#x27;:pd.Series([1,2,3,4,5],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;B&#x27;:pd.Series([6,7,8,9,10],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;C&#x27;:pd.Series([11,12,13,14,15],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;D&#x27;:pd.Series([16,17,18,19,20],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;])#行标签)</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">#删除行</span><br><span class="line">df1=df.drop([&#x27;A&#x27;],axis=1)#axis和labels结合使用</span><br><span class="line">print(df1)</span><br><span class="line"></span><br><span class="line">#删除列</span><br><span class="line">df2=df.drop([&#x27;a&#x27;],axis=0)</span><br><span class="line">print(df2)</span><br></pre></td></tr></table></figure>
+
+<p>输出删除行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    B   C   D</span><br><span class="line">a   6  11  16</span><br><span class="line">b   7  12  17</span><br><span class="line">c   8  13  18</span><br><span class="line">d   9  14  19</span><br><span class="line">e  10  15  20</span><br></pre></td></tr></table></figure>
+
+<p>输出删除列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   A   B   C   D</span><br><span class="line">b  2   7  12  17</span><br><span class="line">c  3   8  13  18</span><br><span class="line">d  4   9  14  19</span><br><span class="line">e  5  10  15  20</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4选取数据"><a href="#2-4选取数据" class="headerlink" title="2.4选取数据"></a>2.4选取数据</h3><h4 id="2-4-1布尔索引"><a href="#2-4-1布尔索引" class="headerlink" title="2.4.1布尔索引"></a>2.4.1布尔索引</h4><p>DateFrame[满足指定列的条件[DataFrame[‘列’]&gt;某值]]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data=&#123;&#x27;A&#x27;:pd.Series([1,2,3,4,5],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;B&#x27;:pd.Series([6,7,8,9,10],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;C&#x27;:pd.Series([11,12,13,14,15],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;D&#x27;:pd.Series([16,17,18,19,20],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;])#行标签)</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">print(df[df[&#x27;A&#x27;]&gt;=3])#输出A列大于等于3的行</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   A   B   C   D</span><br><span class="line">c  3   8  13  18</span><br><span class="line">d  4   9  14  19</span><br><span class="line">e  5  10  15  20</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-2loc选取数据"><a href="#2-4-2loc选取数据" class="headerlink" title="2.4.2loc选取数据"></a>2.4.2loc选取数据</h4><p>原始数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data=&#123;&#x27;A&#x27;:pd.Series([1,2,3,4,5],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;B&#x27;:pd.Series([6,7,8,9,10],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;C&#x27;:pd.Series([11,12,13,14,15],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;]),</span><br><span class="line">       &#x27;D&#x27;:pd.Series([16,17,18,19,20],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;])#行标签)</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A   B   C   D</span><br><span class="line">a  1   6  11  16</span><br><span class="line">b  2   7  12  17</span><br><span class="line">c  3   8  13  18</span><br><span class="line">d  4   9  14  19</span><br><span class="line">e  5  10  15  20</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>DataFrame.loc[行标签索引]</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.loc[&#x27;a&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A     1</span><br><span class="line">B     6</span><br><span class="line">C    11</span><br><span class="line">D    16</span><br><span class="line">Name: a, dtype: int64</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataFrame.loc[行标签索引a：行标签索引b]   从a到b行</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.loc[&#x27;a&#x27;:&#x27;c&#x27;])  # 选择行标签从 &#x27;a&#x27; 到 &#x27;c&#x27; 的行</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   A  B   C   D</span><br><span class="line">a  1  6  11  16</span><br><span class="line">b  2  7  12  17</span><br><span class="line">c  3  8  13  18</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataFrame.loc[行标签索引a，列标签索引B]   选取行标签a和列标签B的值</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.loc[&#x27;a&#x27;, &#x27;B&#x27;])  # 选择行标签为 &#x27;a&#x27;，列标签为 &#x27;B&#x27; 的元素</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataFrame.loc[[行标签索引a，行标签索引b]，[列标签索引A，列标签索引B]]   选取行标签a和b,列标签B和A的值</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.loc[[&#x27;a&#x27;, &#x27;c&#x27;], [&#x27;A&#x27;, &#x27;C&#x27;]])  # 选择行标签为 &#x27;a&#x27; 和 &#x27;c&#x27;，列标签为 &#x27;A&#x27; 和 &#x27;C&#x27; 的数据</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   A   C</span><br><span class="line">a  1  11</span><br><span class="line">c  3  13</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataFrame.loc[行标签索引a：行标签索引b，列标签索引A：列标签索引B]   选取行标签a到b,列标签A到B的值</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.loc[&#x27;a&#x27;:&#x27;d&#x27;, &#x27;A&#x27;:&#x27;C&#x27;])# 选择行标签从 &#x27;a&#x27; 到 &#x27;d&#x27;，列标签从 &#x27;A&#x27; 到 &#x27;C&#x27; 的数据</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">   A  B   C</span><br><span class="line">a  1  6  11</span><br><span class="line">b  2  7  12</span><br><span class="line">c  3  8  13</span><br><span class="line">d  4  9  14A   B   C   D</span><br><span class="line">a  1   6  11  16</span><br><span class="line">b  2   7  12  17</span><br><span class="line">c  3   8  13  18</span><br><span class="line">d  4   9  14  19</span><br><span class="line">e  5  10  15  20</span><br><span class="line">A     1</span><br><span class="line">B     6</span><br><span class="line">C    11</span><br><span class="line">D    16</span><br><span class="line">Name: a, dtype: int64</span><br><span class="line">   A  B   C   D</span><br><span class="line">a  1  6  11  16</span><br><span class="line">b  2  7  12  17</span><br><span class="line">c  3  8  13  18</span><br><span class="line">6</span><br><span class="line">   A   C</span><br><span class="line">a  1  11</span><br><span class="line">c  3  13</span><br><span class="line">   A  B   C</span><br><span class="line">a  1  6  11</span><br><span class="line">b  2  7  12</span><br><span class="line">c  3  8  13</span><br><span class="line">d  4  9  14</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-4-3iloc选取数据"><a href="#2-4-3iloc选取数据" class="headerlink" title="2.4.3iloc选取数据"></a>2.4.3iloc选取数据</h4><p>数字索引</p>
+<p>原始数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 创建一个示例 DataFrame</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;A&#x27;: [1, 2, 3, 4],</span><br><span class="line">    &#x27;B&#x27;: [5, 6, 7, 8],</span><br><span class="line">    &#x27;C&#x27;: [9, 10, 11, 12]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data, index=[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;])</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   A  B   C</span><br><span class="line">a  1  5   9</span><br><span class="line">b  2  6  10</span><br><span class="line">c  3  7  11</span><br><span class="line">d  4  8  12</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>df.iloc[0]：选择第 0 行的数据</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.iloc[0]) </span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A    1</span><br><span class="line">B    5</span><br><span class="line">C    9</span><br><span class="line">Name: a, dtype: int64</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>df.iloc[0:2]：选择第 0 到 1 行的数据</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.iloc[0:2]) </span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   A  B   C</span><br><span class="line">a  1  5   9</span><br><span class="line">b  2  6  10</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>df.iloc[0, 1]：选择第 0 行，第 1 列的元素</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.iloc[0, 1])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>df.iloc[[0, 2], [0, 2]]：选择第 0 和 2 行，第 0 和 2 列的数据</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.iloc[[0, 2], [0, 2]])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   A   C</span><br><span class="line">a  1   9</span><br><span class="line">c  3  11</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-4切片多行选择"><a href="#2-4-4切片多行选择" class="headerlink" title="2.4.4切片多行选择"></a>2.4.4切片多行选择</h4><p>df[0:2]输入行号：使用 df[0:2] 选择前两行</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 创建一个示例 DataFrame</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;A&#x27;: [1, 2, 3, 4],</span><br><span class="line">    &#x27;B&#x27;: [5, 6, 7, 8],</span><br><span class="line">    &#x27;C&#x27;: [9, 10, 11, 12]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data, index=[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;])</span><br><span class="line"></span><br><span class="line"># 使用 df[0:2] 选择前两行</span><br><span class="line">result = df[0:2]</span><br><span class="line">print(type(result))  # 输出: &lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;</span><br><span class="line">   A  B   C</span><br><span class="line">a  1  5   9</span><br><span class="line">b  2  6  10</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-5添加列表"><a href="#2-5添加列表" class="headerlink" title="2.5添加列表"></a>2.5添加列表</h3><h4 id="2-5-1loc方法添加新的行"><a href="#2-5-1loc方法添加新的行" class="headerlink" title="2.5.1loc方法添加新的行"></a>2.5.1loc方法添加新的行</h4><p># 添加新行 ‘e’ df.loc[‘e’] &#x3D; [17, 18, 19]:添加行标签列e</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个 DataFrame</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;A&#x27;: [1, 2, 3, 4],</span><br><span class="line">    &#x27;B&#x27;: [5, 6, 7, 8],</span><br><span class="line">    &#x27;C&#x27;: [9, 10, 11, 12]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data, index=[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;])</span><br><span class="line"></span><br><span class="line"># 添加新行 &#x27;e&#x27;</span><br><span class="line">df.loc[&#x27;e&#x27;] = [17, 18, 19]</span><br><span class="line"></span><br><span class="line">print(&quot;添加新行后的 DataFrame:&quot;)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">添加新行后的 DataFrame:</span><br><span class="line">    A   B   C</span><br><span class="line">a   1   5   9</span><br><span class="line">b   2   6  10</span><br><span class="line">c   3   7  11</span><br><span class="line">d   4   8  12</span><br><span class="line">e  17  18  19</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5-2cocat拼接"><a href="#2-5-2cocat拼接" class="headerlink" title="2.5.2cocat拼接"></a>2.5.2cocat拼接</h4><p><strong>语法：</strong></p>
+<p><strong>obj</strong>：要连接的 DataFrame 或 Series 对象的列表或字典。</p>
+<p><em><strong>axis</strong></em>: 指定连接的轴，0 或 ‘index’ 表示按行连接，1 或 ‘columns’ 表示按列连接。</p>
+<p><strong>join</strong>: 指定连接方式，’outer’ 表示并集（默认），’inner’ 表示交集。</p>
+<p><strong>ignore_index</strong>: 如果为 True，则忽略原始索引并生成新的索引。</p>
+<p>keys: 用于在连接结果中创建层次化索引。</p>
+<p>levels: 指定层次化索引的级别。</p>
+<p>names: 指定层次化索引的名称。</p>
+<p>verify_integrity: 如果为 True，则在连接时检查是否有重复索引。</p>
+<p>sort: 如果为 True，则在连接时对列进行排序。</p>
+<p>copy: 如果为 True，则复制数据。</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">df3=pd.DataFrame(&#123;&#x27;city&#x27;:[&#x27;北京&#x27;,&#x27;上海&#x27;,&#x27;深圳&#x27;],&#x27;year&#x27;:[2010,2011,2012]&#125;)</span><br><span class="line">df4=pd.DataFrame(&#123;&#x27;city&#x27;:[&#x27;北京&#x27;,&#x27;上海&#x27;,&#x27;深圳&#x27;],&#x27;year&#x27;:[2010,2011,2012]&#125;)</span><br><span class="line">df5=pd.concat([df3,df4],axis=1)</span><br><span class="line">print(df5)</span><br><span class="line"></span><br><span class="line">df6=pd.concat([df3,df4],axis=0)</span><br><span class="line">print(df6)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df7=pd.concat([df3,df4],axis=0,ignore_index=True)#ignore_index=True的意思是重新编号</span><br><span class="line">print(df7)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>按行添加的结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">city  year city  year</span><br><span class="line">0   北京  2010   北京  2010</span><br><span class="line">1   上海  2011   上海  2011</span><br><span class="line">2   深圳  2012   深圳  2012</span><br></pre></td></tr></table></figure>
+
+<p>按列添加的结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  city  year</span><br><span class="line">0   北京  2010</span><br><span class="line">1   上海  2011</span><br><span class="line">2   深圳  2012</span><br><span class="line">0   北京  2010</span><br><span class="line">1   上海  2011</span><br><span class="line">2   深圳  2012</span><br></pre></td></tr></table></figure>
+
+<p>重新标号结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> city  year</span><br><span class="line">0   北京  2010</span><br><span class="line">1   上海  2011</span><br><span class="line">2   深圳  2012</span><br><span class="line">3   北京  2010</span><br><span class="line">4   上海  2011</span><br><span class="line">5   深圳  2012</span><br></pre></td></tr></table></figure>
+
+<p>分别命名：</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df8=pd.concat([df3,df4],axis=1,keys=[&#x27;df3&#x27;,&#x27;df4&#x27;])#keys=[&#x27;df3&#x27;,&#x27;df4&#x27;]的意思是把df3和df4分别命名</span><br><span class="line">print(df8)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> df3        df4      </span><br><span class="line">  city  year city  year</span><br><span class="line">0   北京  2010   北京  2010</span><br><span class="line">1   上海  2011   上海  2011</span><br><span class="line">2   深圳  2012   深圳  2012</span><br></pre></td></tr></table></figure>
+
+<p>DataFrame与Series连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个示例 DataFrame</span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    &#x27;A&#x27;: [1, 2, 3],</span><br><span class="line">    &#x27;B&#x27;: [4, 5, 6]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"># 创建一个示例 Series</span><br><span class="line">series = pd.Series([7, 8, 9], name=&#x27;C&#x27;)</span><br><span class="line"></span><br><span class="line"># 按行连接 DataFrame 和 Series</span><br><span class="line">result_row = pd.concat([df, series], axis=0)</span><br><span class="line"></span><br><span class="line"># 按列连接 DataFrame 和 Series</span><br><span class="line">result_col = pd.concat([df, series], axis=1)</span><br><span class="line"></span><br><span class="line">print(&quot;按行连接结果:&quot;)</span><br><span class="line">print(result_row)</span><br><span class="line">print(&quot;\n按列连接结果:&quot;)</span><br><span class="line">print(result_col)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">按行连接结果:</span><br><span class="line">     A    B    C</span><br><span class="line">0  1.0  4.0  NaN</span><br><span class="line">1  2.0  5.0  NaN</span><br><span class="line">2  3.0  6.0  NaN</span><br><span class="line">0  NaN  NaN  7.0</span><br><span class="line">1  NaN  NaN  8.0</span><br><span class="line">2  NaN  NaN  9.0</span><br><span class="line"></span><br><span class="line">按列连接结果:</span><br><span class="line">   A  B  C</span><br><span class="line">0  1  4  7</span><br><span class="line">1  2  5  8</span><br><span class="line">2  3  6  9</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6reindex"><a href="#2-6reindex" class="headerlink" title="2.6reindex"></a>2.6reindex</h3><p>改变索引</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># reindex：重新索引，对原表的索引进行重新排序</span><br><span class="line">data=&#123;</span><br><span class="line">    &#x27;A&#x27;:[1,2,3],</span><br><span class="line">    &#x27;B&#x27;:[4,5,6],</span><br><span class="line">    &#x27;C&#x27;:[7,8,9]</span><br><span class="line">&#125;</span><br><span class="line">print(pd.DataFrame(data))</span><br><span class="line">new_index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;]</span><br><span class="line">df_reindexed=df.reindex(new_index)#等价于df.reindex(index=new_index)和pd.DataFrame(data,index=new_index)</span><br><span class="line">print(df_reindexed)</span><br><span class="line"></span><br><span class="line">df_reindexed=df.reindex(columns=[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;])</span><br><span class="line">print(df_reindexed)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">原始数据：</span><br><span class="line"> A  B  C</span><br><span class="line">0  1  4  7</span><br><span class="line">1  2  5  8</span><br><span class="line">2  3  6  9</span><br><span class="line">修改行索引的数据：</span><br><span class="line">   A  B   C</span><br><span class="line">a  1  5   9</span><br><span class="line">b  2  6  10</span><br><span class="line">c  3  7  11</span><br><span class="line">增加列索引增加D列填充NaN:</span><br><span class="line">   A  B   C   D</span><br><span class="line">a  1  5   9 NaN</span><br><span class="line">b  2  6  10 NaN</span><br><span class="line">c  3  7  11 NaN</span><br><span class="line">d  4  8  12 NaN</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7遍历DataFrame"><a href="#2-7遍历DataFrame" class="headerlink" title="2.7遍历DataFrame"></a>2.7遍历DataFrame</h3><h4 id="2-7-1DataFrame-iterrows"><a href="#2-7-1DataFrame-iterrows" class="headerlink" title="2.7.1DataFrame.iterrows()"></a>2.7.1DataFrame.iterrows()</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">创建表</span><br><span class="line"># 新建一个DataFrame</span><br><span class="line">import pandas as pd </span><br><span class="line">df=pd.DataFrame(&#123;</span><br><span class="line">    &#x27;A&#x27;:pd.Series([1,2,3],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;]),</span><br><span class="line">    &#x27;B&#x27;:pd.Series([5,6,7],index=[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;])</span><br><span class="line">&#125;)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>原始表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   A  B</span><br><span class="line">a  1  5</span><br><span class="line">b  2  6</span><br><span class="line">c  3  7</span><br></pre></td></tr></table></figure>
+
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">j=0</span><br><span class="line">for row in df.iterrows():</span><br><span class="line">    j+=1</span><br><span class="line">    print(f&#x27;第&#123;j&#125;行：&#x27;)</span><br><span class="line">    print()</span><br><span class="line">    print(row)</span><br><span class="line">    for i in row:</span><br><span class="line">        print(i)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">第1行：</span><br><span class="line"></span><br><span class="line">(&#x27;a&#x27;, A    1</span><br><span class="line">B    5</span><br><span class="line">Name: a, dtype: int64)</span><br><span class="line">a</span><br><span class="line">A    1</span><br><span class="line">B    5</span><br><span class="line">Name: a, dtype: int64</span><br><span class="line">第2行：</span><br><span class="line"></span><br><span class="line">(&#x27;b&#x27;, A    2</span><br><span class="line">B    6</span><br><span class="line">Name: b, dtype: int64)</span><br><span class="line">b</span><br><span class="line">A    2</span><br><span class="line">B    6</span><br><span class="line">Name: b, dtype: int64</span><br><span class="line">第3行：</span><br><span class="line"></span><br><span class="line">(&#x27;c&#x27;, A    3</span><br><span class="line">B    7</span><br><span class="line">Name: c, dtype: int64)</span><br><span class="line">c</span><br><span class="line">A    3</span><br><span class="line">B    7</span><br><span class="line">Name: c, dtype: int64</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-2DataFrame-items"><a href="#2-7-2DataFrame-items" class="headerlink" title="2.7.2DataFrame.items()"></a>2.7.2DataFrame.items()</h4><p>也可以利用DataFrame.items()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for idx,value in df.items():</span><br><span class="line">    print(idx)</span><br><span class="line">    print(value)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A</span><br><span class="line">a    1</span><br><span class="line">b    2</span><br><span class="line">c    3</span><br><span class="line">Name: A, dtype: int64</span><br><span class="line">B</span><br><span class="line">a    5</span><br><span class="line">b    6</span><br><span class="line">c    7</span><br><span class="line">Name: B, dtype: int64</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-3遍历行和列来遍历"><a href="#2-7-3遍历行和列来遍历" class="headerlink" title="2.7.3遍历行和列来遍历"></a>2.7.3遍历行和列来遍历</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for row in df.index:</span><br><span class="line">    for col in df.columns:</span><br><span class="line">        print(df.loc[row,col])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">6</span><br><span class="line">10</span><br><span class="line">3</span><br><span class="line">7</span><br><span class="line">11</span><br><span class="line">3</span><br><span class="line">7</span><br><span class="line">11</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-4使用-itertuples-遍历"><a href="#2-7-4使用-itertuples-遍历" class="headerlink" title="2.7.4使用 itertuples() 遍历"></a>2.7.4使用 itertuples() 遍历</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for row in df.itertuples():</span><br><span class="line">    print(row)</span><br><span class="line">    for i in row:</span><br><span class="line">        print(i)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Pandas(Index=&#x27;a&#x27;, A=2, B=6, C=10)</span><br><span class="line">a</span><br><span class="line">2</span><br><span class="line">6</span><br><span class="line">10</span><br><span class="line">Pandas(Index=&#x27;b&#x27;, A=3, B=7, C=11)</span><br><span class="line">b</span><br><span class="line">3</span><br><span class="line">7</span><br><span class="line">11</span><br><span class="line">Pandas(Index=&#x27;c&#x27;, A=3, B=7, C=11)</span><br><span class="line">c</span><br><span class="line">3</span><br><span class="line">7</span><br><span class="line">11</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-8排序"><a href="#2-8排序" class="headerlink" title="2.8排序"></a>2.8排序</h3><h4 id="2-8-1sort-index-排序"><a href="#2-8-1sort-index-排序" class="headerlink" title="2.8.1sort_index()排序"></a>2.8.1sort_index()排序</h4><p>参数：sort_index(axis&#x3D;,ascend&#x3D;False（降序）&#x2F;True（升序）)</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 创建一个示例 DataFrame</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;A&#x27;: [1, 2, 3],</span><br><span class="line">    &#x27;B&#x27;: [4, 5, 6],</span><br><span class="line">    &#x27;C&#x27;: [7, 8, 9]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data, index=[&#x27;b&#x27;, &#x27;c&#x27;, &#x27;a&#x27;])</span><br><span class="line">print(df)</span><br><span class="line">print(&quot;&quot;)</span><br><span class="line"># 按行索引标签排序，不对对应的值排序</span><br><span class="line">df_sorted = df.sort_index()</span><br><span class="line">#按列索引标签降序排序</span><br><span class="line">df_sorted = df.sort_index(axis=1,ascending=False)#按行索引标签降序排序</span><br><span class="line">print(df_sorted)</span><br><span class="line">print(&quot;&quot;)</span><br><span class="line">df_sorted1=df.sort_index(axis=0,ascending=False)#按列的索引标签降序排序</span><br><span class="line">print(df_sorted1)</span><br></pre></td></tr></table></figure>
+
+<p>原表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A  B  C</span><br><span class="line">b  1  4  7</span><br><span class="line">c  2  5  8</span><br><span class="line">a  3  6  9</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>axis&#x3D;1时，按行索引标签降序排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   C  B  A</span><br><span class="line">b  7  4  1</span><br><span class="line">c  8  5  2</span><br><span class="line">a  9  6  3</span><br></pre></td></tr></table></figure>
+
+<p>axis&#x3D;0时，按行索引标签降序排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   A  B  C</span><br><span class="line">c  2  5  8</span><br><span class="line">b  1  4  7</span><br><span class="line">a  3  6  9</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-8-2sort-values"><a href="#2-8-2sort-values" class="headerlink" title="2.8.2sort_values()"></a>2.8.2sort_values()</h4><p>按某列索引，sort_values(by&#x3D;[‘列标签’，arg**]，,ascend&#x3D;False（降序）&#x2F;True（升序）)</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">df=pd.DataFrame(&#123;</span><br><span class="line">    &#x27;name&#x27;:[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;],</span><br><span class="line">    &#x27;age&#x27;:[26,11,22,22,24],</span><br><span class="line">    &#x27;city&#x27;:[&#x27;delhi&#x27;,&#x27;mumbai&#x27;,&#x27;chennai&#x27;,&#x27;kolkata&#x27;,&#x27;banglore&#x27;],</span><br><span class="line">    &#x27;score&#x27;:[90,80,60,60,50]</span><br><span class="line">&#125;)</span><br><span class="line">df=df.sort_values(by=[&#x27;age&#x27;],ascending=False)#通过age列降序排列,默认是true是升序排列</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  name  age      city  score</span><br><span class="line">0    a   26     delhi     90</span><br><span class="line">4    e   24  banglore     50</span><br><span class="line">2    c   22   chennai     60</span><br><span class="line">3    d   22   kolkata     60</span><br><span class="line">1    b   11    mumbai     80</span><br></pre></td></tr></table></figure>
+
+<p>可以选定两个列标签，先按照前一个标签，若值相同，则按照第二个标签排序</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 如果age有相同个的值，则按照score列降序排列</span><br><span class="line">df=df.sort_values(by=[&#x27;score&#x27;,&#x27;name&#x27;],ascending=False)#通过age列降序排列</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  name  age      city  score</span><br><span class="line">0    a   26     delhi     90</span><br><span class="line">1    b   11    mumbai     80</span><br><span class="line">3    d   22   kolkata     60</span><br><span class="line">2    c   22   chennai     60</span><br><span class="line">4    e   24  banglore     50</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-9去重"><a href="#2-9去重" class="headerlink" title="2.9去重"></a>2.9去重</h3><p>drop.drop_duplicates(keep,subset)</p>
+<p>不加任何条件默认只保留第一次出现的重复项</p>
+<p>keep&#x3D;：是否保留值：last保留最后的值，False删除所有重复值，</p>
+<p>示例：代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">df=pd.DataFrame(&#123;</span><br><span class="line">    &#x27;a&#x27;: [1,1,1,5,5],</span><br><span class="line">    &#x27;b&#x27;: [6,6,6,2,2],</span><br><span class="line">    &#x27;c&#x27;: [11,11,15,15,15]</span><br><span class="line">&#125;)</span><br><span class="line">print(df)</span><br><span class="line">df_unique=df.drop_duplicates()#默认只保留第一次出现的重复项</span><br><span class="line">print()</span><br><span class="line">print(df_unique)</span><br><span class="line">print()</span><br><span class="line">df_unique_last=df.drop_duplicates(keep=&#x27;last&#x27;)</span><br><span class="line">print(df_unique_last)#保留最后一个重复项</span><br><span class="line"></span><br><span class="line">print   ()</span><br><span class="line"></span><br><span class="line">df_unique_all=df.drop_duplicates(keep=False)</span><br><span class="line">print(df_unique_all)#删除所有重复项</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>原表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   a  b   c</span><br><span class="line">0  1  6  11</span><br><span class="line">1  1  6  11</span><br><span class="line">2  1  6  15</span><br><span class="line">3  5  2  15</span><br><span class="line">4  5  2  15</span><br></pre></td></tr></table></figure>
+
+<p>不加任何参数的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> a  b   c</span><br><span class="line">0  1  6  11</span><br><span class="line">2  1  6  15</span><br><span class="line">3  5  2  15</span><br></pre></td></tr></table></figure>
+
+<p>keep&#x3D;last示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  a  b   c</span><br><span class="line">1  1  6  11</span><br><span class="line">2  1  6  15</span><br><span class="line">4  5  2  15</span><br></pre></td></tr></table></figure>
+
+<p>keep&#x3D;False示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  a  b   c</span><br><span class="line">2  1  6  15</span><br></pre></td></tr></table></figure>
+
+<p>subset&#x3D;[‘a’,’b’]，只保留a和b列的重复项</p>
+<p>示例输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  a  b   c</span><br><span class="line">0  1  6  11</span><br><span class="line">3  5  2  15</span><br></pre></td></tr></table></figure>
+
+<p>subset&#x3D;[‘a’,’c’],keep&#x3D;’last’，只保留a和b列的最后一个重复项</p>
+<p>示例输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   a  b   c</span><br><span class="line">1  1  6  11</span><br><span class="line">2  1  6  15</span><br><span class="line">4  5  2  15</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-10分组"><a href="#2-10分组" class="headerlink" title="2.10分组"></a>2.10分组</h3><p>groupby函数，指定按列分类参数groupby(指定的列名)</p>
+<p>后可加拓展函数，返回一个对象，可以通过for循环访问</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">#创建一个有类别的DataFrame</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;A&#x27;: [&#x27;foo&#x27;, &#x27;bar&#x27;, &#x27;foo&#x27;, &#x27;bar&#x27;, &#x27;foo&#x27;, &#x27;bar&#x27;, &#x27;foo&#x27;, &#x27;foo&#x27;],</span><br><span class="line">    &#x27;B&#x27;: [&#x27;one&#x27;, &#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;, &#x27;two&#x27;, &#x27;two&#x27;, &#x27;one&#x27;, &#x27;three&#x27;],</span><br><span class="line">    &#x27;C&#x27;: [1, 2, 3, 4, 5, 6, 7, 8],</span><br><span class="line">    &#x27;D&#x27;: [10, 20, 30, 40, 50, 60, 70, 80]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"># 按列 &#x27;A&#x27; 分组</span><br><span class="line">grouped = df.groupby(&#x27;A&#x27;)</span><br><span class="line">print(grouped)</span><br><span class="line"># 查看分组结果</span><br><span class="line">for name, group in grouped:</span><br><span class="line">    print(f&quot;Group: &#123;name&#125;&quot;)</span><br><span class="line">    #统计每组的个数</span><br><span class="line">    print(f&quot;Group size: &#123;len(group)&#125;&quot;)</span><br><span class="line">    print(f&quot;Group mean_C: &#123;group[&#x27;C&#x27;].mean()&#125;&quot;)</span><br><span class="line">    print(f&quot;Group mean_D: &#123;group[&#x27;D&#x27;].mean()&#125;&quot;)</span><br><span class="line">    print(group)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x000001B9B7320EC0&gt;</span><br><span class="line">Group: bar</span><br><span class="line">Group size: 3</span><br><span class="line">Group mean_C: 4.0</span><br><span class="line">Group mean_D: 40.0</span><br><span class="line">     A      B  C   D</span><br><span class="line">1  bar    one  2  20</span><br><span class="line">3  bar  three  4  40</span><br><span class="line">5  bar    two  6  60</span><br><span class="line"></span><br><span class="line">Group: foo</span><br><span class="line">Group size: 5</span><br><span class="line">Group mean_C: 4.8</span><br><span class="line">Group mean_D: 48.0</span><br><span class="line">     A      B  C   D</span><br><span class="line">0  foo    one  1  10</span><br><span class="line">2  foo    two  3  30</span><br><span class="line">4  foo    two  5  50</span><br><span class="line">6  foo    one  7  70</span><br><span class="line">7  foo  three  8  80</span><br></pre></td></tr></table></figure>
+
+<p>使用transform方法: 在每个分组中计算平均值，并将结果赋值给新列也可以在taransform方法中传入其他聚合函数如sum、max或者lambada函数等</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df[&#x27;C_mean&#x27;]=df.groupby(&#x27;A&#x27;)[&#x27;C&#x27;].transform(&#x27;mean&#x27;)</span><br><span class="line">df[&#x27;D_mean&#x27;]=df.groupby(&#x27;A&#x27;)[&#x27;D&#x27;].transform(&#x27;mean&#x27;)  </span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    A      B  C   D  C_mean  D_mean</span><br><span class="line">0  foo    one  1  10     4.8    48.0</span><br><span class="line">1  bar    one  2  20     4.0    40.0</span><br><span class="line">2  foo    two  3  30     4.8    48.0</span><br><span class="line">3  bar  three  4  40     4.0    40.0</span><br><span class="line">4  foo    two  5  50     4.8    48.0</span><br><span class="line">5  bar    two  6  60     4.0    40.0</span><br><span class="line">6  foo    one  7  70     4.8    48.0</span><br><span class="line">7  foo  three  8  80     4.8    48.0</span><br></pre></td></tr></table></figure>
+
+<p>lambada函数示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fillter=df.groupby(&#x27;A&#x27;).filter(lambda x:x[&#x27;C&#x27;].mean()&gt;4.5)# 意义：A列分组，C列大于4.5的行，x[&#x27;C&#x27;].mean()：C列的平均值</span><br><span class="line">print(fillter)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    A      B  C   D  C_mean  D_mean</span><br><span class="line">0  foo    one  1  10     4.8    48.0</span><br><span class="line">2  foo    two  3  30     4.8    48.0</span><br><span class="line">4  foo    two  5  50     4.8    48.0</span><br><span class="line">6  foo    one  7  70     4.8    48.0</span><br><span class="line">7  foo  three  8  80     4.8    48.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-11合并"><a href="#2-11合并" class="headerlink" title="2.11合并"></a>2.11合并</h3><p>merge(on,how)</p>
+<p>#on：合并的列名，默认为None，表示合并的列名是索引，如果索引没有重叠，则报错</p>
+<p>#how：合并方式，默认为inner，表示交集，outer表示并集，left表示左表，right表示右表，indicator表示显示合并方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">left = pd.DataFrame(&#123;</span><br><span class="line">    &#x27;key&#x27;: [&#x27;K0&#x27;, &#x27;K1&#x27;, &#x27;K2&#x27;, &#x27;K3&#x27;],</span><br><span class="line">    &#x27;A&#x27;: [&#x27;A0&#x27;, &#x27;A1&#x27;, &#x27;A2&#x27;, &#x27;A3&#x27;],</span><br><span class="line">    &#x27;B&#x27;: [&#x27;B0&#x27;, &#x27;B1&#x27;, &#x27;B2&#x27;, &#x27;B3&#x27;]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">right = pd.DataFrame(&#123;</span><br><span class="line">    &#x27;key&#x27;: [&#x27;K0&#x27;, &#x27;K1&#x27;, &#x27;K2&#x27;, &#x27;K4&#x27;],</span><br><span class="line">    &#x27;C&#x27;: [&#x27;C0&#x27;, &#x27;C1&#x27;, &#x27;C2&#x27;, &#x27;C3&#x27;],</span><br><span class="line">    &#x27;D&#x27;: [&#x27;D0&#x27;, &#x27;D1&#x27;, &#x27;D2&#x27;, &#x27;D3&#x27;]</span><br><span class="line">&#125;)</span><br><span class="line">#内连接：返回两个DataFrame相同的键对应的数据</span><br><span class="line">df1=pd.merge(left,right,how=&#x27;inner&#x27;,on=&#x27;key&#x27;)</span><br><span class="line">print(df1)</span><br><span class="line"></span><br><span class="line">#外连接：返回两个DataFrame的并集</span><br><span class="line">df2=pd.merge(left,right,on=&#x27;key&#x27;,how=&#x27;outer&#x27;)</span><br><span class="line">print(df2)</span><br><span class="line"></span><br><span class="line">#左连接：以左表为基准，返回左表所有键对应的数据，没有则填充null</span><br><span class="line">df3=pd.merge(left,right,on=&#x27;key&#x27;,how=&#x27;left&#x27;)</span><br><span class="line">print(df3)</span><br><span class="line">#右连接同理</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>内连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  key   A   B   C   D</span><br><span class="line">0  K0  A0  B0  C0  D0</span><br><span class="line">1  K1  A1  B1  C1  D1</span><br><span class="line">2  K2  A2  B2  C2  D2</span><br></pre></td></tr></table></figure>
+
+<p>外连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> key    A    B    C    D</span><br><span class="line">0  K0   A0   B0   C0   D0</span><br><span class="line">1  K1   A1   B1   C1   D1</span><br><span class="line">2  K2   A2   B2   C2   D2</span><br><span class="line">3  K3   A3   B3  NaN  NaN</span><br><span class="line">4  K4  NaN  NaN   C3   D3</span><br></pre></td></tr></table></figure>
+
+<p>左连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> key   A   B    C    D</span><br><span class="line">0  K0  A0  B0   C0   D0</span><br><span class="line">1  K1  A1  B1   C1   D1</span><br><span class="line">2  K2  A2  B2   C2   D2</span><br><span class="line">3  K3  A3  B3  NaN  NaN</span><br></pre></td></tr></table></figure>
+
+<p>右连接同理</p>
+<h3 id="2-12随机抽样"><a href="#2-12随机抽样" class="headerlink" title="2.12随机抽样"></a>2.12随机抽样</h3><p>sample(n,axis,random_state,frac)</p>
+<p>参数意义：n是取的行数，axis&#x3D;0表示行，random_state是随机种子，保证每次随机结果相同，frac表示抽取多少行或者列数据，取0~1。</p>
+<p>示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df_sample = pd.DataFrame(&#123;</span><br><span class="line">    &quot;company&quot;: [&quot;Google&quot;, &quot;Facebook&quot;, &quot;Amazon&quot;, &quot;Microsoft&quot;,&quot;Tencent&quot;,&quot;MiHoYo&quot;],</span><br><span class="line">    &quot;revenue&quot;: [100, 200, 300, 400, 500,600],</span><br><span class="line">    &quot;contry&quot;: [&quot;USA&quot;, &quot;USA&quot;, &quot;USA&quot;, &quot;USA&quot;,&quot;China&quot;,&quot;China&quot;]</span><br><span class="line">&#125;)</span><br><span class="line"># 随机取两行</span><br><span class="line">df1=df_sample.sample(n=2,axis=0,random_state=3)#参数意义：n是取的行数，axis=0表示行，random_state是随机种子，保证每次随机结果相同</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">     company  revenue contry</span><br><span class="line">3  Microsoft      400    USA</span><br><span class="line">5     MiHoYo      600  China</span><br></pre></td></tr></table></figure>
+
+<p>随机取两列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 随机取两列</span><br><span class="line">df2=df_sample.sample(n=2,axis=1)</span><br><span class="line">print(df2)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     company contry</span><br><span class="line">0     Google    USA</span><br><span class="line">1   Facebook    USA</span><br><span class="line">2     Amazon    USA</span><br><span class="line">3  Microsoft    USA</span><br><span class="line">4    Tencent  China</span><br><span class="line">5     MiHoYo  China</span><br></pre></td></tr></table></figure>
+
+<p>示例：取三分之二列数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#抽取百分之五十行的数据</span><br><span class="line">df3 = df_sample.sample(axis=1,frac=0.66,random_state=1)</span><br><span class="line">print(df3)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     company contry</span><br><span class="line">0     Google    USA</span><br><span class="line">1   Facebook    USA</span><br><span class="line">2     Amazon    USA</span><br><span class="line">3  Microsoft    USA</span><br><span class="line">4    Tencent  China</span><br><span class="line">5     MiHoYo  China</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-13空值处理"><a href="#2-13空值处理" class="headerlink" title="2.13空值处理"></a>2.13空值处理</h3><h4 id="2-13-1检测空值-is-not-null"><a href="#2-13-1检测空值-is-not-null" class="headerlink" title="2.13.1检测空值(is&#x2F;not null)"></a>2.13.1检测空值(is&#x2F;not null)</h4><ul>
+<li><p>isnull方法,检测DataFrame或者Series中缺失值，为空返回true，不为空返回false</p>
+</li>
+<li><p>notnull方法，检测DataFrame或者Series中缺失值，为空返回false，不为空返回true</p>
+</li>
+</ul>
+<p>  示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">data=&#123;&#x27;A&#x27;:[1,2,np.nan],&#x27;B&#x27;:[5,np.nan,np.nan],&#x27;C&#x27;:[1,2,3]&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">print(df.isnull())</span><br><span class="line">df_null=df.isnull()</span><br><span class="line">print(df_null.sum())#统计每一列缺失值个数</span><br></pre></td></tr></table></figure>
+
+<p>输出空值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">       A      B      C</span><br><span class="line">0  False  False  False</span><br><span class="line">1  False   True  False</span><br><span class="line">2   True   True  False</span><br></pre></td></tr></table></figure>
+
+<p> 统计每一列的数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A    1</span><br><span class="line">B    2</span><br><span class="line">C    0</span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-13-2-空值填充（fillna）"><a href="#2-13-2-空值填充（fillna）" class="headerlink" title="2.13.2 空值填充（fillna）"></a>2.13.2 空值填充（fillna）</h4><p>参数：制定要填充的值，以及要填充的列名</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data=&#123;&#x27;A&#x27;:[1,2,np.nan],&#x27;B&#x27;:[5,np.nan,np.nan],&#x27;C&#x27;:[1,2,3]&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">df1=df.fillna(value=0)</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    A    B   C</span><br><span class="line">0  1.0  5.0  1</span><br><span class="line">1  2.0  0.0  2</span><br><span class="line">2  0.0  0.0  3</span><br></pre></td></tr></table></figure>
+
+<p>2.13.3删除空值（dropna（）)</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data=&#123;&#x27;A&#x27;:[1,2,np.nan],&#x27;B&#x27;:[5,np.nan,np.nan],&#x27;C&#x27;:[1,2,3]&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">df1=df.dropna(axis=1)# 删除有空值的列</span><br><span class="line">df2=df.dropna(axis=0)# 删除有空值的行</span><br><span class="line"></span><br><span class="line">print(df1)</span><br><span class="line">print(df2)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   C</span><br><span class="line">0  1</span><br><span class="line">1  2</span><br><span class="line">2  3</span><br><span class="line">     A    B  C</span><br><span class="line">0  1.0  5.0  1</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-14读取csv文件"><a href="#2-14读取csv文件" class="headerlink" title="2.14读取csv文件"></a>2.14读取csv文件</h3><p>读取文件：data.read_csv(文件地址）</p>
+<p>保存地址：data.to”_csv(文件名)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data=&#123;</span><br><span class="line">    &#x27;A&#x27;:[1,2,3,4],</span><br><span class="line">    &#x27;B&#x27;:[5,6,7,8],</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">df.to_csv(&#x27;data.csv&#x27;,index=False)</span><br></pre></td></tr></table></figure>
+
+<p>2.15pandas绘图</p>
+<h2 id="pandas绘图"><a href="#pandas绘图" class="headerlink" title="pandas绘图"></a>pandas绘图</h2><ul>
+<li>由于pandas封装了一个plot方法，所以可以直接使用pandas.DataFrame.plot方法<br>参数：</li>
+<li>kind：绘图类型，默认为line</li>
+<li>x：x轴数据</li>
+<li>y：y轴数据</li>
+<li>figsize：设置绘图大小</li>
+<li>title：设置标题</li>
+<li>xlabel：设置x轴标签</li>
+<li>ylabel：设置y轴标签</li>
+<li>grid：设置是否显示网格</li>
+<li>legend：设置是否显示图例</li>
+<li>xticks：设置x轴刻度</li>
+<li>yticks：设置y轴刻度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">data=&#123;</span><br><span class="line">    &#x27;A&#x27;:[1,2,3,4],</span><br><span class="line">    &#x27;B&#x27;:[5,6,7,8],</span><br><span class="line">&#125;</span><br><span class="line">df=pd.DataFrame(data)</span><br><span class="line">df.plot(kind=&#x27;line&#x27;,x=&#x27;A&#x27;,y=&#x27;B&#x27;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 
         </div>
 
@@ -1862,6 +2247,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/04/20/OpenCV%E5%A4%84%E7%90%86%E5%9B%BE%E5%83%8F/">OpenCV处理图像</a>
             
             
             <a class="next" rel="next" href="/2025/03/19/day09%E8%A3%85%E9%A5%B0%E5%99%A8%E5%87%BD%E6%95%B0%E5%92%8C%E4%BE%8B%E9%A2%98%E8%A7%A3%E6%9E%90/">day09装饰器函数和例题解析</a>

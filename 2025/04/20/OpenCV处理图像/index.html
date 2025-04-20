@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>OpenCV处理图像 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">OpenCV处理图像</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">CXZ</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 20, 2025&nbsp;&nbsp;11:56:22</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="OpenCV"><a href="#OpenCV" class="headerlink" title="OpenCV"></a>OpenCV</h1><h2 id="1-学前准备"><a href="#1-学前准备" class="headerlink" title="1.学前准备"></a>1.学前准备</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install OpenCV-python</span><br></pre></td></tr></table></figure>
+
+<p>测试能否正常使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import cv2</span><br><span class="line">print(cv2.__version__)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-图片基本处理"><a href="#2-图片基本处理" class="headerlink" title="2.图片基本处理"></a>2.图片基本处理</h2><h3 id="2-1图片读取"><a href="#2-1图片读取" class="headerlink" title="2.1图片读取"></a>2.1图片读取</h3><p>cv.imread(文件地址)</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">path = &quot;./imgs/cat1.png&quot;</span><br><span class="line">img=cv.imread(path,cv.IMREAD_COLOR)</span><br><span class="line">cv.imshow(&quot;cat_pic&quot;,img)</span><br><span class="line">h,w,c=img.shape</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2numpy数组转化为图片"><a href="#2-2numpy数组转化为图片" class="headerlink" title="2.2numpy数组转化为图片"></a>2.2numpy数组转化为图片</h3><p>创建一个三维的数组</p>
+<p>大小为：height*weight*3（颜色通道），数据类型转化为uint8</p>
+<p>img&#x3D;np.zeros((height,width,3),np.uint8)#参数：宽，高，通道</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 </span><br><span class="line">import numpy as np</span><br><span class="line">height,width = 480,640</span><br><span class="line">img=np.zeros((height,width,3),np.uint8)#参数：宽，高，通道</span><br><span class="line">print(img.shape)</span><br><span class="line">img[:,:,:]=np.random.randint(125,255,img.shape)#random.randint参数：随机数范围，图片尺寸</span><br><span class="line">print(img.shape)#打印图片的尺寸</span><br><span class="line">#打印图片维度</span><br><span class="line">print(img.ndim)</span><br><span class="line">cv2.imshow(&quot;img&quot;,img)#显示图片</span><br><span class="line">cv2.waitKey(0)#等待键盘输入</span><br><span class="line">cv2.destroyAllWindows()#销毁所有窗口</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3在图片里绘制图形"><a href="#2-3在图片里绘制图形" class="headerlink" title="2.3在图片里绘制图形"></a>2.3在图片里绘制图形</h3><h4 id="2-3-1绘制直线"><a href="#2-3-1绘制直线" class="headerlink" title="2.3.1绘制直线"></a>2.3.1绘制直线</h4><p>cv.line(参数：图片，起始点，终止点，颜色，线宽)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">cat=cv.imread(&#x27;./imgs/cat1.png&#x27;)</span><br><span class="line">cv.line(cat,(0,0),(cat.shape[1],cat.shape[0]),(0,255,0),2)#参数：图片，起始点，终止点，颜色，线宽</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-2绘制圆形"><a href="#2-3-2绘制圆形" class="headerlink" title="2.3.2绘制圆形"></a>2.3.2绘制圆形</h4><p>cv.cirle(参数：图片，圆心，半径，颜色，线宽 线宽为-1则填充为实心圆)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.circle(cat,(cat.shape[1]//2,cat.shape[0]//2),100,(0,255,0),-1)#参数：图片，圆心，半径，颜色，线宽 线宽为-1则填充为实心圆</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-3绘制矩形"><a href="#2-3-3绘制矩形" class="headerlink" title="2.3.3绘制矩形"></a>2.3.3绘制矩形</h4><p>cv.rectangle(参数：图片，左上角点，右下角点，颜色，线宽,-1，填充为实心)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.rectangle(cat,(cat.shape[1],cat.shape[0]),(cat.shape[1]//4*3,cat.shape[0]//4*3),(0,255,0),-1)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-4绘制文字（仅英文）"><a href="#2-3-4绘制文字（仅英文）" class="headerlink" title="2.3.4绘制文字（仅英文）"></a>2.3.4绘制文字（仅英文）</h4><p>cv.putText(参数：图片，字，坐标，字体，字体大小，颜色，线宽)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.putText(cat,&#x27;Hello&#x27;,(cat.shape[1]//2,cat.shape[0]//2),cv.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)</span><br></pre></td></tr></table></figure>
+
+<p>线的类型：#cv.LINE_AA为抗锯齿: cv.LINE_AA, cv.LINE_4, cv.LINE_8, cv.LINE_AA</p>
+<h2 id="3-视频处理"><a href="#3-视频处理" class="headerlink" title="3.视频处理"></a>3.视频处理</h2><h3 id="3-1读取视频"><a href="#3-1读取视频" class="headerlink" title="3.1读取视频"></a>3.1读取视频</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">cap=cv.VideoCapture(&#x27;./img/7233x3100 (4).mp4&#x27;)</span><br><span class="line">while True:</span><br><span class="line">    ret,frame=cap.read()#参数为True时，读取下一帧，为False时，读取最后一帧</span><br><span class="line">    if ret==False:</span><br><span class="line">        print(&#x27;读取失败&#x27;)</span><br><span class="line">        break</span><br><span class="line">    cv.imshow(&#x27;frame&#x27;,frame)</span><br><span class="line">    if cv.waitKey(40)&amp;0xFF==ord(&#x27;q&#x27;):#意思：回第八位的值，0xFF为十六进制的FF，即二进制的11111111</span><br><span class="line">        break</span><br><span class="line">cap.release()  </span><br><span class="line">cv.destroyAllWindows()  </span><br></pre></td></tr></table></figure>
+
+<h2 id="4-图像预处理"><a href="#4-图像预处理" class="headerlink" title="4.图像预处理"></a>4.图像预处理</h2><h3 id="4-1图像预处理准备"><a href="#4-1图像预处理准备" class="headerlink" title="4.1图像预处理准备"></a>4.1图像预处理准备</h3><p>读取图片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">img=cv.imread(&#x27;./imgs/cat1.png&#x27;)</span><br><span class="line">cv.resize(img,(480,480))</span><br><span class="line">cv.imshow(&#x27;cat&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2图像翻转"><a href="#4-2图像翻转" class="headerlink" title="4.2图像翻转"></a>4.2图像翻转</h3><p><strong>cv2.flip(img,flipcode)</strong><br>参数：</p>
+<ul>
+<li>img: 要翻转的图像</li>
+<li>flipcode: 指定翻转类型的标志<ul>
+<li>flipcode&#x3D;0: 垂直翻转，图片像素点沿x轴翻转</li>
+<li>flipcode&gt;0: 水平翻转，图片像素点沿y轴翻转</li>
+<li>flipcode&lt;0: 沿原点翻转，与原图中心对称</li>
+</ul>
+</li>
+</ul>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat_fx=cv.flip(img,0)</span><br><span class="line">cat_fy=cv.flip(img,1)</span><br><span class="line">cat_fxy=cv.flip(img,-1)</span><br><span class="line">cv.imshow(&#x27;cat&#x27;,img)</span><br><span class="line">cv.imshow(&#x27;cat_fx&#x27;,cat_fx)#沿x轴翻转上下</span><br><span class="line">cv.imshow(&#x27;cat_fy&#x27;,cat_fy)#沿y轴翻转左右</span><br><span class="line">cv.imshow(&#x27;cat_fxy&#x27;,cat_fxy)#沿着原点中心翻转</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3图像仿射变换"><a href="#4-3图像仿射变换" class="headerlink" title="4.3图像仿射变换"></a>4.3<strong>图像仿射变换</strong></h3><p>使用关键仿射变换函数</p>
+<p>cv.warpAffline(参数：图片名,仿射变换矩阵,图片大小,插值方法)</p>
+<p>得到仿射变换矩阵M –&gt; 带入仿射变换函数 –&gt; 输出</p>
+<h4 id="4-3-1图像旋转"><a href="#4-3-1图像旋转" class="headerlink" title="4.3.1图像旋转"></a>4.3.1图像旋转</h4><p>设置参数旋转中心，旋转角度，缩放比例</p>
+<p>使用cv.getRotationMatrix2D(设置旋转中心，旋转角度，缩放比例）</p>
+<p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">h,w,_=img.shape</span><br><span class="line">#设置旋转中心</span><br><span class="line">center=(w//2,h//2)</span><br><span class="line">angle=0</span><br><span class="line">scale=0.01#缩放比例</span><br><span class="line">M=cv.getRotationMatrix2D(center,angle,scale)#仿射变换矩阵</span><br><span class="line">#使用仿射变换函数进行变换旋转</span><br><span class="line">img_rotate=cv.warpAffine(img,M,(w,h),flags=cv.INTER_LINEAR)#参数：图片名,仿射变换矩阵,输出图片大小,插值方法</span><br><span class="line">cv.imshow(&#x27;img_rotate&#x27;,img_rotate)</span><br><span class="line">cv.imshow(&#x27;cat&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-2图像平移"><a href="#4-3-2图像平移" class="headerlink" title="4.3.2图像平移"></a>4.3.2图像平移</h4><p>平移：读取图像-》设置参数（平移量tx，ty）-》获取平移矩阵np.float32-》仿射变换函数进行平移-》显示图像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tx = 200</span><br><span class="line">ty = 100</span><br><span class="line">M = np.float32([[1,0,tx],[0,1,ty]])</span><br><span class="line">print(M)</span><br><span class="line"></span><br><span class="line">img_remove = cv.warpAffine(img,M,(w,h))#挪移后多余的像素点舍弃</span><br><span class="line">cv.imshow(&#x27;img_remove&#x27;,img_remove)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-3图像缩放"><a href="#4-3-3图像缩放" class="headerlink" title="4.3.3图像缩放"></a>4.3.3图像缩放</h4><p>M仿射矩阵：设置缩放比例</p>
+<p>M &#x3D; np.float32([[缩放比例, 0, 0], [0, 缩放比例, 0]])</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#读取图像</span><br><span class="line">M = np.float32([[0.1, 0, 0], [0, 0.1, 0]])</span><br><span class="line">img_little = cv.warpAffine(img, M, (img.shape[1], img.shape[0]))</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img_little)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>4.3.4图像剪切</p>
+<p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np </span><br><span class="line">import cv2 as cv</span><br><span class="line">#读取图像</span><br><span class="line">shx=0.2</span><br><span class="line">shy=0.2</span><br><span class="line">img=cv.imread(&#x27;./imgs/cat1.png&#x27;)</span><br><span class="line">img=cv.resize(img,(300,300))</span><br><span class="line">M_y = np.float32([[1,shy, 0], [0, 1, 0]])</span><br><span class="line">M_x = np.float32([[1, 0, 0], [shx, 1, 0]])</span><br><span class="line">M_xy= np.float32([[1,shy, 0], [shx, 1, 0]])</span><br><span class="line">M= np.float32([[1,0, 0], [0, 1, 0]])</span><br><span class="line">img_little_y = cv.warpAffine(img, M_y, (360, 360))</span><br><span class="line">img_little_x = cv.warpAffine(img, M_x, (360, 360))</span><br><span class="line">img_little_xy = cv.warpAffine(img, M_xy, (360, 360))</span><br><span class="line">img_li=cv.warpAffine(img, M, (360, 360))</span><br><span class="line">cv.imshow(&#x27;img_y&#x27;,img_little_y)</span><br><span class="line">cv.imshow(&#x27;img_x&#x27;,img_little_x)</span><br><span class="line">cv.imshow(&#x27;img_xy&#x27;,img_little_xy)</span><br><span class="line">cv.imshow(&#x27;img_li&#x27;,img_li)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>4.4图片压缩</p>
+<p>4.4.1最近邻插值法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new_img=cv.warpAffine(img,M,(300,300),flags=cv.INTER_NEAREST)</span><br><span class="line">cv.imshow(&quot;new_img&quot;,new_img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>4.4.2双线性插值法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new_img=cv.warpAffine(img,M,(300,300),flags=cv.INTER_LINEAR)</span><br><span class="line">cv.imshow(&quot;new_img&quot;,new_img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>4.4.3像素区域插值法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">st=cv.imread(&#x27;./img/blackstocking.png&#x27;)</span><br><span class="line">st=cv.resize(st,(160,240))</span><br><span class="line">dst_x=cv.warpAffine(st,M,(160,240),flags=cv.INTER_NEAREST)</span><br><span class="line">dst_l=cv.warpAffine(st,M,(160,240),flags=cv.INTER_LINEAR)</span><br><span class="line">dst_c=cv.warpAffine(st,M,(160,240),flags=cv.INTER_AREA)#像素区域插值</span><br><span class="line">cv.imshow(&#x27;st&#x27;,st)</span><br><span class="line">cv.imshow(&#x27;dst_x&#x27;,dst_x)</span><br><span class="line">cv.imshow(&#x27;dst_l&#x27;,dst_l)</span><br><span class="line">cv.imshow(&#x27;dst_c&#x27;,dst_c)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-4其他方法"><a href="#4-3-4其他方法" class="headerlink" title="4.3.4其他方法"></a>4.3.4其他方法</h4><h5 id="4-4-4-1双三次插值法"><a href="#4-4-4-1双三次插值法" class="headerlink" title="4.4.4.1双三次插值法"></a>4.4.4.1双三次插值法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.warpAffine(img,M,(cols,rows),flags=cv.INTER_CUBIC)</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-4-4-2Lanczos插值"><a href="#4-4-4-2Lanczos插值" class="headerlink" title="4.4.4.2Lanczos插值"></a>4.4.4.2Lanczos插值</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.warpAffine(img,M,(cols,rows),flags=cv.INTER_LANCZOS4)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5图像边缘填充"><a href="#4-5图像边缘填充" class="headerlink" title="4.5图像边缘填充"></a>4.5图像边缘填充</h3><h4 id="4-5-1边缘填充准备"><a href="#4-5-1边缘填充准备" class="headerlink" title="4.5.1边缘填充准备"></a>4.5.1边缘填充准备</h4><p>旋转缩放图像做准备</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">face=cv.imread(&quot;./images/face.png&quot;)</span><br><span class="line">#获取旋转矩阵</span><br><span class="line">scale=0.1</span><br><span class="line">angle=45</span><br><span class="line">center=(face.shape[1]//2,face.shape[0]//2)</span><br><span class="line">M=cv.getRotationMatrix2D(center,angle,scale)</span><br><span class="line">#使用仿射变换矩阵</span><br><span class="line">img=cv.warpAffine(face,M,(face.shape[1],face.shape[0]))</span><br><span class="line">cv.imshow(&quot;img&quot;,img)    </span><br><span class="line">cv.imshow(&quot;face&quot;,face)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-2边缘复制"><a href="#4-5-2边缘复制" class="headerlink" title="4.5.2边缘复制"></a>4.5.2边缘复制</h4><p>cv.warpAffine(<strong>参数：图像，输出图片大小，插值方式，边界模式</strong></p>
+<p>borderMode&#x3D;cv.BORDER_REPLICATE</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">img_boradercv=cv.warpAffine(face,M,(face.shape[1],face.shape[0]),cv.INTER_LANCZOS4,borderMode=cv.BORDER_REPLICATE)</span><br><span class="line">cv.imshow(&quot;img&quot;,img)    </span><br><span class="line">cv.imshow(&quot;face&quot;,face)</span><br><span class="line">cv.imshow(&quot;img_boradercv&quot;,img_boradercv)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-3边界反射"><a href="#4-5-3边界反射" class="headerlink" title="4.5.3边界反射"></a>4.5.3边界反射</h4><p>borderMode&#x3D;cv.BORDER_REFLECT</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">img_reflect = cv.warpAffine(face,M,(face.shape[1],face.shape[0]), cv.INTER_LANCZOS4,borderMode=cv.BORDER_REFLECT)</span><br><span class="line">cv.imshow(&#x27;reflect&#x27;, img_reflect)</span><br><span class="line">cv.imshow(&quot;img&quot;,img)    </span><br><span class="line">cv.imshow(&quot;face&quot;,face)</span><br><span class="line">cv.imshow(&quot;img_boradercv&quot;,img_boradercv)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-4边界反射-101"><a href="#4-5-4边界反射-101" class="headerlink" title="4.5.4边界反射_101"></a>4.5.4边界反射_101</h4><p>borderMode&#x3D;cv.BORDER_REFLECT101</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">img_reflect101=cv.warpAffine(face,M,dsize=(img.shape[1],img.shape[0]),flags=cv.INTER_LINEAR,borderMode=cv.BORDER_REFLECT101)</span><br><span class="line">cv.imshow(&#x27;reflect&#x27;, img_reflect)</span><br><span class="line">cv.imshow(&quot;img&quot;,img)    </span><br><span class="line">cv.imshow(&quot;face&quot;,face)</span><br><span class="line">cv.imshow(&quot;img_boradercv&quot;,img_boradercv)</span><br><span class="line">cv.imshow(&quot;img_reflect101&quot;,img_reflect101)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-5边缘常数填充"><a href="#4-5-5边缘常数填充" class="headerlink" title="4.5.5边缘常数填充"></a>4.5.5边缘常数填充</h4><p>borderMode&#x3D;cv.BORDER_CONSTANT,borderValue&#x3D;(0,0,255)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img_ch=cv.warpAffine(face,M,(face.shape[1],face.shape[0]),cv.INTER_LANCZOS4,borderMode=cv.BORDER_CONSTANT,borderValue=(0,0,255))</span><br><span class="line">cv.imshow(&#x27;img_ch&#x27;,img_ch)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-6边缘包裹"><a href="#4-5-6边缘包裹" class="headerlink" title="4.5.6边缘包裹"></a>4.5.6边缘包裹</h4><p>borderMode&#x3D;cv.BORDER_WRAP</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img_wrap=cv.warpAffine(face,M,(face.shape[<span class="number">1</span>],face.shape[<span class="number">0</span>]),cv.INTER_LANCZOS4,borderMode=cv.BORDER_WRAP)</span><br><span class="line">cv.imshow(<span class="string">&#x27;wrap&#x27;</span>,img_wrap)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-6图像矫正（透视变换）"><a href="#4-6图像矫正（透视变换）" class="headerlink" title="4.6图像矫正（透视变换）"></a>4.6图像矫正（透视变换）</h3><p>步骤：对原图需要矫正位置的坐标进行框中选定，输出图像的大小坐标分别创建两个numpy数组</p>
+<p>使用cv.getPerspectiveTransform(pic1,pic_2)创建仿射变换矩阵M</p>
+<p>使用cv.warpPerspective(img_tou,M,(w,h),flags&#x3D;cv.INTER_LINEAR,borderMode&#x3D;cv.BORDER_CONSTANT)</p>
+<p>cv.warpPerspective(参数：图像片，变换矩阵，输出尺寸，插值方法，边界填充方式)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">pic1=np.float32([[182,113],[521,141],[115,294],[501,340]])</span><br><span class="line">print(pic1[0].shape)</span><br><span class="line"></span><br><span class="line">M = cv.getPerspectiveTransform(pic1,pic_2)</span><br><span class="line">new_img=new_pic = cv.warpPerspective(img_tou,M,(w,h),flags=cv.INTER_LINEAR,borderMode=cv.BORDER_CONSTANT)#参数：图像片，变换矩阵，输出尺寸，插值方法，边界填充方式</span><br><span class="line">cv.imshow(&#x27;new_img&#x27;,new_img)</span><br><span class="line">cv.imshow(&#x27;img_tou&#x27;,img_tou)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-7图像叠加"><a href="#4-7图像叠加" class="headerlink" title="4.7图像叠加"></a>4.7图像叠加</h3><h4 id="4-7-1直接相加"><a href="#4-7-1直接相加" class="headerlink" title="4.7.1直接相加"></a>4.7.1直接相加</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pig=cv.imread(&#x27;./images/pig.png&#x27;)</span><br><span class="line">cao=cv.imread(&#x27;./images/cao.png&#x27;)</span><br><span class="line">img_numpy=cao+pig</span><br><span class="line">print(img_numpy)</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-7-2add函数饱和运算"><a href="#4-7-2add函数饱和运算" class="headerlink" title="4.7.2add函数饱和运算"></a>4.7.2add函数饱和运算</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_add=cv.add(pig,cao)</span><br><span class="line">print(cv.add(pig,cao))#add函数</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-7-3加权求和运算"><a href="#4-7-3加权求和运算" class="headerlink" title="4.7.3加权求和运算"></a>4.7.3加权求和运算</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_weight=cv.addWeighted(pig,0.5,cao,0.5,0)#加权求和运算·</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-8图像处理转换"><a href="#4-8图像处理转换" class="headerlink" title="4.8图像处理转换"></a>4.8图像处理转换</h3><p>函数cv.cvtcolor(参数：转换方式)</p>
+<h4 id="4-8-1rgb转换为gray"><a href="#4-8-1rgb转换为gray" class="headerlink" title="4.8.1rgb转换为gray"></a>4.8.1rgb转换为gray</h4><p>cat_grey&#x3D;cv.cvtColor(cat,cv.COLOR_RGB2GRAY)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">cat=cv.imread(&#x27;./images/cat1.png&#x27;)</span><br><span class="line">cv.imshow(&#x27;cat&#x27;,cat)</span><br><span class="line">cat_grey=cv.cvtColor(cat,cv.COLOR_RGB2GRAY)</span><br><span class="line">cv.imshow(&#x27;cat_grey&#x27;,cat_grey)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-8-2rgb转换为hsv"><a href="#4-8-2rgb转换为hsv" class="headerlink" title="4.8.2rgb转换为hsv"></a>4.8.2rgb转换为hsv</h4><p>cat_hsv&#x3D;cv.cvtColor(cat,cv.COLOR_BGR2HSV)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat_hsv=cv.cvtColor(cat,cv.COLOR_BGR2HSV)</span><br><span class="line">cv.imshow(&quot;cat_hsv&quot;,cat_hsv)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-9灰度实验"><a href="#4-9灰度实验" class="headerlink" title="4.9灰度实验"></a>4.9灰度实验</h3><h4 id="4-9-1最大值灰度转换"><a href="#4-9-1最大值灰度转换" class="headerlink" title="4.9.1最大值灰度转换"></a>4.9.1最大值灰度转换</h4><p>使用for循环迭代，取颜色通道中的最大值，并且赋值到颜色通道上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">pig_y=cv.imread(&#x27;./images/pig.png&#x27;)</span><br><span class="line">pig=cv.imread(&#x27;./images/pig.png&#x27;)</span><br><span class="line">for i in range(pig.shape[0]):</span><br><span class="line">    for j in range(pig.shape[1]):</span><br><span class="line">        pig[i][j][0]=max(pig[i][j])</span><br><span class="line">        pig[i][j][1]=max(pig[i][j])</span><br><span class="line">        pig[i][j][2]=max(pig[i][j])</span><br><span class="line">cv.imshow(&#x27;pig&#x27;,pig)</span><br><span class="line">cv.imshow(&#x27;pig_y&#x27;,pig_y)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-9-2平均值灰度"><a href="#4-9-2平均值灰度" class="headerlink" title="4.9.2平均值灰度"></a>4.9.2平均值灰度</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">pig = cv.imread(&quot;./images/pig.png&quot;)</span><br><span class="line">h,w,_ = pig.shape</span><br><span class="line">av_grey=np.zeros((h,w),dtype=np.uint8)#uint8:0~255</span><br><span class="line">for i in range(h):</span><br><span class="line">    for j in range(w):</span><br><span class="line">        av_grey[i,j] = int(sum((pig[i,j])))//3</span><br><span class="line">cv.imshow(&quot;av&quot;,av_grey)</span><br><span class="line">cv.imshow(&quot;pig&quot;,pig)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-9-3加权灰度"><a href="#4-9-3加权灰度" class="headerlink" title="4.9.3加权灰度"></a>4.9.3加权灰度</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">wr,wg,wb=0.299,0.576,0.114</span><br><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">pig = cv.imread(&quot;./images/pig.png&quot;)</span><br><span class="line">h,w,_ = pig.shape</span><br><span class="line">weight_grey=np.zeros((h,w),dtype=np.uint8)#uint8:0~255</span><br><span class="line">for i in range(h):</span><br><span class="line">    for j in range(w):</span><br><span class="line">        weight_grey[i,j] = np.array([pig[i,j,0]*wr,pig[i,j,1]*wg,pig[i,j,2]*wb]).sum()/3</span><br><span class="line">cv.imshow(&quot;av&quot;,weight_grey)</span><br><span class="line">cv.imshow(&quot;pig&quot;,pig)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-10图像二值化处理"><a href="#4-10图像二值化处理" class="headerlink" title="4.10图像二值化处理"></a>4.10图像二值化处理</h3><p><em><strong>cv.threshold(图片，阈值，maxval，方法)</strong></em></p>
+<h4 id="4-10-1阈值法-cv-THRESH-BINARY"><a href="#4-10-1阈值法-cv-THRESH-BINARY" class="headerlink" title="4.10.1阈值法(cv.THRESH_BINARY)"></a>4.10.1阈值法(cv.THRESH_BINARY)</h4><p>小于等于阈值的像素就被设置为0（通常代表背景），大于阈值的像素就被设置为maxval（通常代表前景）</p>
+<h4 id="4-10-2反阈值法-THRESH-BINARY-INV"><a href="#4-10-2反阈值法-THRESH-BINARY-INV" class="headerlink" title="4.10.2反阈值法(THRESH_BINARY_INV)"></a>4.10.2反阈值法(THRESH_BINARY_INV)</h4><p>像素值大于阈值时，该像素值将会变成0（黑），当灰度图的像素值小于等于阈值时，该像素值将会变成maxval</p>
+<h4 id="4-10-3截断阈值法-THRESH-TRUNC"><a href="#4-10-3截断阈值法-THRESH-TRUNC" class="headerlink" title="4.10.3截断阈值法(THRESH_TRUNC)"></a>4.10.3截断阈值法(THRESH_TRUNC)</h4><p>像素值大于阈值的部分将会被修改为阈值，小于等于阈值的部分不变。</p>
+<h4 id="4-10-4低阈值零处理-THRESH-TOZERO"><a href="#4-10-4低阈值零处理-THRESH-TOZERO" class="headerlink" title="4.10.4低阈值零处理(THRESH_TOZERO)"></a>4.10.4低阈值零处理(THRESH_TOZERO)</h4><p>像素值小于等于阈值的部分被置为0（也就是黑色），大于阈值的部分不变。</p>
+<h4 id="4-10-5超阈值零处理-THRESH-TOZERO-INV"><a href="#4-10-5超阈值零处理-THRESH-TOZERO-INV" class="headerlink" title="4.10.5超阈值零处理(THRESH_TOZERO_INV)"></a>4.10.5超阈值零处理(THRESH_TOZERO_INV)</h4><p>像素值大于阈值的部分置为0（也就是黑色），像素值小于等于阈值的部分不变。</p>
+<h4 id="4-10-6OSTU阈值法-THRESH-OTSU"><a href="#4-10-6OSTU阈值法-THRESH-OTSU" class="headerlink" title="4.10.6OSTU阈值法(THRESH_OTSU)"></a>4.10.6OSTU阈值法(THRESH_OTSU)</h4><p>采取最大类间距的策略，该方法是使用是寻找最佳阈值</p>
+<h4 id="4-10-7自适应二值法"><a href="#4-10-7自适应二值法" class="headerlink" title="4.10.7自适应二值法"></a>4.10.7自适应二值法</h4><p><em><strong>cv.adaptiveThreshold(参数1：灰度图，参数2：最大值，参数3：自适应阈值方法，参数4：二值化方法，参数5：窗口大小，参数6：偏移量)</strong></em></p>
+<p>明暗分布不均匀可以使用自适应二值化</p>
+<h5 id="4-10-7-1均值法-ADAPTIVE-THRESH-MEAN-C"><a href="#4-10-7-1均值法-ADAPTIVE-THRESH-MEAN-C" class="headerlink" title="4.10.7.1均值法(ADAPTIVE_THRESH_MEAN_C)"></a>4.10.7.1均值法(ADAPTIVE_THRESH_MEAN_C)</h5><p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img_mean=cv.adaptiveThreshold(gray,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,5,10)</span><br><span class="line">cv.imshow(&#x27;mean&#x27;,img_mean)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-10-7-2加权求和法-ADAPTIVE-THRESH-GAUSSIAN-C"><a href="#4-10-7-2加权求和法-ADAPTIVE-THRESH-GAUSSIAN-C" class="headerlink" title="4.10.7.2加权求和法(ADAPTIVE_THRESH_GAUSSIAN_C)"></a>4.10.7.2加权求和法(ADAPTIVE_THRESH_GAUSSIAN_C)</h5><p>示例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img_guss=cv.adaptiveThreshold(gray,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY,11,2)</span><br><span class="line">cv.imshow(&#x27;img_guss&#x27;,img_guss)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-11制作图像掩膜"><a href="#4-11制作图像掩膜" class="headerlink" title="4.11制作图像掩膜"></a>4.11制作图像掩膜</h3><ul>
+<li>图像掩膜是图像处理中的一个重要概念，它用于对图像进行遮罩，从而实现对图像的裁剪、过滤、增强等操作。</li>
+</ul>
+<p>  设置：color_low&#x3D;np.array([23,46,46])</p>
+<p>  color_high&#x3D;np.array([34,255,255])</p>
+<p>  根据hsv表</p>
+<p>颜色bgr转hsv –&gt; 创建掩膜：cv.inRange(src,lowerb,upperb,dst) –&gt;做与运算输出掩膜</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>CXZ</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://cxz-deman.github.io/2025/04/20/OpenCV%E5%A4%84%E7%90%86%E5%9B%BE%E5%83%8F/">https://cxz-deman.github.io/2025/04/20/OpenCV%E5%A4%84%E7%90%86%E5%9B%BE%E5%83%8F/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/03/30/%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%89%E6%96%B9%E5%BA%93/">常用的三方库</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
