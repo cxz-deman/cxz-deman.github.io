@@ -528,7 +528,166 @@
 <p>绘制凸包</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制凸包</span><br><span class="line">cv.polylines(img,[hull],True,(0,255,0),1,cv.LINE_AA)</span><br><span class="line">#显示图像</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 
-<p>4.17</p>
+<h3 id="4-17绘制矩形"><a href="#4-17绘制矩形" class="headerlink" title="4.17绘制矩形"></a>4.17绘制矩形</h3><h4 id="4-17-1绘制正向的一般矩形"><a href="#4-17-1绘制正向的一般矩形" class="headerlink" title="4.17.1绘制正向的一般矩形"></a>4.17.1绘制正向的一般矩形</h4><p>读图、图像预处理、灰度、二值化</p>
+<p>白色图像为目标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制矩形</span><br><span class="line">import  cv2 as cv</span><br><span class="line">img=cv.imread(&#x27;../images/num.png&#x27;)</span><br><span class="line">num=img.copy()</span><br><span class="line">num_gray=cv.cvtColor(num,cv.COLOR_BGR2GRAY)</span><br><span class="line">_,num_binary=cv.threshold(num_gray,150,255,cv.THRESH_BINARY_INV)#反阈值法</span><br></pre></td></tr></table></figure>
+
+<p>找到轮廓，并且绘制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c,h=cv.findContours(num_binary,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE)</span><br><span class="line">img_Con=cv.drawContours(img,c,-1,(0,0,255),2)</span><br></pre></td></tr></table></figure>
+
+<p>使用cv.boundingRect(cnt),找出矩形坐标，返回x,y和矩形的长和宽是</p>
+<p>利用cv.rectangle绘制出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for cnt in c:</span><br><span class="line">    x,y,w,h=cv.boundingRect(cnt)</span><br><span class="line">    print(cnt,end=&#x27;,&#x27;)</span><br><span class="line">    cv.rectangle(img_Con,(x,y),(x+w,y+h),(0,255,0),1,cv.LINE_AA)</span><br><span class="line">cv.imshow(&#x27;drawing img_Con&#x27;,img_Con)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-17-2绘制最小矩阵"><a href="#4-17-2绘制最小矩阵" class="headerlink" title="4.17.2绘制最小矩阵"></a>4.17.2绘制最小矩阵</h4><p>无关方向，最小能包裹目标图像的矩形</p>
+<p>读图、图像预处理、灰度、二值化</p>
+<p>白色图像为目标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制矩形</span><br><span class="line">import  cv2 as cv</span><br><span class="line">img=cv.imread(&#x27;../images/num.png&#x27;)</span><br><span class="line">num=img.copy()</span><br><span class="line">num_gray=cv.cvtColor(num,cv.COLOR_BGR2GRAY)</span><br><span class="line">_,num_binary=cv.threshold(num_gray,150,255,cv.THRESH_BINARY_INV)#反阈值法</span><br></pre></td></tr></table></figure>
+
+<p>找到轮廓，并且绘制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c,h=cv.findContours(num_binary,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE)</span><br><span class="line">img_Con=cv.drawContours(img,c,-1,(0,0,255),2)</span><br></pre></td></tr></table></figure>
+
+<p>使用cv.minAreaRect的方式已找到,cv.minAreaRect(),返回最小外接矩形的中心点、宽度和角度</p>
+<p>利用cv.boxPoints(rect)将中心、尺寸和角度转换为四个角点坐标</p>
+<p>并且转化为int类型</p>
+<p>使用cv.polylines()绘制参数：目标图，坐标列表，是否闭合，颜色，宽度，线形</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">for cnt in c:</span><br><span class="line">        # 计算最小外接矩形</span><br><span class="line">    rect = cv.minAreaRect(cnt)#返回最小外接矩形的中心点、宽高和角度</span><br><span class="line"></span><br><span class="line">    # 将最小外接矩形的中心、尺寸和角度转换为四个角点坐标</span><br><span class="line">    box = cv.boxPoints(rect)</span><br><span class="line">    box = box.astype(&#x27;int&#x27;)  # 转换为整数类型</span><br><span class="line">    </span><br><span class="line">    # 绘制旋转后的最小外接矩形</span><br><span class="line">    cv.polylines(img, [box], isClosed=True, color=(0, 0, 255), thickness=1, lineType=cv.LINE_AA)</span><br><span class="line">    </span><br><span class="line">    #绘制矩阵</span><br><span class="line">    x,y,w,h=cv.boundingRect(cnt)</span><br><span class="line">    cv.rectangle(img_Con,(x,y),(x+w,y+h),(255,0,0),2,cv.LINE_AA)</span><br><span class="line">    </span><br><span class="line">    #绘制凸包</span><br><span class="line">    hull = cv.convexHull(cnt)</span><br><span class="line">    # cv.drawContours(img_Con, [hull], 0, (0, 255, 0), 2, cv.LINE_AA)</span><br><span class="line">    cv.polylines(img_Con, [hull], isClosed=True, color=(0, 255, 0), thickness=2, lineType=cv.LINE_AA)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-18直方图和直方图均衡化"><a href="#4-18直方图和直方图均衡化" class="headerlink" title="4.18直方图和直方图均衡化"></a>4.18直方图和直方图均衡化</h3><h4 id="4-18-1绘制直方图的步骤"><a href="#4-18-1绘制直方图的步骤" class="headerlink" title="4.18.1绘制直方图的步骤"></a>4.18.1绘制直方图的步骤</h4><p>读图</p>
+<p>利用函数cv.calcHist([img],[2],None,[256],[0,256])</p>
+<p>返回一个数组列表，代表每一个像素值的像素数量</p>
+<p>参数：图片，通道，掩膜，直方图大小，直方图范围</p>
+<ul>
+<li>图片：目标图片</li>
+<li>通道：指定通道</li>
+<li>掩膜：可以对指定的白色区域进行绘制直方图，也可以为None</li>
+<li>直方图大小：可以设定将像素值分为多少组进行统计</li>
+<li>直方图范围：一般为[0,256]</li>
+</ul>
+<p>再使用cv.minMaxLoc提取最少数量像素值及其索引像素值和最多数量像素值及其索引像素值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">img=cv.imread(&#x27;../images/lvbo.png&#x27;)</span><br><span class="line">hist=cv.calcHist([img],[2],None,[256],[0,256])#计算直方图，参数：图片，通道，掩膜，直方图大小，直方图范围</span><br><span class="line">minVal,maxVal,minLoc,maxLoc=cv.minMaxLoc(hist) #返回值最少的像素个数，最多的像素个数，最小值位置索引，最大值位置索引</span><br></pre></td></tr></table></figure>
+
+<p>可以使用matplotlib进行直线绘制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 绘制直方图</span><br><span class="line">plt.figure(figsize=(6, 4))</span><br><span class="line">plt.plot(hist, color=&#x27;r&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>使用cv.line进行绘制直方图，将数据归一化，先限制直方图高度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">arr=np.zeros((256,256,3),np.uint8)</span><br><span class="line">#限制直方图的高</span><br><span class="line">hpt=int(0.9*256)</span><br><span class="line">#使用cv.line 画出直方图</span><br><span class="line">for i in range(256):</span><br><span class="line">    cv.line(arr,(i,256),(i,256-int(hist[i].item()*hpt/maxVal)),(0,0,255),2,1)</span><br><span class="line">cv.imshow(&#x27;hist&#x27;,arr)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>将绘制直方图的代码封装成函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def draw(img,m,color):</span><br><span class="line">    hist=cv.calcHist([img],[m],None,[256],[0,256])</span><br><span class="line">    minVal,maxVal,minLoc,maxLoc=cv.minMaxLoc(hist) #返回值最少的像素个数，最多的像素个数，最小值位置索引，最大值位置索引</span><br><span class="line">    arr=np.zeros((256,256,3),np.uint8)</span><br><span class="line">    #限制直方图的高</span><br><span class="line">    hpt=int(0.9*256)</span><br><span class="line">    #使用cv.line 画出直方图</span><br><span class="line">    for i in range(256):</span><br><span class="line">        cv.line(arr,(i,256),(i,256-int(hist[i].item()*hpt/maxVal)),color,2,1)</span><br><span class="line">    return arr</span><br><span class="line">img=cv.imread(&#x27;../images/lvbo.png&#x27;)</span><br><span class="line">cv.imshow(&quot;hist&quot;,draw(img,2,(0,0,255)))</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-18-2直方图均衡化"><a href="#4-18-2直方图均衡化" class="headerlink" title="4.18.2直方图均衡化"></a>4.18.2直方图均衡化</h4><p>同样的进行灰度化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#读图</span><br><span class="line">img=cv.imread(&#x27;../images/zhifang.png&#x27;)</span><br><span class="line">#转灰度图</span><br><span class="line">gray=cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br></pre></td></tr></table></figure>
+
+<p>直方图均衡化使用cv.equalizeHist(gray)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eqh=cv.equalizeHist(gray)#直方图均衡化</span><br><span class="line">dst_eqh=draw(eqh,0,(0,255,0))</span><br><span class="line">cv.imshow(&#x27;eqh&#x27;,eqh)</span><br><span class="line">cv.imshow(&#x27;dst_eqh&#x27;,dst_eqh)</span><br></pre></td></tr></table></figure>
+
+<p>对比度受限自适应直方图变化：</p>
+<p><strong>clahe &#x3D; cv2.createCLAHE(clipLimit&#x3D;None, tileGridSize&#x3D;None)</strong></p>
+<ul>
+<li>clipLimit（可选）：对比度限制参数，用于控制直方图均衡化过程中对比度增强的程度。如果设置一个大于1的值（如2.0或4.0），CLAHE会限制对比度增强的最大程度，避免过度放大噪声。如果不设置，OpenCV会使用一个默认值。</li>
+<li>tileGridSize（可选）：图像分块的大小，通常是一个包含两个整数的元组，如<code>(8, 8)</code>，表示将图像划分成8x8的小块进行独立的直方图均衡化处理。分块大小的选择会影响到CLAHE的效果以及处理速度。</li>
+</ul>
+<p>创建CLAHE对象后，可以使用 <code>.apply()</code> 方法对图像进行CLAHE处理：</p>
+<p><strong>img&#x3D;clahe.apply(image)</strong></p>
+<ul>
+<li>image:要均衡化的图像。</li>
+<li>img均衡后的图像</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clahe=cv.createCLAHE(clipLimit=2.0,tileGridSize=(8,8))#对比度受限自适应直方图变化</span><br><span class="line">img_clahe=clahe.apply(gray)#意义：对比度受限</span><br><span class="line">cv.imshow(&#x27;img_clahe&#x27;,img_clahe)</span><br><span class="line">dst_clahe=draw(img_clahe,0,(0,255,0))</span><br><span class="line">cv.imshow(&#x27;dst_clahe&#x27;,dst_clahe)</span><br></pre></td></tr></table></figure>
+
+<p>图像输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dst_gray=draw(gray,0,(0,0,255))</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.imshow(&#x27;gray&#x27;,gray)</span><br><span class="line">cv.imshow(&#x27;dst_gray&#x27;,dst_gray)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-19模板匹配"><a href="#4-19模板匹配" class="headerlink" title="4.19模板匹配"></a>4.19模板匹配</h3><h4 id="4-19-1模版匹配步骤"><a href="#4-19-1模版匹配步骤" class="headerlink" title="4.19.1模版匹配步骤"></a>4.19.1模版匹配步骤</h4><p>进行匹配，读取原图和目标图并且进行转灰度图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">#读图</span><br><span class="line">img=cv.imread(&#x27;../images/game.png&#x27;)#目标图</span><br><span class="line">temp=cv.imread(&#x27;../images/temp.png&#x27;)#模板图</span><br><span class="line">#转灰度</span><br><span class="line">img_gray=cv.cvtColor(img,cv.COLOR_BGR2GRAY)#目标图转灰度</span><br><span class="line">temp_gray=cv.cvtColor(temp,cv.COLOR_BGR2GRAY)</span><br></pre></td></tr></table></figure>
+
+<p>使用cv.matchTemplate(原图，目标图，匹配的方法)</p>
+<p>匹配方法，可以是以下之一：</p>
+<ul>
+<li>cv2.TM_CCOEFF</li>
+<li>cv2.TM_CCOEFF_NORMED</li>
+<li>cv2.TM_CCORR</li>
+<li>cv2.TM_CCORR_NORMED</li>
+<li>cv2.TM_SQDIFF</li>
+<li>cv2.TM_SQDIFF_NORMED</li>
+<li>这些方法决定了如何度量模板图像与原图像子窗口之间的相似度。</li>
+</ul>
+<p>返回值res</p>
+<p>函数在完成图像模板匹配后返回一个结果矩阵，这个矩阵的大小与原图像相同。矩阵的每个元素表示原图像中相应位置与模板图像匹配的相似度。</p>
+<p>设置阈值，使用np.where()的函数获取符合条件的坐标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">threshold=0.8</span><br><span class="line">loc=np.where(res&gt;=threshold)</span><br><span class="line">h,w=temp.shape[:2]#获取目标图的长和宽</span><br></pre></td></tr></table></figure>
+
+<p>使用zip(*loc)返回一个迭代器</p>
+<p>进行图像绘制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for pt in zip(*loc):#py===&gt;(y,x)</span><br><span class="line">    leftupper=pt[::-1]#(x,y)</span><br><span class="line">    rightbottom=(pt[1]+w,pt[0]+h)#(x+w,y+h)</span><br><span class="line">    cv.rectangle(img,leftupper,rightbottom,(0,0,255),2)</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-20霍夫变换"><a href="#4-20霍夫变换" class="headerlink" title="4.20霍夫变换"></a>4.20霍夫变换</h3><h4 id="4-20-1霍夫变换的基本理论"><a href="#4-20-1霍夫变换的基本理论" class="headerlink" title="4.20.1霍夫变换的基本理论"></a>4.20.1霍夫变换的基本理论</h4><p><strong>霍夫变换</strong>是图像处理的一种技术，主要用于检测图像中的直线、圆等几何形状。基本思想就是将图像空间中的点映射到<strong>参数空间</strong>中，通过在参数空间中寻找<strong>累计最大值</strong>实现对特定形状的检测。</p>
+<h4 id="4-20-2霍夫变换的具体操作"><a href="#4-20-2霍夫变换的具体操作" class="headerlink" title="4.20.2霍夫变换的具体操作"></a>4.20.2霍夫变换的具体操作</h4><h5 id="4-20-2-1霍夫变换直线"><a href="#4-20-2-1霍夫变换直线" class="headerlink" title="4.20.2.1霍夫变换直线"></a>4.20.2.1霍夫变换直线</h5><p>cv.HoughLines(目标图像,r的精度,角度θ的精度,阈值)主要参数<br>目标图像：二值化，目标白，背景黑<br>r的精度：r的精度，以像素为单位，表示霍夫空间中每一步的距离增量, 值越大，考虑越多的线。<br>角度θ的精度：通常以弧度为单位，表示霍夫空间中每一步的角度增量。值越小，考虑越多的线。<br>阈值：满足目标斜率的函数图像上的点的最少数量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img=cv.imread(&#x27;../images/huofu.png&#x27;)#读取图片</span><br><span class="line">img_g=cv.cvtColor(img,cv.COLOR_BGR2GRAY)#灰度化</span><br><span class="line">dst=cv.Canny(img_g,30,70)#获得边缘检测后的图像</span><br><span class="line">lines=cv.HoughLines(dst,0.9,np.pi/180,90)#进行霍夫直线变换</span><br><span class="line">#返回ro值和角度theta值</span><br><span class="line">print(lines)</span><br><span class="line">for line in lines:</span><br><span class="line">    ro = line[0][0]#提取ro</span><br><span class="line">    theta= line[0][1]#提取角度</span><br><span class="line">    sint_t=np.sin(theta)#计算cos和sin值</span><br><span class="line">    cost_t=np.cos(theta)</span><br><span class="line">    x1,x2=0,img.shape[1]#图的边界点</span><br><span class="line">    y1,y2=int((ro-x1*cost_t)/sint_t),int((ro-x2*cost_t)/sint_t)#将边界点带入计算</span><br><span class="line">    cv.line(img,(x1,y1),(x2,y2),(0,0,255),2)#绘制直线</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-20-2-2统计概率霍夫直线变换"><a href="#4-20-2-2统计概率霍夫直线变换" class="headerlink" title="4.20.2.2统计概率霍夫直线变换"></a>4.20.2.2统计概率霍夫直线变换</h5><p>对于霍夫变换，对图像的预处理也尤其重要，若遇到明暗分布不均匀的图像，需要进行必要的处理<br>lines&#x3D;cv2.HoughLinesP(image, rho, theta, threshold, lines&#x3D;None, minLineLength&#x3D;0, maxLineGap&#x3D;0)**</p>
+<p>image：输入图像，通常为二值图像，其中白点表示边缘点，黑点为背景。<br>rho：极径分辨率，以像素为单位，表示极坐标系中的距离分辨率。<br>theta：极角分辨率，以弧度为单位，表示极坐标系中角度的分辨率。<br>threshold：阈值，用于过滤掉弱检测结果，只有累计投票数超过这个阈值的直线才会被返回。<br>lines（可选）：一个可初始化的输出数组，用于存储检测到的直线参数。<br>minLineLength（可选）：最短长度阈值，比这个长度短的线会被排除。<br>maxLineGap（可选）：同一直线两点之间的最大距离。当霍夫变换检测到一系列接近直角的线段时，这些线段可能是同一直线的不同部分。<br>注意：</p>
+<ol>
+<li>minLineLength 太小：可能会检测到很多短的线段，这些线段可能是噪声或不相关的边缘，增加计算量且降低检测结果的可靠性。</li>
+<li>minLineLength 太大：可能会漏掉一些较短但重要的线段，影响车道线的完整性。</li>
+<li>maxLineGap 太小：可能会导致一些连续的线段被分割成多段，无法正确表示实际的车道线。<br>4.maxLineGap 太大：可能会将不相关的线段合并在一起，导致误检。<br>对于公路识别原图：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv    </span><br><span class="line">import numpy as np</span><br><span class="line">img=cv.imread(&#x27;../images/daolu.jpg&#x27;)</span><br><span class="line">#降噪</span><br><span class="line">img=cv.GaussianBlur(img,(3,3),0)</span><br><span class="line">img_g=cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">dst=cv.Canny(img_g,50,80)</span><br><span class="line">#统计概率霍夫直线变换</span><br><span class="line">lines=cv.HoughLinesP(dst,1,np.pi/180,100,minLineLength=130,maxLineGap=50)#参数:图片,rho精度,theta精度,阈值,最小线段长度,最大线段间隔</span><br><span class="line"></span><br><span class="line">#遍历取得数据</span><br><span class="line">img_c=img.copy()</span><br><span class="line">for line in lines:</span><br><span class="line">    x1,y1,x2,y2=line[0]</span><br><span class="line">    cv.line(img_c,(x1,y1),(x2,y2),(0,255,0),1,cv.LINE_AA)</span><br><span class="line">cv.imshow(&#x27;img_c&#x27;,img_c)</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.imshow(&#x27;dst&#x27;,dst)</span><br><span class="line">cv.waitKey()</span><br><span class="line">cv.destroyAllWindows()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-20-2-3霍夫圆变换"><a href="#4-20-2-3霍夫圆变换" class="headerlink" title="4.20.2.3霍夫圆变换"></a>4.20.2.3霍夫圆变换</h5><p>circles&#x3D;cv2.HoughCircles(image, method, dp, minDist, param1, param2)</p>
+<p>image：输入图像，通常是灰度图像。</p>
+<p>method：使用的霍夫变换方法:霍夫梯度法，可以是 cv2.HOUGH_GRADIENT，这是唯一在OpenCV中用于圆检测的方法。</p>
+<p>dp：累加器分辨率与输入图像分辨率之间的降采样比率，用于加速运算但不影响准确性。设置为1表示霍夫梯度法中累加器图像的分辨率与原图一致</p>
+<p>minDist：检测到的圆心之间的最小允许距离，以像素为单位。在霍夫变换检测圆的过程中，可能会检测到许多潜在的圆心。minDist 参数就是为了过滤掉过于接近的圆检测结果，避免检测结果过于密集。当你设置一个较小的 minDist 值时，算法会尝试找出尽可能多的圆，即使是彼此靠得很近的圆也可能都被检测出来。相反，当你设置一个较大的 minDist 值时，算法会倾向于只检测那些彼此间存在一定距离的独立的圆。</p>
+<p>param1 和 param2：这两个参数是在使用 cv2.HOUGH_GRADIENT 方法时的特定参数，分别为：</p>
+<p>param1(可选)：阈值1，决定边缘强度的阈值。</p>
+<p>param2：阈值2，控制圆心识别的精确度。较大的该值会使得检测更严格的圆。param2 通常被称为圆心累积概率的阈值。在使用霍夫梯度方法时，param2 设置的是累加器阈值，它决定了哪些候选圆点集合被认为是有效的圆。较高的 param2 值意味着对圆的检测更严格，只有在累加器中积累了足够高的响应值才认为是真实的圆；较低的 param2 值则会降低检测的门槛，可能会检测到更多潜在的圆，但也可能包含更多的误检结果。</p>
+<p>返回值：cv2.HoughCircles 返回一个二维numpy数组，包含了所有满足条件的圆的参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img=cv.imread(&#x27;../images/huofu.png&#x27;)</span><br><span class="line">imd_g=cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">dst=cv.Canny(imd_g,30,70)</span><br><span class="line">circles=cv.HoughCircles(dst,cv.HOUGH_GRADIENT,1,20,param2=30)</span><br><span class="line">circles=np.int_(circles)</span><br><span class="line">for i in circles:</span><br><span class="line">    x,y,r=i[0]</span><br><span class="line">    cv.circle(img,(x,y),r,(0,255,0),2)</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-21图像亮度变换"><a href="#4-21图像亮度变换" class="headerlink" title="4.21图像亮度变换"></a>4.21图像亮度变换</h3><h4 id="4-21-1步骤"><a href="#4-21-1步骤" class="headerlink" title="4.21.1步骤"></a>4.21.1步骤</h4><p>读图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#读图</span><br><span class="line">img=cv.imread(&#x27;../images/cat1.png&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>使用cv2.addweighted(sr1,alpha,sr2,beta,gamma)函数(输入图像，权重，输出图像，权重，偏移量(亮度))</p>
+<p>将原图的所有像素值带入计算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot; </span><br><span class="line">np.zeros_like(img)：返回一个与img相同形状和类型的零数组。</span><br><span class="line">np.ones_like(img)：返回一个与img相同形状和类型的1数组。</span><br><span class="line">np.full_like(img,value)：返回一个与img相同形状和类型的value数组。</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">dst=cv.addWeighted(img,1,np.zeros_like(img),1,200)</span><br></pre></td></tr></table></figure>
+
+<p>cv2.addWeighted(src1, alpha, src2, beta, gamma)**</p>
+<ul>
+<li><p><code>src1</code>：第一张输入图像，它将被赋予权重 <code>alpha</code>。</p>
+</li>
+<li><p><code>alpha</code>：第一个输入图像的权重。</p>
+</li>
+<li><p><code>src2</code>：第二张输入图像，它将被赋予权重 <code>beta</code>。</p>
+</li>
+<li><p><code>beta</code>：第二个输入图像的权重。</p>
+</li>
+<li><p><code>gamma</code>：一个标量，将被添加到权重求和的结果上，可用于调整总体亮度。</p>
+</li>
+</ul>
+<p>计算公式为: dst &#x3D; src1 * alpha + src2 * beta + gamma</p>
+<p>滑条控制图像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot; </span><br><span class="line">原图：img</span><br><span class="line">输出：dst=img+p</span><br><span class="line">防止溢出：np.clip(dst,0,255)</span><br><span class="line">用一个滑条来控制p的值，p=0时，输出与原图相同，p=255时，输出全黑</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>cv.createTrackbar(trackbarName,windowName,value,count,onChange)</p>
+<p>clip&#x3D;np.clip(img,50,180)</p>
+<p>再利用np.clip修改数值小于所给的阈值，变成所给阈值，大于所给阈值，也修改为对应阈值</p>
+<p>给滑条创建窗口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#给滑条创建窗口</span><br><span class="line">win_name=&#x27;trackbar&#x27;</span><br><span class="line">cv.namedWindow(win_name)</span><br><span class="line">def onChange(p):</span><br></pre></td></tr></table></figure>
+
+<p>再将滑条映射到[-255,255]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def onChange(p):</span><br><span class="line">    #把滑条值映射到[-255,255]</span><br><span class="line">    p=p/255*(255-(-255))-255</span><br><span class="line">    #读图</span><br><span class="line">    dst=np.uint8(np.clip(img+p,0,255))</span><br><span class="line">    cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">    cv.imshow(&#x27;dst&#x27;,dst)</span><br></pre></td></tr></table></figure>
+
+<p>设置初始参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">max_val=255#最大值</span><br><span class="line">trackbar_name=&#x27;p_value&#x27;#滑条名字</span><br><span class="line">initial_value=150#初始值</span><br></pre></td></tr></table></figure>
+
+<p>初始化滑条</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onChange(initial_value)</span><br></pre></td></tr></table></figure>
+
+<p>创建滑条</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv.createTrackbar(trackbar_name,win_name,0,max_val,onChange)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
 
         </div>
 
