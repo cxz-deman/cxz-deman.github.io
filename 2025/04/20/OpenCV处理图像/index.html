@@ -243,6 +243,10 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.putText(cat,&#x27;Hello&#x27;,(cat.shape[1]//2,cat.shape[0]//2),cv.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)</span><br></pre></td></tr></table></figure>
 
 <p>线的类型：#cv.LINE_AA为抗锯齿: cv.LINE_AA, cv.LINE_4, cv.LINE_8, cv.LINE_AA</p>
+<h3 id="2-4图像保存"><a href="#2-4图像保存" class="headerlink" title="2.4图像保存"></a>2.4图像保存</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv.imwrite(&quot;存储位置&quot;，需要存储的图像)</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="3-视频处理"><a href="#3-视频处理" class="headerlink" title="3.视频处理"></a>3.视频处理</h2><h3 id="3-1读取视频"><a href="#3-1读取视频" class="headerlink" title="3.1读取视频"></a>3.1读取视频</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">cap=cv.VideoCapture(&#x27;./img/7233x3100 (4).mp4&#x27;)</span><br><span class="line">while True:</span><br><span class="line">    ret,frame=cap.read()#参数为True时，读取下一帧，为False时，读取最后一帧</span><br><span class="line">    if ret==False:</span><br><span class="line">        print(&#x27;读取失败&#x27;)</span><br><span class="line">        break</span><br><span class="line">    cv.imshow(&#x27;frame&#x27;,frame)</span><br><span class="line">    if cv.waitKey(40)&amp;0xFF==ord(&#x27;q&#x27;):#意思：回第八位的值，0xFF为十六进制的FF，即二进制的11111111</span><br><span class="line">        break</span><br><span class="line">cap.release()  </span><br><span class="line">cv.destroyAllWindows()  </span><br></pre></td></tr></table></figure>
 
 <h2 id="4-图像预处理"><a href="#4-图像预处理" class="headerlink" title="4.图像预处理"></a>4.图像预处理</h2><h3 id="4-1图像预处理准备"><a href="#4-1图像预处理准备" class="headerlink" title="4.1图像预处理准备"></a>4.1图像预处理准备</h3><p>读取图片</p>
@@ -370,10 +374,10 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">demo=cv.imread(&quot;./images/demo.png&quot;)</span><br><span class="line">demo=cv.resize(demo,(480,480))</span><br><span class="line">#颜色bgr转hsv</span><br><span class="line">demo_hsv=cv.cvtColor(demo,cv.COLOR_BGR2HSV)</span><br></pre></td></tr></table></figure>
 
 <p>创建掩膜：cv.inRange(src,lowerb,upperb,dst) </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#创建掩膜：cv.inRange(src,lowerb,upperb,dst)，参数：src：源图像，lowerb：颜色下限，upperb：颜色上限，dst：输出图像</span><br><span class="line">color_low=np.array([23,46,46])</span><br><span class="line">color_high=np.array([34,255,255])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#创建掩膜：cv.inRange(src,lowerb,upperb)，参数：src：源图像，lowerb：颜色下限，upperb：颜色上限</span><br><span class="line">color_low=np.array([23,46,46])</span><br><span class="line">color_high=np.array([34,255,255])</span><br><span class="line">mask=cv.inRange(demo_hsv,color_low,color_high)#只显示黑白色</span><br></pre></td></tr></table></figure>
 
 <p>做与运算输出掩膜cv.bitwise_and(demo,demo,mask&#x3D;mask)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#创建掩膜与原图大小一样，是一个二值化图像</span><br><span class="line">mask=cv.inRange(demo_hsv,color_low,color_high)#只显示黑白色</span><br><span class="line">mask_and=cv.bitwise_and(demo,demo,mask=mask)#做两次运算前两个颜色，再与掩膜运算</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#创建掩膜与原图大小一样，是一个二值化图像</span><br><span class="line">mask_and=cv.bitwise_and(demo,demo,mask=mask)#做两次运算前两个颜色，再与掩膜运算</span><br></pre></td></tr></table></figure>
 
 <p>将原图目标色进行替换</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#修改颜色</span><br><span class="line">demo[mask==255]=[0,255,0]</span><br><span class="line">cv.imshow(&#x27;demo&#x27;,demo)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
@@ -528,7 +532,8 @@
 <p>绘制凸包</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制凸包</span><br><span class="line">cv.polylines(img,[hull],True,(0,255,0),1,cv.LINE_AA)</span><br><span class="line">#显示图像</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-17绘制矩形"><a href="#4-17绘制矩形" class="headerlink" title="4.17绘制矩形"></a>4.17绘制矩形</h3><h4 id="4-17-1绘制正向的一般矩形"><a href="#4-17-1绘制正向的一般矩形" class="headerlink" title="4.17.1绘制正向的一般矩形"></a>4.17.1绘制正向的一般矩形</h4><p>读图、图像预处理、灰度、二值化</p>
+<h3 id="4-17绘制矩形"><a href="#4-17绘制矩形" class="headerlink" title="4.17绘制矩形"></a>4.17绘制矩形</h3><h4 id="4-17-1绘制正向的一般矩形"><a href="#4-17-1绘制正向的一般矩形" class="headerlink" title="4.17.1绘制正向的一般矩形"></a>4.17.1绘制正向的一般矩形</h4><p><strong>旋转卡壳法</strong></p>
+<p>读图、图像预处理、灰度、二值化</p>
 <p>白色图像为目标</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制矩形</span><br><span class="line">import  cv2 as cv</span><br><span class="line">img=cv.imread(&#x27;../images/num.png&#x27;)</span><br><span class="line">num=img.copy()</span><br><span class="line">num_gray=cv.cvtColor(num,cv.COLOR_BGR2GRAY)</span><br><span class="line">_,num_binary=cv.threshold(num_gray,150,255,cv.THRESH_BINARY_INV)#反阈值法</span><br></pre></td></tr></table></figure>
 
@@ -539,7 +544,7 @@
 <p>利用cv.rectangle绘制出来</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for cnt in c:</span><br><span class="line">    x,y,w,h=cv.boundingRect(cnt)</span><br><span class="line">    print(cnt,end=&#x27;,&#x27;)</span><br><span class="line">    cv.rectangle(img_Con,(x,y),(x+w,y+h),(0,255,0),1,cv.LINE_AA)</span><br><span class="line">cv.imshow(&#x27;drawing img_Con&#x27;,img_Con)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-17-2绘制最小矩阵"><a href="#4-17-2绘制最小矩阵" class="headerlink" title="4.17.2绘制最小矩阵"></a>4.17.2绘制最小矩阵</h4><p>无关方向，最小能包裹目标图像的矩形</p>
+<h4 id="4-17-2绘制最小矩形"><a href="#4-17-2绘制最小矩形" class="headerlink" title="4.17.2绘制最小矩形"></a>4.17.2绘制最小矩形</h4><p>无关方向，最小能包裹目标图像的矩形</p>
 <p>读图、图像预处理、灰度、二值化</p>
 <p>白色图像为目标</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#绘制矩形</span><br><span class="line">import  cv2 as cv</span><br><span class="line">img=cv.imread(&#x27;../images/num.png&#x27;)</span><br><span class="line">num=img.copy()</span><br><span class="line">num_gray=cv.cvtColor(num,cv.COLOR_BGR2GRAY)</span><br><span class="line">_,num_binary=cv.threshold(num_gray,150,255,cv.THRESH_BINARY_INV)#反阈值法</span><br></pre></td></tr></table></figure>
@@ -553,7 +558,7 @@
 <p>使用cv.polylines()绘制参数：目标图，坐标列表，是否闭合，颜色，宽度，线形</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">for cnt in c:</span><br><span class="line">        # 计算最小外接矩形</span><br><span class="line">    rect = cv.minAreaRect(cnt)#返回最小外接矩形的中心点、宽高和角度</span><br><span class="line"></span><br><span class="line">    # 将最小外接矩形的中心、尺寸和角度转换为四个角点坐标</span><br><span class="line">    box = cv.boxPoints(rect)</span><br><span class="line">    box = box.astype(&#x27;int&#x27;)  # 转换为整数类型</span><br><span class="line">    </span><br><span class="line">    # 绘制旋转后的最小外接矩形</span><br><span class="line">    cv.polylines(img, [box], isClosed=True, color=(0, 0, 255), thickness=1, lineType=cv.LINE_AA)</span><br><span class="line">    </span><br><span class="line">    #绘制矩阵</span><br><span class="line">    x,y,w,h=cv.boundingRect(cnt)</span><br><span class="line">    cv.rectangle(img_Con,(x,y),(x+w,y+h),(255,0,0),2,cv.LINE_AA)</span><br><span class="line">    </span><br><span class="line">    #绘制凸包</span><br><span class="line">    hull = cv.convexHull(cnt)</span><br><span class="line">    # cv.drawContours(img_Con, [hull], 0, (0, 255, 0), 2, cv.LINE_AA)</span><br><span class="line">    cv.polylines(img_Con, [hull], isClosed=True, color=(0, 255, 0), thickness=2, lineType=cv.LINE_AA)</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-18直方图和直方图均衡化"><a href="#4-18直方图和直方图均衡化" class="headerlink" title="4.18直方图和直方图均衡化"></a>4.18直方图和直方图均衡化</h3><h4 id="4-18-1绘制直方图的步骤"><a href="#4-18-1绘制直方图的步骤" class="headerlink" title="4.18.1绘制直方图的步骤"></a>4.18.1绘制直方图的步骤</h4><p>读图</p>
+<h4 id="4-17-3最小外接圆"><a href="#4-17-3最小外接圆" class="headerlink" title="4.17.3最小外接圆"></a>4.17.3最小外接圆</h4><h3 id="4-18直方图和直方图均衡化"><a href="#4-18直方图和直方图均衡化" class="headerlink" title="4.18直方图和直方图均衡化"></a>4.18直方图和直方图均衡化</h3><h4 id="4-18-1绘制直方图的步骤"><a href="#4-18-1绘制直方图的步骤" class="headerlink" title="4.18.1绘制直方图的步骤"></a>4.18.1绘制直方图的步骤</h4><p>读图</p>
 <p>利用函数cv.calcHist([img],[2],None,[256],[0,256])</p>
 <p>返回一个数组列表，代表每一个像素值的像素数量</p>
 <p>参数：图片，通道，掩膜，直方图大小，直方图范围</p>
@@ -605,9 +610,9 @@
 <p>使用cv.matchTemplate(原图，目标图，匹配的方法)</p>
 <p>匹配方法，可以是以下之一：</p>
 <ul>
-<li>cv2.TM_CCOEFF</li>
+<li>cv2.TM_CCOEFF </li>
 <li>cv2.TM_CCOEFF_NORMED</li>
-<li>cv2.TM_CCORR</li>
+<li>cv2.TM_CCORR  </li>
 <li>cv2.TM_CCORR_NORMED</li>
 <li>cv2.TM_SQDIFF</li>
 <li>cv2.TM_SQDIFF_NORMED</li>
@@ -618,7 +623,7 @@
 <p>设置阈值，使用np.where()的函数获取符合条件的坐标</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">threshold=0.8</span><br><span class="line">loc=np.where(res&gt;=threshold)</span><br><span class="line">h,w=temp.shape[:2]#获取目标图的长和宽</span><br></pre></td></tr></table></figure>
 
-<p>使用zip(*loc)返回一个迭代器</p>
+<p>使用zip(<em>loc)返回一个迭代器</em><em>（解包操作）</em>*</p>
 <p>进行图像绘制</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for pt in zip(*loc):#py===&gt;(y,x)</span><br><span class="line">    leftupper=pt[::-1]#(x,y)</span><br><span class="line">    rightbottom=(pt[1]+w,pt[0]+h)#(x+w,y+h)</span><br><span class="line">    cv.rectangle(img,leftupper,rightbottom,(0,0,255),2)</span><br><span class="line">cv.imshow(&#x27;img&#x27;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 
@@ -688,6 +693,44 @@
 <p>创建滑条</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv.createTrackbar(trackbar_name,win_name,0,max_val,onChange)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
 
+<h3 id="4-22形态学变换"><a href="#4-22形态学变换" class="headerlink" title="4.22形态学变换"></a>4.22形态学变换</h3><h4 id="4-22-1基本概念"><a href="#4-22-1基本概念" class="headerlink" title="4.22.1基本概念"></a>4.22.1基本概念</h4><p>形态学变换是基于图像形状的一系列操作，主要针对二值图像，使用结构元素(核)与图像进行相互作用。</p>
+<h4 id="4-22-2各运算总结"><a href="#4-22-2各运算总结" class="headerlink" title="4.22.2各运算总结"></a>4.22.2各运算总结</h4><h5 id="4-22-2-1-腐蚀-Erosion"><a href="#4-22-2-1-腐蚀-Erosion" class="headerlink" title="4.22.2.1. 腐蚀 (Erosion)"></a>4.22.2.1. 腐蚀 (Erosion)</h5><ul>
+<li><strong>作用</strong>：消除边界点，使物体缩小</li>
+<li><strong>代码</strong>：<code>cv2.erode(src, kernel, iterations)</code></li>
+<li><strong>步骤</strong>：核在图像上滑动，只有当核覆盖区域全为1时，中心像素才保留</li>
+</ul>
+<h5 id="4-22-2-2-膨胀-Dilation"><a href="#4-22-2-2-膨胀-Dilation" class="headerlink" title="4.22.2.2. 膨胀 (Dilation)"></a>4.22.2.2. 膨胀 (Dilation)</h5><ul>
+<li><strong>作用</strong>：填补空洞，扩大物体</li>
+<li><strong>代码</strong>：<code>cv2.dilate(src, kernel, iterations)</code></li>
+<li><strong>步骤</strong>：核覆盖区域有至少一个1时，中心像素设为1</li>
+</ul>
+<h5 id="4-22-2-3-开运算-Opening-cv2-MORPH-OPEN"><a href="#4-22-2-3-开运算-Opening-cv2-MORPH-OPEN" class="headerlink" title="4.22.2.3. 开运算 (Opening|cv2.MORPH_OPEN)"></a>4.22.2.3. 开运算 (Opening|cv2.MORPH_OPEN)</h5><ul>
+<li><strong>作用</strong>：先腐蚀后膨胀，去除小物体</li>
+<li><strong>代码</strong>：<code>cv2.morphologyEx(src, cv2.MORPH_OPEN, kernel)</code></li>
+</ul>
+<h5 id="4-22-2-4-闭运算-Closing-cv2-MORPH-CLOSE"><a href="#4-22-2-4-闭运算-Closing-cv2-MORPH-CLOSE" class="headerlink" title="4.22.2.4. 闭运算 (Closing|cv2.MORPH_CLOSE)"></a>4.22.2.4. 闭运算 (Closing|cv2.MORPH_CLOSE)</h5><ul>
+<li><strong>作用</strong>：先膨胀后腐蚀，填补小孔</li>
+<li><strong>代码</strong>：<code>cv2.morphologyEx(src, cv2.MORPH_CLOSE, kernel)</code></li>
+</ul>
+<h5 id="4-22-2-5-礼帽运算-顶帽运算-Top-Hat-cv2-MORPH-TOPHAT"><a href="#4-22-2-5-礼帽运算-顶帽运算-Top-Hat-cv2-MORPH-TOPHAT" class="headerlink" title="4.22.2.5. 礼帽运算&#x2F;顶帽运算 (Top Hat|cv2.MORPH_TOPHAT)"></a>4.22.2.5. 礼帽运算&#x2F;顶帽运算 (Top Hat|cv2.MORPH_TOPHAT)</h5><ul>
+<li><strong>作用</strong>：原图与开运算结果之差</li>
+<li><strong>代码</strong>：<code>cv2.morphologyEx(src, cv2.MORPH_TOPHAT, kernel)</code></li>
+<li><strong>实际用途</strong>：提取比背景亮的细小物体(如白纸上的黑字中的白噪声)</li>
+</ul>
+<h5 id="4-22-2-6-黑帽运算-Black-Hat-cv2-MORPH-BLACKHAT"><a href="#4-22-2-6-黑帽运算-Black-Hat-cv2-MORPH-BLACKHAT" class="headerlink" title="4.22.2.6. 黑帽运算 (Black Hat| cv2.MORPH_BLACKHAT)"></a>4.22.2.6. 黑帽运算 (Black Hat| cv2.MORPH_BLACKHAT)</h5><ul>
+<li><strong>作用</strong>：闭运算结果与原图之差</li>
+<li><strong>代码</strong>：<code>cv2.morphologyEx(src, cv2.MORPH_BLACKHAT, kernel)</code></li>
+<li><strong>实际用途</strong>：提取比背景暗的细小物体(如黑纸上的白字中的黑点)，工业检测中产品瑕疵</li>
+</ul>
+<h5 id="4-22-2-7-形态学梯度-Morphological-Gradient-cv2-MORPH-GRADIENT"><a href="#4-22-2-7-形态学梯度-Morphological-Gradient-cv2-MORPH-GRADIENT" class="headerlink" title="4.22.2.7. 形态学梯度 (Morphological Gradient|cv2.MORPH_GRADIENT)"></a>4.22.2.7. 形态学梯度 (Morphological Gradient|cv2.MORPH_GRADIENT)</h5><ul>
+<li><strong>作用</strong>：膨胀与腐蚀结果之差，得到物体边缘</li>
+<li><strong>代码</strong>：<code>cv2.morphologyEx(src, cv2.MORPH_GRADIENT, kernel)</code></li>
+</ul>
+<h4 id="4-22-3通用步骤"><a href="#4-22-3通用步骤" class="headerlink" title="4.22.3通用步骤"></a>4.22.3通用步骤</h4><ol>
+<li>定义结构元素(核)：<code>kernel = cv2.getStructuringElement(shape, size)</code></li>
+<li>选择适当的形态学操作</li>
+<li>应用操作并显示结果</li>
+</ol>
 
         </div>
 
