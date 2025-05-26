@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>机器学习 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">机器学习</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">CXZ</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 6, 2025&nbsp;&nbsp;18:35:31</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、机器学习介绍与定义"><a href="#一、机器学习介绍与定义" class="headerlink" title="一、机器学习介绍与定义"></a>一、机器学习介绍与定义</h1><h2 id="1-机器学习的定义"><a href="#1-机器学习的定义" class="headerlink" title="1.机器学习的定义"></a>1.机器学习的定义</h2><p>机器学习（Machine Learning）本质上就是让计算机自己在数据中学习规律，并根据所得到的规律对未来数据进行预测。</p>
+<h2 id="2-机器学习的分类"><a href="#2-机器学习的分类" class="headerlink" title="2.机器学习的分类"></a>2.机器学习的分类</h2><p>机器学习包括如聚类、分类、决策树、贝叶斯、神经网络、深度学习（Deep Learning）等算法。</p>
+<h3 id="2-1监督学习"><a href="#2-1监督学习" class="headerlink" title="2.1监督学习"></a>2.1监督学习</h3><p>监督学习（Supervised Learning）是从有标签的训练数据中学习模型，然后对某个给定的新数据利用模型预测它的标签。如果分类标签精确度越高，则学习模型准确度越高，预测结果越精确。</p>
+<p>常见的监督学习的回归算法有<strong>线性回归、回归树、K邻近、Adaboost、神经网络</strong>等。</p>
+<p>常见的监督学习的分类算法有<strong>朴素贝叶斯、决策树、SVM、逻辑回归、K邻近、Adaboost、神经网络</strong>等。</p>
+<h3 id="2-2半监督学习"><a href="#2-2半监督学习" class="headerlink" title="2.2半监督学习"></a>2.2半监督学习</h3><p>半监督学习（Semi-Supervised Learning）是利用<strong>少量标注数据和大量无标注数据</strong>进行学习的模式。</p>
+<p>半监督学习侧重于在有监督的分类算法中加入无标记样本来实现半监督分类。</p>
+<p>常见的半监督学习算法有<strong>Pseudo-Label、Π-Model、Temporal Ensembling、Mean Teacher、VAT、UDA、MixMatch、ReMixMatch、FixMatch</strong>等。</p>
+<h3 id="2-3无监督学习"><a href="#2-3无监督学习" class="headerlink" title="2.3无监督学习"></a>2.3无监督学习</h3><p>无监督学习（Unsupervised Learning）是从<strong>未标注数据</strong>中寻找隐含结构的过程。</p>
+<p>无监督学习主要用于关联分析、聚类和降维。</p>
+<p>常见的无监督学习算法有**稀疏自编码（Sparse Auto-Encoder）、主成分分析（Principal Component Analysis, PCA）、K-Means算法（K均值算法）、DBSCAN算法（Density-Based Spatial Clustering of Applications with Noise）、最大期望算法（Expectation-Maximization algorithm, EM）**等。</p>
+<h3 id="2-4强化学习"><a href="#2-4强化学习" class="headerlink" title="2.4强化学习"></a>2.4强化学习</h3><p>强化学习（Reinforcement Learning）类似于监督学习，但未使用样本数据进行训练，是是通过不断试错进行学习的模式。</p>
+<p>在强化学习中，有两个可以进行交互的对象：智能体（Agnet）和环境（Environment），还有四个核心要素：策略（Policy）、回报函数（收益信号，Reward Function）、价值函数（Value Function）和环境模型（Environment Model），其中环境模型是可选的。</p>
+<p>强化学习常用于机器人避障、棋牌类游戏、广告和推荐等应用场景中。</p>
+<p>为了便于读者理解，用灰色圆点代表没有标签的数据，其他颜色的圆点代表不同的类别有标签数据。监督学习、半监督学习、无监督学习、强化学习的示意图如下所示：</p>
+<h2 id="3-安装方法"><a href="#3-安装方法" class="headerlink" title="3.安装方法"></a>3.安装方法</h2><p>参考以下安装教程：<a target="_blank" rel="noopener" href="https://www.sklearncn.cn/62/">https://www.sklearncn.cn/62/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple scikit-learn</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、数据集"><a href="#二、数据集" class="headerlink" title="二、数据集"></a>二、数据集</h1><h2 id="1-sklearn玩具数据集介绍"><a href="#1-sklearn玩具数据集介绍" class="headerlink" title="1.sklearn玩具数据集介绍"></a>1.sklearn玩具数据集介绍</h2><p>数据量小，数据在sklearn库的本地，只要安装了sklearn，不用上网就可以获取</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>load_boston(*[, return_X_y])</code></td>
+<td>加载并返回波士顿房价数据集（回归）。</td>
+</tr>
+<tr>
+<td><code>load_iris(*[, return_X_y, as_frame])</code></td>
+<td>加载并返回鸢尾花数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>load_diabetes(*[, return_X_y, as_frame])</code></td>
+<td>加载并返回糖尿病数据集（回归）。</td>
+</tr>
+<tr>
+<td><code>load_digits(*[, n_class, return_X_y, as_frame])</code></td>
+<td>加载并返回数字数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>load_linnerud(*[, return_X_y, as_frame])</code></td>
+<td>加载并返回linnerud物理锻炼数据集。</td>
+</tr>
+<tr>
+<td><code>load_wine(*[, return_X_y, as_frame])</code></td>
+<td>加载并返回葡萄酒数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>load_breast_cancer(*[, return_X_y, as_frame])</code></td>
+<td>加载并返回威斯康星州乳腺癌数据集（分类）。</td>
+</tr>
+</tbody></table>
+<h2 id="2-sklearn现实世界数据集介绍"><a href="#2-sklearn现实世界数据集介绍" class="headerlink" title="2.sklearn现实世界数据集介绍"></a>2.sklearn现实世界数据集介绍</h2><p>数据量大，数据只能通过网络获取</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fetch_olivetti_faces(*[, data_home, ...])</code></td>
+<td>从AT&amp;T（分类）中加载Olivetti人脸数据集。</td>
+</tr>
+<tr>
+<td><code>fetch_20newsgroups(*[, data_home, subset, ...])</code></td>
+<td>从20个新闻组数据集中加载文件名和数据（分类）。</td>
+</tr>
+<tr>
+<td><code>fetch_20newsgroups_vectorized(*[, subset, ...])</code></td>
+<td>加载20个新闻组数据集并将其矢量化为令牌计数（分类）。</td>
+</tr>
+<tr>
+<td><code>fetchlfw_people(*[, data_home, funneled, ...])</code></td>
+<td>将标签的面孔加载到Wild（LFW）人数据集中（分类）。</td>
+</tr>
+<tr>
+<td><code>fetchlfw_pairs(*[, subset, data_home, ...])</code></td>
+<td>在“Wild（LFW）”对数据集中加载标签的面部（分类）。</td>
+</tr>
+<tr>
+<td><code>fetch_covtype(*[, data_home, ...])</code></td>
+<td>加载covertype（植被型数据集）数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>fetch_rcv1(*[, data_home, subset, ...])</code></td>
+<td>加载RCV1多标签数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>fetch_kddcup99(*[, subset, data_home, ...])</code></td>
+<td>加载kddcup99（网络入侵检测）数据集（分类）。</td>
+</tr>
+<tr>
+<td><code>fetch_california_housing(*[, data_home, ...])</code></td>
+<td>加载加利福尼亚住房数据集（回归）。</td>
+</tr>
+</tbody></table>
+<h2 id="3-sklearn加载玩具数据集"><a href="#3-sklearn加载玩具数据集" class="headerlink" title="3.sklearn加载玩具数据集"></a>3.sklearn加载玩具数据集</h2><p>示例数据集：鸢尾花数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">iris = load_iris()</span><br></pre></td></tr></table></figure>
+
+<p>鸢尾花数据集介绍</p>
+<p>特征有：</p>
+<p>花萼长 sepal length  </p>
+<p>​	花萼宽sepal width </p>
+<p>​	花瓣长 petal length  </p>
+<p>​	花瓣宽 petal width</p>
+<p>三分类：</p>
+<p>​	0-Setosa山鸢尾    </p>
+<p>​	1-versicolor变色鸢尾   </p>
+<p>​	2-Virginica维吉尼亚鸢尾</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sepal length (cm)</th>
+<th>sepal width (cm)</th>
+<th>petal length (cm)</th>
+<th>petal width (cm)</th>
+<th>target</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4.9</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4.7</td>
+<td>3.2</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4.6</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5.0</td>
+<td>3.6</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>145</td>
+<td>6.7</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>146</td>
+<td>6.3</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>1.9</td>
+<td>2</td>
+</tr>
+<tr>
+<td>147</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>148</td>
+<td>6.2</td>
+<td>3.4</td>
+<td>5.4</td>
+<td>2.3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>149</td>
+<td>5.9</td>
+<td>3.0</td>
+<td>5.1</td>
+<td>1.8</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<p>150 rows × 5 columns</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">iris=load_iris()</span><br></pre></td></tr></table></figure>
+
+<p>iris字典中有几个重要属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># data 特征</span><br><span class="line"># feature_names 特征描述</span><br><span class="line"># target  目标</span><br><span class="line"># target_names  目标描述</span><br><span class="line"># DESCR 数据集的描述</span><br><span class="line"># filename 下后到本地保存后的文件名</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(iris.data)<span class="comment">#得到特征</span></span><br><span class="line"><span class="built_in">print</span>(iris.feature_names) <span class="comment">#特征描述</span></span><br><span class="line"><span class="built_in">print</span>(iris.target) <span class="comment">#目标形状</span></span><br><span class="line"><span class="built_in">print</span>(iris.target_names)<span class="comment">#目标描述</span></span><br><span class="line"><span class="built_in">print</span>(iris.filename) <span class="comment">#iris.csv 保存后的文件名</span></span><br><span class="line"><span class="built_in">print</span>(iris.DESCR)<span class="comment">#数据集的描述</span></span><br></pre></td></tr></table></figure>
+
+<p>下面使用pandas把特征和目标一起显示出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">iris = load_iris()</span><br><span class="line">feature = iris.data</span><br><span class="line">target = iris.target</span><br><span class="line">target.shape=(len(target), 1)</span><br><span class="line">data = np.hstack([feature, target])</span><br><span class="line">cols = iris.feature_names</span><br><span class="line">cols.append(&quot;target&quot;)</span><br><span class="line">pd.DataFrame(data,columns=cols)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sepal length (cm)</th>
+<th>sepal width (cm)</th>
+<th>petal length (cm)</th>
+<th>petal width (cm)</th>
+<th>target</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4.9</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4.7</td>
+<td>3.2</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4.6</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5.0</td>
+<td>3.6</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>145</td>
+<td>6.7</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.3</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>146</td>
+<td>6.3</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>1.9</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>147</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>148</td>
+<td>6.2</td>
+<td>3.4</td>
+<td>5.4</td>
+<td>2.3</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>149</td>
+<td>5.9</td>
+<td>3.0</td>
+<td>5.1</td>
+<td>1.8</td>
+<td>2.0</td>
+</tr>
+</tbody></table>
+<p>150 rows × 5 columns</p>
+<h2 id="4-sklearn获得现实世界数据集"><a href="#4-sklearn获得现实世界数据集" class="headerlink" title="4.sklearn获得现实世界数据集"></a>4.sklearn获得现实世界数据集</h2><p>(1)所有现实世界数据，通过网络才能下载后，默认保存的目录可以使用下面api获取。实际上就是保存到home目录</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line">datasets.get_data_home()  <span class="comment">#查看数据集默认存放的位置</span></span><br></pre></td></tr></table></figure>
+
+<p>(2)下载时，有可能回为网络问题而出问题，要“小心”的解决网络问题，不可言…..</p>
+<p>(3)第一次下载会保存的硬盘中，如果第二次下载，因为硬盘中已经保存有了，所以不会再次下载就直接加载成功了。</p>
+<p><strong>示例：获得20分类新闻数据集</strong></p>
+<p>(1)使用函数:  sklearn.datasets.fetch_20newsgroups(data_home,subset)</p>
+<p>(2)函数参数说明:</p>
+<p>(2.1) data_home</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">None</span><br><span class="line">	这是默认值，下载的文件路径为 “C:/Users/ADMIN/scikit_learn_data/20news-bydate_py3.pkz”</span><br><span class="line">自定义路径</span><br><span class="line">	例如 “./src”, 下载的文件路径为“./20news-bydate_py3.pkz”</span><br></pre></td></tr></table></figure>
+
+<p>(2.2) subset</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">“train”，只下载训练集</span><br><span class="line">“test”，只下载测试集</span><br><span class="line">“all”， 下载的数据包含了训练集和测试集</span><br></pre></td></tr></table></figure>
+
+<p>(2.3) return_X_y，决定着返回值的情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">False，这是默认值</span><br><span class="line">True,</span><br></pre></td></tr></table></figure>
+
+<p>(3) 函数返值说明:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">当参数return_X_y值为False时， 函数返回Bunch对象,Bunch对象中有以下属性</span><br><span class="line">    *data:特征数据集, 长度为18846的列表list, 每一个元素就是一篇新闻内容， 共有18846篇</span><br><span class="line">    *target:目标数据集，长度为18846的数组ndarray, 第一个元素是一个整数，整数值为[0,20)</span><br><span class="line">    *target_names:目标描述，长度为20的list</span><br><span class="line">    *filenames：长度为18846的ndarray, 元素为字符串,代表新闻的数据位置的路径</span><br><span class="line">    </span><br><span class="line">当参数return_X_y值为True时，函数返回值为元组，元组长度为2， 第一个元素值为特征数据集，第二个元素值为目标数据集</span><br></pre></td></tr></table></figure>
+
+<p>代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups <span class="comment">#这是一个20分类的数据</span></span><br><span class="line">news = fetch_20newsgroups(data_home=<span class="literal">None</span>,subset=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(news.data)) <span class="comment">#18846</span></span><br><span class="line"><span class="built_in">print</span>(news.target.shape) <span class="comment">#(18846,)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(news.target_names)) <span class="comment">#20</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(news.filenames)) <span class="comment">#18846</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-使用pandas读取"><a href="#5-使用pandas读取" class="headerlink" title="5.使用pandas读取"></a>5.使用pandas读取</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data=pd.read_csv(&quot;文件路径&quot;)</span><br><span class="line">pf=pd.Dataframe(data)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-数据集划分"><a href="#6-数据集划分" class="headerlink" title="6.数据集划分"></a>6.数据集划分</h2><h3 id="6-1-函数代码展示"><a href="#6-1-函数代码展示" class="headerlink" title="6.1 函数代码展示"></a>6.1 函数代码展示</h3><h4 id="6-1-1一般数据集划分"><a href="#6-1-1一般数据集划分" class="headerlink" title="6.1.1一般数据集划分"></a>6.1.1一般数据集划分</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sklearn.model_selection.train_test_split(*arrays，**options)</span><br></pre></td></tr></table></figure>
+
+<p>arrays:接收数据，一个数据或者两个数据</p>
+<p>options:内置参数例如，</p>
+<p>随机数种子：random_state</p>
+<p>是否打乱原数据：shuffle（布尔）</p>
+<p>测试集尺寸：test_size</p>
+<h4 id="6-1-2字典数据集"><a href="#6-1-2字典数据集" class="headerlink" title="6.1.2字典数据集"></a>6.1.2字典数据集</h4><p>转化为稀疏矩阵</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction <span class="keyword">import</span> DictVectorizer</span><br><span class="line">data = [&#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;成都&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">20</span>&#125;, </span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;重庆&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">33</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">60</span>&#125;, </span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;北京&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">42</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">80</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;上海&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">22</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">70</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;成都&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">72</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">40</span>&#125;,</span><br><span class="line">       ]</span><br><span class="line">transfer = DictVectorizer(sparse=<span class="literal">True</span>)</span><br><span class="line">data_new = transfer.fit_transform(data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;data_new:\n&quot;</span>, data_new)</span><br><span class="line">x = data_new.toarray()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(x))</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#(0,0)是矩阵的行列下标  30是值</span></span><br><span class="line">data_new:</span><br><span class="line">   (<span class="number">0</span>, <span class="number">0</span>)	<span class="number">30.0</span></span><br><span class="line">  (<span class="number">0</span>, <span class="number">3</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">0</span>, <span class="number">5</span>)	<span class="number">20.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">0</span>)	<span class="number">33.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">4</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">5</span>)	<span class="number">60.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">0</span>)	<span class="number">42.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">2</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">5</span>)	<span class="number">80.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">0</span>)	<span class="number">22.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">1</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">5</span>)	<span class="number">70.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">0</span>)	<span class="number">72.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">3</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">5</span>)	<span class="number">40.0</span></span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;numpy.ndarray&#x27;</span>&gt;</span><br><span class="line"><span class="comment"># 第一行中:30表示age的值  0表示上海 0表示北京 1表示成都 0表示重庆 20表示temperature</span></span><br><span class="line">[[<span class="number">30.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span> <span class="number">20.</span>]</span><br><span class="line"> [<span class="number">33.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span> <span class="number">60.</span>]</span><br><span class="line"> [<span class="number">42.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span> <span class="number">80.</span>]</span><br><span class="line"> [<span class="number">22.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span> <span class="number">70.</span>]</span><br><span class="line"> [<span class="number">72.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span> <span class="number">40.</span>]]</span><br></pre></td></tr></table></figure>
+
+<p>使用train_test_split进行划分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a, b = train_test_split(data_new,  test_size=0.4, random_state=22)</span><br><span class="line">print(a)</span><br><span class="line">print(&quot;\n&quot;, b)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(0, 0)	22.0</span><br><span class="line"> (0, 1)	1.0</span><br><span class="line"> (0, 5)	70.0</span><br><span class="line"> (1, 0)	30.0</span><br><span class="line"> (1, 3)	1.0</span><br><span class="line"> (1, 5)	20.0</span><br><span class="line"> (2, 0)	72.0</span><br><span class="line"> (2, 3)	1.0</span><br><span class="line"> (2, 5)	40.0</span><br><span class="line"></span><br><span class="line">  (0, 0)	33.0</span><br><span class="line"> (0, 4)	1.0</span><br><span class="line"> (0, 5)	60.0</span><br><span class="line"> (1, 0)	42.0</span><br><span class="line"> (1, 2)	1.0</span><br><span class="line"> (1, 5)	80.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-特征工程"><a href="#7-特征工程" class="headerlink" title="7.特征工程"></a>7.特征工程</h2><h3 id="7-1特征工程API，"><a href="#7-1特征工程API，" class="headerlink" title="7.1特征工程API，"></a>7.1特征工程API，</h3><p>实例化转换器对象，转换器种类，需要利用Transformer的子类，常用的子类有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DictVectorizer  	字典特征提取</span><br><span class="line">CountVectorizer 	文本特征提取</span><br><span class="line">TfidfVectorizer 	TF-IDF文本特征词的重要程度特征提取 </span><br><span class="line">MinMaxScaler 		归一化</span><br><span class="line">StandardScaler 		标准化</span><br><span class="line">VarianceThreshold 	底方差过滤降维</span><br><span class="line">PCA  				主成分分析降维</span><br></pre></td></tr></table></figure>
+
+<p>转换器需要使用fit_transform()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_new=transfer.fit_transform(data)</span><br><span class="line"></span><br><span class="line">data_new=transform(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2DictVectorizer-字典列表特征提取"><a href="#7-2DictVectorizer-字典列表特征提取" class="headerlink" title="7.2DictVectorizer  字典列表特征提取"></a>7.2DictVectorizer  字典列表特征提取</h3><h4 id="7-2-1稀疏矩阵"><a href="#7-2-1稀疏矩阵" class="headerlink" title="7.2.1稀疏矩阵"></a>7.2.1稀疏矩阵</h4><p>稀疏矩阵是指一个矩阵中大部分元素为零，只有少数元素是非零的矩阵。在数学和计算机科学中，当一个矩阵的非零元素数量远小于总的元素数量，且非零元素分布没有明显的规律时，这样的矩阵就被认为是稀疏矩阵。例如，在一个1000 x 1000的矩阵中，如果只有1000个非零元素，那么这个矩阵就是稀疏的。</p>
+<p>由于稀疏矩阵中零元素非常多，存储和处理稀疏矩阵时，通常会采用特殊的存储格式，以节省内存空间并提高计算效率。</p>
+<p><strong>三元组表</strong> (Coordinate List, COO)：三元组表就是一种稀疏矩阵类型数据,存储非零元素的行索引、列索引和值:</p>
+<p>(行,列) 数据</p>
+<p>(0,0) 10</p>
+<p>(0,1) 20</p>
+<p>(2,0) 90</p>
+<p>(2,20) 8</p>
+<p>(8,0) 70</p>
+<p>表示除了列出的有值, 其余全是0</p>
+<h4 id="7-2-2非稀疏矩阵（稠密矩阵）"><a href="#7-2-2非稀疏矩阵（稠密矩阵）" class="headerlink" title="7.2.2非稀疏矩阵（稠密矩阵）"></a>7.2.2非稀疏矩阵（稠密矩阵）</h4><p>非稀疏矩阵，或称稠密矩阵，是指矩阵中非零元素的数量与总元素数量相比接近或相等，也就是说矩阵中的大部分元素都是非零的。在这种情况下，矩阵的存储通常采用标准的二维数组形式，因为非零元素密集分布，不需要特殊的压缩或优化存储策略。</p>
+<ul>
+<li><strong>存储</strong>：稀疏矩阵使用特定的存储格式来节省空间，而稠密矩阵使用常规的数组存储所有元素，无论其是否为零。</li>
+<li><strong>计算</strong>：稀疏矩阵在进行计算时可以利用零元素的特性跳过不必要的计算，从而提高效率。而稠密矩阵在计算时需要处理所有元素，包括零元素。</li>
+<li><strong>应用领域</strong>：稀疏矩阵常见于大规模数据分析、图形学、自然语言处理、机器学习等领域，而稠密矩阵在数学计算、线性代数等通用计算领域更为常见。</li>
+</ul>
+<p>在实际应用中，选择使用稀疏矩阵还是稠密矩阵取决于具体的问题场景和数据特性。</p>
+<h4 id="7-2-3api"><a href="#7-2-3api" class="headerlink" title="7.2.3api"></a>7.2.3api</h4><ul>
+<li><p>创建转换器对象:</p>
+<p>sklearn.feature_extraction.DictVectorizer(sparse&#x3D;True)</p>
+<p>参数:</p>
+<p>sparse&#x3D;True返回类型为csr_matrix的稀疏矩阵</p>
+<p>sparse&#x3D;False表示返回的是数组,数组可以调用.toarray()方法将稀疏矩阵转换为数组</p>
+</li>
+<li><p>转换器对象:</p>
+<p>转换器对象调用fit_transform(data)函数，参数data为一维字典数组或一维字典列表,返回转化后的矩阵或数组</p>
+<p>转换器对象get_feature_names_out()方法获取特征名</p>
+</li>
+</ul>
+<p>转化为稀疏矩阵</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction <span class="keyword">import</span> DictVectorizer</span><br><span class="line">data = [&#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;成都&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">20</span>&#125;, </span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;重庆&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">33</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">60</span>&#125;, </span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;北京&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">42</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">80</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;上海&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">22</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">70</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;city&#x27;</span>:<span class="string">&#x27;成都&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">72</span>, <span class="string">&#x27;temperature&#x27;</span>:<span class="number">40</span>&#125;,</span><br><span class="line">       ]</span><br><span class="line">transfer = DictVectorizer(sparse=<span class="literal">True</span>)</span><br><span class="line">data_new = transfer.fit_transform(data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;data_new:\n&quot;</span>, data_new)</span><br><span class="line">x = data_new.toarray()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(x))</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#(0,0)是矩阵的行列下标  30是值</span></span><br><span class="line">data_new:</span><br><span class="line">   (<span class="number">0</span>, <span class="number">0</span>)	<span class="number">30.0</span></span><br><span class="line">  (<span class="number">0</span>, <span class="number">3</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">0</span>, <span class="number">5</span>)	<span class="number">20.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">0</span>)	<span class="number">33.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">4</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">5</span>)	<span class="number">60.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">0</span>)	<span class="number">42.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">2</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">2</span>, <span class="number">5</span>)	<span class="number">80.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">0</span>)	<span class="number">22.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">1</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">3</span>, <span class="number">5</span>)	<span class="number">70.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">0</span>)	<span class="number">72.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">3</span>)	<span class="number">1.0</span></span><br><span class="line">  (<span class="number">4</span>, <span class="number">5</span>)	<span class="number">40.0</span></span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;numpy.ndarray&#x27;</span>&gt;</span><br><span class="line"><span class="comment"># 第一行中:30表示age的值  0表示上海 0表示北京 1表示成都 0表示重庆 20表示temperature</span></span><br><span class="line">[[<span class="number">30.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span> <span class="number">20.</span>]</span><br><span class="line"> [<span class="number">33.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span> <span class="number">60.</span>]</span><br><span class="line"> [<span class="number">42.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span> <span class="number">80.</span>]</span><br><span class="line"> [<span class="number">22.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span> <span class="number">70.</span>]</span><br><span class="line"> [<span class="number">72.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span> <span class="number">40.</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3CountVectorizer-文本特征提取"><a href="#7-3CountVectorizer-文本特征提取" class="headerlink" title="7.3CountVectorizer 文本特征提取"></a>7.3CountVectorizer 文本特征提取</h3><h4 id="7-3-1API"><a href="#7-3-1API" class="headerlink" title="7.3.1API"></a>7.3.1API</h4><p>sklearn.feature_extraction.text.CountVectorizer</p>
+<p>​	构造函数关键字参数stop_words，值为list，表示词的黑名单(不提取的词)</p>
+<p>fit_transform函数的返回值为稀疏矩阵</p>
+<h4 id="7-3-2英文文本提取"><a href="#7-3-2英文文本提取" class="headerlink" title="7.3.2英文文本提取"></a>7.3.2英文文本提取</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data=[<span class="string">&quot;stu is well, stu is great&quot;</span>, <span class="string">&quot;You like stu&quot;</span>]</span><br><span class="line"><span class="comment">#创建转换器对象, you和is不提取</span></span><br><span class="line">transfer = CountVectorizer(stop_words=[<span class="string">&quot;you&quot;</span>,<span class="string">&quot;is&quot;</span>])</span><br><span class="line"><span class="comment">#进行提取,得到稀疏矩阵</span></span><br><span class="line">data_new = transfer.fit_transform(data)</span><br><span class="line"><span class="built_in">print</span>(data_new)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">pandas.DataFrame(data_new.toarray(), </span><br><span class="line">                 index=[<span class="string">&quot;第一个句子&quot;</span>,<span class="string">&quot;第二个句子&quot;</span>],</span><br><span class="line">                 columns=transfer.get_feature_names_out())</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-3-3中文文本提取"><a href="#7-3-3中文文本提取" class="headerlink" title="7.3.3中文文本提取"></a>7.3.3中文文本提取</h4><p>（1）使用jieba进行分词</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cut</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.join(<span class="built_in">list</span>(jieba.cut(text)))</span><br><span class="line"></span><br><span class="line">data = [<span class="string">&quot;教育学会会长期间坚定支持民办教育事业！&quot;</span>,<span class="string">&quot;热忱关心、扶持民办学校发展&quot;</span>,<span class="string">&quot;事业做出重大贡献！&quot;</span>]</span><br><span class="line">data_new = [cut(v) <span class="keyword">for</span> v <span class="keyword">in</span> data]</span><br></pre></td></tr></table></figure>
+
+<p>(2)输出稀疏矩阵</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">transfer = CountVectorizer(stop_words=[&#x27;期间&#x27;, &#x27;做出&#x27;]) </span><br><span class="line">data_final = transfer.fit_transform(data_new)</span><br><span class="line"></span><br><span class="line">print(data_final.toarray())#把非稀疏矩阵转变为稀疏矩阵</span><br><span class="line">print(transfer.get_feature_names_out())#</span><br><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">pd.DataFrame(data_final.toarray(), columns=transfer.get_feature_names_out())</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[1 1 0 0 1 1 0 1 1 0 1 0 0]</span><br><span class="line"> [0 0 1 1 0 0 1 0 0 1 0 1 0]</span><br><span class="line"> [1 0 0 0 0 0 0 0 0 0 0 0 1]]</span><br><span class="line">[&#x27;事业&#x27; &#x27;会长&#x27; &#x27;关心&#x27; &#x27;发展&#x27; &#x27;坚定&#x27; &#x27;学会&#x27; &#x27;扶持&#x27; &#x27;支持&#x27; &#x27;教育&#x27; &#x27;民办学校&#x27; &#x27;民办教育&#x27; &#x27;热忱&#x27; &#x27;重大贡献&#x27;]</span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>事业</th>
+      <th>会长</th>
+      <th>关心</th>
+      <th>发展</th>
+      <th>坚定</th>
+      <th>学会</th>
+      <th>扶持</th>
+      <th>支持</th>
+      <th>教育</th>
+      <th>民办学校</th>
+      <th>民办教育</th>
+      <th>热忱</th>
+      <th>重大贡献</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+#### 7.3.4TfidfVectorizer TF-IDF文本特征词的重要程度特征提取 
+
+<p>反应词语在当前文章中的重要性</p>
+<h5 id="7-3-4-1API"><a href="#7-3-4-1API" class="headerlink" title="7.3.4.1API"></a>7.3.4.1API</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sklearn.feature_extraction.text.TfidfVectorizer()</span><br><span class="line"></span><br><span class="line">​	构造函数关键字参数stop_words，表示词特征黑名单</span><br><span class="line"></span><br><span class="line">fit_transform函数的返回值为稀疏矩阵</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-3-4-2代码示例"><a href="#7-3-4-2代码示例" class="headerlink" title="7.3.4.2代码示例"></a>7.3.4.2代码示例</h5><p>代码与CountVectorizer的示例基本相同,仅仅把CountVectorizer改为TfidfVectorizer即可</p>
+<p>示例中data是一个字符串list, list中的第一个元素就代表一篇文章.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cut_words</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot; &quot;</span>.join(<span class="built_in">list</span>(jieba.cut(text)))</span><br><span class="line"></span><br><span class="line">data = [<span class="string">&quot;教育学会会长期间，坚定支持民办教育事业！&quot;</span>,  <span class="string">&quot;扶持民办,学校发展事业&quot;</span>,<span class="string">&quot;事业做出重大贡献！&quot;</span>]</span><br><span class="line">data_new = [cut_words(v) <span class="keyword">for</span> v <span class="keyword">in</span> data]</span><br><span class="line"></span><br><span class="line">transfer = TfidfVectorizer(stop_words=[<span class="string">&#x27;期间&#x27;</span>, <span class="string">&#x27;做出&#x27;</span>,<span class="string">&quot;重大贡献&quot;</span>]) </span><br><span class="line">data_final = transfer.fit_transform(data_new)</span><br><span class="line"></span><br><span class="line">pd.DataFrame(data_final.toarray(), columns=transfer.get_feature_names_out())</span><br></pre></td></tr></table></figure>
+
+<p><strong>补充</strong>:在sklearn库中 TF-IDF算法做了一些细节的优化</p>
+<p><strong>词频 (TF)</strong></p>
+<p>词频是指一个词在文档中出现的频率。通常有两种计算方法：</p>
+<ol>
+<li>原始词频：一个词在文档中出现的次数除以文档中总的词数。</li>
+<li><strong>平滑后的词频</strong>：为了防止高频词主导向量空间，有时会对词频进行平滑处理，例如使用 <code>1 + log(TF)</code>。</li>
+<li>在 TfidfVectorizer 中，TF 默认是：直接使用一个词在文档中出现的次数也就是CountVectorizer的结果</li>
+</ol>
+<p><strong>逆文档频率 (IDF)</strong></p>
+<p>逆文档频率衡量一个词的普遍重要性。如果一个词在许多文档中都出现，那么它的重要性就会降低。</p>
+<p>IDF 的计算公式是：</p>
+<p>$$IDF(t)&#x3D;\log⁡(\dfrac{总文档数}{包含词t的文档数+1})$$</p>
+<p>在 TfidfVectorizer 中，IDF 的默认计算公式是：</p>
+<p>$$IDF(t)&#x3D;\log⁡(\dfrac{总文档数+1}{包含词t的文档数+1})+1$$</p>
+<p>在 TfidfVectorizer 中还会进行归一化处理(采用的L2归一化)</p>
+<p><strong>L2归一化</strong></p>
+<p>$$x_1归一化后的数据&#x3D;\dfrac{x_1}{\sqrt{x_1^2+x_2^2+…x_n^2}}$$</p>
+<h3 id="7-4标准化处理（无量纲化处理）"><a href="#7-4标准化处理（无量纲化处理）" class="headerlink" title="7.4标准化处理（无量纲化处理）"></a>7.4标准化处理（无量纲化处理）</h3><h4 id="7-4-1MinMaxScaler-归一化"><a href="#7-4-1MinMaxScaler-归一化" class="headerlink" title="7.4.1MinMaxScaler 归一化"></a>7.4.1MinMaxScaler 归一化</h4><h5 id="7-4-1-1公式"><a href="#7-4-1-1公式" class="headerlink" title="7.4.1.1公式"></a>7.4.1.1公式</h5><p>这里的 𝑥min 和 𝑥max 分别是每种特征中的最小值和最大值，而 𝑥是当前特征值，𝑥scaled 是归一化后的特征值。</p>
+<p>若要缩放到其他区间，可以使用公式：x&#x3D;x*(max-min)+min; </p>
+<h5 id="7-4-1-2API"><a href="#7-4-1-2API" class="headerlink" title="7.4.1.2API"></a>7.4.1.2API</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">data=[[12,22,4],[22,23,1],[11,23,9]]</span><br><span class="line">#feature_range=(0, 1)表示归一化后的值域,可以自己设定</span><br><span class="line">transfer = MinMaxScaler(feature_range=(0, 1))</span><br><span class="line">#data_new的类型为&lt;class &#x27;numpy.ndarray&#x27;&gt;</span><br><span class="line">data_new = transfer.fit_transform(data)</span><br><span class="line">print(data_new)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[0.09090909 0.         0.375     ]</span><br><span class="line"> [1.         1.         0.        ]</span><br><span class="line"> [0.         1.         1.        ]]</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-4-1-3缺点"><a href="#7-4-1-3缺点" class="headerlink" title="7.4.1.3缺点"></a>7.4.1.3缺点</h5><p>鲁棒性较差</p>
+<h4 id="7-4-2normalize归一化"><a href="#7-4-2normalize归一化" class="headerlink" title="7.4.2normalize归一化"></a>7.4.2normalize归一化</h4><h5 id="7-4-2-1API"><a href="#7-4-2-1API" class="headerlink" title="7.4.2.1API"></a>7.4.2.1API</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import normalize</span><br><span class="line">normalize(data, norm=&#x27;l2&#x27;, axis=1)</span><br><span class="line">#data是要归一化的数据</span><br><span class="line">#norm是使用那种归一化:&quot;l1&quot;  &quot;l2&quot;  &quot;max</span><br><span class="line">#axis=0是列  axis=1是行</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-4-2-2L1归一化"><a href="#7-4-2-2L1归一化" class="headerlink" title="7.4.2.2L1归一化"></a>7.4.2.2L1归一化</h5><p>绝对值相加作为分母,特征值作为分子</p>
+<h5 id="7-4-2-3-L2归一化"><a href="#7-4-2-3-L2归一化" class="headerlink" title="7.4.2.3 L2归一化"></a>7.4.2.3 L2归一化</h5><p>平方相加作为分母,特征值作为分子</p>
+<h5 id="7-4-2-4max归一化"><a href="#7-4-2-4max归一化" class="headerlink" title="7.4.2.4max归一化"></a>7.4.2.4max归一化</h5><p>max作为分母,特征值作为分子</p>
+<h4 id="7-4-3StandardScaler-标准化（最常用的）"><a href="#7-4-3StandardScaler-标准化（最常用的）" class="headerlink" title="7.4.3StandardScaler 标准化（最常用的）"></a>7.4.3StandardScaler 标准化（最常用的）</h4><p>在机器学习中，标准化是一种数据预处理技术，也称为数据归一化或特征缩放。它的目的是将不同特征的数值范围缩放到统一的标准范围，以便更好地适应一些机器学习算法，特别是那些对输入数据的尺度敏感的算法。</p>
+<h5 id="7-4-3-1标准化公式"><a href="#7-4-3-1标准化公式" class="headerlink" title="7.4.3.1标准化公式"></a>7.4.3.1标准化公式</h5><p>最常见的标准化方法是Z-score标准化，也称为零均值标准化。它通过对每个特征的值减去其均值，再除以其标准差，将数据转换为均值为0，标准差为1的分布。这可以通过以下公式计算:<br>$$<br>z &#x3D; \frac{x - \mu}{\sigma}<br>$$</p>
+<p>$$<br>\mu &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} x_i<br>$$</p>
+<p>$$<br>\sigma &#x3D; \sqrt{\frac{\sum_{i&#x3D;1}^{n} (x_i - \mu)^2}{n}}<br>$$</p>
+<p>其中，z是转换后的数值，x是原始数据的值，μ是该特征的均值，σ是该特征的 标准差 </p>
+<h5 id="7-4-3-2标准化API"><a href="#7-4-3-2标准化API" class="headerlink" title="7.4.3.2标准化API"></a>7.4.3.2标准化API</h5><p>sklearn.preprocessing.StandardScale</p>
+<p>与MinMaxScaler一样，原始数据类型可以是list、DataFrame和ndarray</p>
+<p>fit_transform函数的返回值为ndarray,   归一化后得到的数据类型都是ndarray</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="comment">#不能加参数feature_range=(0, 1)</span></span><br><span class="line">transfer = StandardScaler()</span><br><span class="line">data_new = transfer.fit_transform(data) <span class="comment">#data_new的类型为ndarray</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-特征降维"><a href="#8-特征降维" class="headerlink" title="8.特征降维"></a>8.特征降维</h2><p>实际数据中,有时候特征很多,会增加计算量,降维就是去掉一些特征,或者转化多个特征为少量个特征</p>
+<p><strong>特征降维其目的</strong>:是减少数据集的维度，同时尽可能保留数据的重要信息。</p>
+<p><strong>特征降维的好处</strong>:</p>
+<p>减少计算成本：在高维空间中处理数据可能非常耗时且计算密集。降维可以简化模型，降低训练时间和资源需求。</p>
+<p><strong>去除噪声</strong>：高维数据可能包含许多无关或冗余特征，这些特征可能引入噪声并导致过拟合。降维可以帮助去除这些不必要的特征。</p>
+<p><strong>特征降维的方式:</strong></p>
+<ul>
+<li>特征选择<ul>
+<li>从原始特征集中挑选出最相关的特征</li>
+</ul>
+</li>
+<li>主成份分析(PCA)<ul>
+<li>主成分分析就是把之前的特征通过一系列数学计算，形成新的特征，新的特征数量会小于之前特征数量</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-1VarianceThreshold-低方差过滤特征选择"><a href="#8-1VarianceThreshold-低方差过滤特征选择" class="headerlink" title="8.1VarianceThreshold 低方差过滤特征选择"></a>8.1VarianceThreshold 低方差过滤特征选择</h3><p>Filter(过滤式): 主要探究特征本身特点， 特征与特征、特征与目标 值之间关联</p>
+<ul>
+<li><p>方差选择法: 低方差特征过滤</p>
+<p>如果一个特征的方差很小，说明<strong>这个特征的值在样本中几乎相同或变化不大</strong>，包含的信息量很少，模型很难通过该特征区分不同的对象,比如区分甜瓜子和咸瓜子还是蒜香瓜子,如果有一个特征是长度,这个特征相差不大可以去掉。</p>
+<ol>
+<li><strong>计算方差</strong>：对于每个特征，计算其在训练集中的方差(每个样本值与均值之差的平方,在求平均)。</li>
+<li><strong>设定阈值</strong>：选择一个方差阈值，任何低于这个阈值的特征都将被视为低方差特征。</li>
+<li><strong>过滤特征</strong>：移除所有方差低于设定阈值的特征</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建对象，准备把方差为等于小于2的去掉，threshold的缺省值为2.0</span><br><span class="line">sklearn.feature_selection.VarianceThreshold(threshold=2.0)</span><br><span class="line"></span><br><span class="line">把x中低方差特征去掉, x的类型可以是DataFrame、ndarray和list</span><br><span class="line">VananceThreshold.fit_transform(x)</span><br><span class="line">fit_transform函数的返回值为ndarray</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> VarianceThreshold</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">variance_demo</span>():</span><br><span class="line">    <span class="comment"># 1、获取数据,data是一个DataFrame,可以是读取的csv文件</span></span><br><span class="line">    data=pd.DataFrame([[<span class="number">10</span>,<span class="number">1</span>],[<span class="number">11</span>,<span class="number">3</span>],[<span class="number">11</span>,<span class="number">1</span>],[<span class="number">11</span>,<span class="number">5</span>],[<span class="number">11</span>,<span class="number">9</span>],[<span class="number">11</span>,<span class="number">3</span>],[<span class="number">11</span>,<span class="number">2</span>],[<span class="number">11</span>,<span class="number">6</span>]])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;data:\n&quot;</span>, data)   </span><br><span class="line">    <span class="comment"># 2、实例化一个转换器类</span></span><br><span class="line">    transfer = VarianceThreshold(threshold=<span class="number">1</span>)<span class="comment">#0.1阈值</span></span><br><span class="line">    <span class="comment"># 3、调用fit_transform</span></span><br><span class="line">    data_new = transfer.fit_transform(data)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;data_new:\n&quot;</span>,data_new)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">variance_demo()</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-2根据相关系数的特征选择"><a href="#8-2根据相关系数的特征选择" class="headerlink" title="8.2根据相关系数的特征选择"></a>8.2根据相关系数的特征选择</h3><p>皮尔逊相关系数（Pearson correlation coefficient)是一种度量两个变量之间线性相关性的统计量。它提供了两个变量间关系的方向（正相关或负相关）和强度的信息。皮尔逊相关系数的取值范围是 [−1,1]，其中：</p>
+<ul>
+<li>$\rho&#x3D;1$ 表示完全正相关，即随着一个变量的增加，另一个变量也线性增加。</li>
+<li>$\rho&#x3D;-1$  表示完全负相关，即随着一个变量的增加，另一个变量线性减少。</li>
+<li>$\rho&#x3D;0$ 表示两个变量之间不存在线性关系。</li>
+</ul>
+<p>相关系数$\rho$的绝对值为0-1之间，绝对值越大，表示越相关，当两特征完全相关时，两特征的值表示的向量是</p>
+<p>在同一条直线上，当两特征的相关系数绝对值很小时，两特征值表示的向量接近在同一条直线上。当相关系值为负数时，表示负相关</p>
+<p>示例：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> pearsonr</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">association_demo</span>():</span><br><span class="line">     <span class="comment"># 1、获取数据</span></span><br><span class="line">    data = pd.read_csv(<span class="string">&quot;src/factor_returns.csv&quot;</span>)</span><br><span class="line">    data = data.iloc[:, <span class="number">1</span>:-<span class="number">2</span>]</span><br><span class="line">     <span class="comment"># 计算某两个变量之间的相关系数</span></span><br><span class="line">    r1 = pearsonr(data[<span class="string">&quot;pe_ratio&quot;</span>], data[<span class="string">&quot;pb_ratio&quot;</span>])</span><br><span class="line">    <span class="built_in">print</span>(r1.statistic) <span class="comment">#-0.0043893227799362555 相关性, 负数表示负相关,正数表示正相关</span></span><br><span class="line">    <span class="built_in">print</span>(r1.pvalue) <span class="comment">#0.8327205496590723        相关性,越小越相关</span></span><br><span class="line">    r2 = pearsonr(data[<span class="string">&#x27;revenue&#x27;</span>], data[<span class="string">&#x27;total_expense&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(r2) <span class="comment">#PearsonRResult(statistic=0.9958450413136111, pvalue=0.0)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">association_demo()</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-主成分分析（PCA）"><a href="#8-3-主成分分析（PCA）" class="headerlink" title="8.3.主成分分析（PCA）"></a>8.3.主成分分析（PCA）</h3><p>PCA的核心目标是从原始特征空间中找到一个新的坐标系统，使得数据在新坐标轴上的投影能够最大程度地保留数据的方差，同时减少数据的维度。</p>
+<h4 id="8-3-1API"><a href="#8-3-1API" class="headerlink" title="8.3.1API"></a>8.3.1API</h4><ul>
+<li>from sklearn.decomposition import PCA</li>
+<li>PCA(n_components&#x3D;None)<ul>
+<li>主成分分析</li>
+<li>n_components:<ul>
+<li>实参为小数时：表示降维后保留百分之多少的信息</li>
+<li>实参为整数时：表示减少到多少特征</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="8-3-1-1n-components为小数"><a href="#8-3-1-1n-components为小数" class="headerlink" title="8.3.1.1n_components为小数"></a>8.3.1.1n_components为小数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line">def pca_demo():</span><br><span class="line">    data = [[2,8,4,5], </span><br><span class="line">            [6,3,0,8], </span><br><span class="line">            [5,4,9,1]]</span><br><span class="line">    # 1、实例化一个转换器类， 降维后还要保留原始数据0.95%的信息, 最后的结果中发现由4个特征降维成2个特征了</span><br><span class="line">    transfer = PCA(n_components=0.95)</span><br><span class="line">    # 2、调用fit_transform</span><br><span class="line">    data_new = transfer.fit_transform(data)</span><br><span class="line">    print(&quot;data_new:\n&quot;, data_new)</span><br><span class="line">    return None</span><br><span class="line">pca_demo()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data_new:</span><br><span class="line"> [[-3.13587302e-16  3.82970843e+00]</span><br><span class="line"> [-5.74456265e+00 -1.91485422e+00]</span><br><span class="line"> [ 5.74456265e+00 -1.91485422e+00]]</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-3-1-2n-components为整数"><a href="#8-3-1-2n-components为整数" class="headerlink" title="8.3.1.2n_components为整数"></a>8.3.1.2n_components为整数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line">def pca_demo():</span><br><span class="line">    data = [[2,8,4,5], [6,3,0,8], [5,4,9,1]]</span><br><span class="line">    # 1、实例化一个转换器类， 降维到只有3个特征</span><br><span class="line">    transfer = PCA(n_components=3)</span><br><span class="line">    # 2、调用fit_transform</span><br><span class="line">    data_new = transfer.fit_transform(data)</span><br><span class="line">    print(&quot;data_new:\n&quot;, data_new)</span><br><span class="line">    return None</span><br><span class="line">pca_demo()</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data_new:</span><br><span class="line"> [[-3.13587302e-16  3.82970843e+00  4.59544715e-16]</span><br><span class="line"> [-5.74456265e+00 -1.91485422e+00  4.59544715e-16]</span><br><span class="line"> [ 5.74456265e+00 -1.91485422e+00  4.59544715e-16]]</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、机器学习"><a href="#三、机器学习" class="headerlink" title="三、机器学习"></a>三、机器学习</h1><h2 id="1-分类"><a href="#1-分类" class="headerlink" title="1.分类"></a>1.分类</h2><h3 id="1-1KNN算法分类"><a href="#1-1KNN算法分类" class="headerlink" title="1.1KNN算法分类"></a>1.1KNN算法分类</h3><h4 id="1-1-1样本距离判断"><a href="#1-1-1样本距离判断" class="headerlink" title="1.1.1样本距离判断"></a>1.1.1样本距离判断</h4><h5 id="1-1-1-1欧式距离"><a href="#1-1-1-1欧式距离" class="headerlink" title="1.1.1.1欧式距离"></a>1.1.1.1欧式距离</h5><p>$$<br>|AB| &#x3D; \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}<br>$$</p>
+<p>$$<br>|P| &#x3D; \sqrt{x^2 + y^2 + z^2}<br>$$</p>
+<h5 id="1-1-1-2曼哈顿距离"><a href="#1-1-1-2曼哈顿距离" class="headerlink" title="1.1.1.2曼哈顿距离"></a>1.1.1.2曼哈顿距离</h5><p>$$<br>d_{12} &#x3D; |x_1 - x_2| + |y_1 - y_2|<br>$$</p>
+<p>$$<br>d_{12} &#x3D; \sum_{k&#x3D;1}^{n} |x_{1k} - x_{2k}|<br>$$</p>
+<h4 id="1-1-2算法原理"><a href="#1-1-2算法原理" class="headerlink" title="1.1.2算法原理"></a>1.1.2算法原理</h4><p>K-近邻算法（K-Nearest Neighbors，简称KNN）,根据K个邻居样本的类别来判断当前样本的类别;</p>
+<p>如果一个样本在特征空间中的k个最相似(最邻近)样本中的大多数属于某个类别，则该类本也属于这个类别</p>
+<p>比如: 有10000个样本,选出7个到样本A的距离最近的,然后这7个样本中假设:类别1有2个,类别2有3个,类别3有2个.那么就认为A样本属于类别2,因为它的7个邻居中 类别2最多(近朱者赤近墨者黑)</p>
+<p>**缺点：**对于大规模数据集，计算量大，因为需要计算测试样本与所有训练样本的距离。对于高维数据，距离度量可能变得不那么有意义，这就是所谓的“维度灾难”，需要选择合适的k值和距离度量，这可能需要一些实验和调整</p>
+<h4 id="1-1-3API"><a href="#1-1-3API" class="headerlink" title="1.1.3API"></a>1.1.3API</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.neighbors.KNeighborsClassifier(n_neighbors=5, algorithm=&#x27;auto&#x27;）</span><br><span class="line">参数:                                             </span><br><span class="line">(1)n_neighbors: </span><br><span class="line">		int, default=5, 默认情况下用于kneighbors查询的近邻数，就是K</span><br><span class="line">(2)algorithm:</span><br><span class="line">	&#123;‘auto’, ‘ball_tree’, ‘kd_tree’, ‘brute’&#125;, default=’auto’。找到近邻的方式，注意不是计算距离		的方式，与机器学习算法没有什么关系，开发中请使用默认值&#x27;auto&#x27;</span><br><span class="line">方法:</span><br><span class="line"> (1) fit(x， y) </span><br><span class="line">        使用X作为训练数据和y作为目标数据  </span><br><span class="line"> (2) predict(X)	预测提供的数据，得到预测数据                                                                            </span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-4sklearn实现KNN"><a href="#1-1-4sklearn实现KNN" class="headerlink" title="1.1.4sklearn实现KNN"></a>1.1.4sklearn实现KNN</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用KNN算法对鸢尾花进行分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"> <span class="comment"># 1）获取数据</span></span><br><span class="line">iris = load_iris()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只有4个特征, 150个样本</span></span><br><span class="line"><span class="built_in">print</span>(iris.data.shape) <span class="comment">#(150,4)</span></span><br><span class="line"><span class="comment"># 4个特征的描述 [&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]</span></span><br><span class="line"><span class="built_in">print</span>(iris.feature_names)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 150个目标，对应150个样本的类别</span></span><br><span class="line"><span class="built_in">print</span>(iris.target.shape) <span class="comment">#(150,)</span></span><br><span class="line"><span class="comment"># 目标值只有0 1 2这三种值，说明150个样本属于三类中的其中一种</span></span><br><span class="line"><span class="built_in">print</span>(iris.target) <span class="comment">#[0 0 0...1 1 1 ...2 2 2]</span></span><br><span class="line"><span class="comment"># 目标值三种值代表的三种类型的描述。</span></span><br><span class="line"><span class="built_in">print</span>(iris.target_names) <span class="comment">#[&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2）划分数据集</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># x_train训练特征，y_train训练目标， x_test测试特征，y_test测试目标</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=<span class="number">22</span>)</span><br><span class="line"><span class="comment"># print(x_train.shape, x_test.shape, y_train.shape, y_test.shape) #(112, 4) (38, 4) (112,) (38,)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3）特征工程：标准化, 只有4个特征</span></span><br><span class="line">transfer = StandardScaler()</span><br><span class="line"><span class="comment"># 对训练特征做标准化, 对测试特征做相同的标准化，因为fit_transform中已经有fit进行计算了，所以对x_test只需要做transform了</span></span><br><span class="line"><span class="comment"># 训练用的什么数据，模式就只能识别什么样的数据。</span></span><br><span class="line">x_train = transfer.fit_transform(x_train)</span><br><span class="line">x_test = transfer.transform(x_test)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4）KNN算法预估器, k=7表示找7个邻近来判断自身类型. </span></span><br><span class="line">estimator = KNeighborsClassifier(n_neighbors=<span class="number">7</span>)</span><br><span class="line">estimator.fit(x_train, y_train)<span class="comment">#该步骤就是estimator根据训练特征和训练目标在自己学习，让它自己变聪敏</span></span><br><span class="line"><span class="comment"># 5）模型评估  测试一下聪敏的estimator能力</span></span><br><span class="line"><span class="comment"># 方法1：直接比对真实值和预测值， </span></span><br><span class="line">y_predict = estimator.predict(x_test) <span class="comment">#y_predict预测的目标结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_predict:\n&quot;</span>, y_predict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;直接比对真实值和预测值:\n&quot;</span>, y_test == y_predict)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2：计算准确率, </span></span><br><span class="line">score = estimator.score(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;准确率为：\n&quot;</span>, score) <span class="comment">#0.9473684210526315</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(150, 4)</span><br><span class="line">[&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]</span><br><span class="line">(150,)</span><br><span class="line">[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line"> 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span><br><span class="line"> 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2</span><br><span class="line"> 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span><br><span class="line"> 2 2]</span><br><span class="line">[&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]</span><br><span class="line">y_predict:</span><br><span class="line"> [0 2 1 2 1 1 1 1 1 0 2 1 2 2 0 2 1 1 1 1 0 2 0 1 2 0 2 2 2 2 0 0 1 1 1 0 0</span><br><span class="line"> 0]</span><br><span class="line">直接比对真实值和预测值:</span><br><span class="line"> [ True  True  True  True  True  True  True False  True  True  True  True</span><br><span class="line">  True  True  True  True  True  True False  True  True  True  True  True</span><br><span class="line">  True  True  True  True  True  True  True  True  True  True  True  True</span><br><span class="line">  True  True]</span><br><span class="line">准确率为：</span><br><span class="line"> 0.9473684210526315</span><br></pre></td></tr></table></figure>
+
+<p><strong>模型加载与保存：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> joblib</span><br><span class="line"><span class="comment"># 保存模型</span></span><br><span class="line">joblib.dump(estimator, <span class="string">&quot;my_ridge.pkl&quot;</span>)</span><br><span class="line"><span class="comment"># 加载模型</span></span><br><span class="line">estimator = joblib.load(<span class="string">&quot;my_ridge.pkl&quot;</span>)</span><br><span class="line"><span class="comment">#使用模型预测</span></span><br><span class="line">y_test=estimator.predict([[<span class="number">0.4</span>,<span class="number">0.2</span>,<span class="number">0.4</span>,<span class="number">0.7</span>]])</span><br><span class="line"><span class="built_in">print</span>(y_test)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2朴素贝叶斯分类"><a href="#1-2朴素贝叶斯分类" class="headerlink" title="1.2朴素贝叶斯分类"></a>1.2朴素贝叶斯分类</h3><h4 id="1-2-1理论"><a href="#1-2-1理论" class="headerlink" title="1.2.1理论"></a>1.2.1理论</h4><p>我们现在用p1(x,y)表示数据点(x,y)属于类别1(图中红色圆点表示的类别)的概率，用p2(x,y)表示数据点(x,y)属于类别2(图中蓝色三角形表示的类别)的概率，那么对于一个新数据点(x,y)，可以用下面的规则来判断它的类别：</p>
+<ul>
+<li>如果p1(x,y)&gt;p2(x,y)，那么类别为1</li>
+<li>如果p1(x,y)&lt;p2(x,y)，那么类别为2</li>
+</ul>
+<p>也就是说，我们会选择高概率对应的类别。这就是贝叶斯决策理论的核心思想，即选择具有最高概率的决策。已经了解了贝叶斯决策理论的核心思想，那么接下来，就是学习如何计算p1和p2概率。</p>
+<h4 id="1-2-2公式"><a href="#1-2-2公式" class="headerlink" title="1.2.2公式"></a>1.2.2公式</h4><p>朴素贝叶斯分类器的决策规则是基于最大化后验概率的。对于给定的观测数据$$mathbf{x} $$，我们希望找到使得后验概率 $$ P(C_k | \mathbf{x}) $$ 最大的类别 $$ C_k $$：</p>
+<p>$$ P(C_k | \mathbf{x}) &#x3D; \frac{P(\mathbf{x} | C_k) P(C_k)}{P(\mathbf{x})} $$</p>
+<p>由于 ( P(\mathbf{x}) ) 对于所有类别都是相同的，我们可以忽略它，只关注分子部分：</p>
+<p>$$ \max_k P(C_k | \mathbf{x}) \propto \max_k [P(\mathbf{x} | C_k) P(C_k) $$</p>
+<p>在朴素贝叶斯中，我们假设特征之间相互独立，因此可以将联合概率 ( P(\mathbf{x} | C_k) ) 表示为各个特征条件概率的乘积：</p>
+<p>​                  $$ P(\mathbf{x} | C_k) &#x3D; \prod_{j&#x3D;1}^{n} P(x_j | C_k) $$</p>
+<p>其中，$$ x_j $$是观测数据$$  \mathbf{x}  $$的第 ( j ) 个特征，( n ) 是特征的总数。</p>
+<p>$$ P(C_k | x_1, x_2, \ldots, x_n) &#x3D; \frac{P(C_k) \prod_{i&#x3D;1}^{n} P(x_i | C_k)}{\prod_{i&#x3D;1}^{n} P(x_i)} $$</p>
+<h4 id="1-2-3API"><a href="#1-2-3API" class="headerlink" title="1.2.3API"></a>1.2.3API</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sklearn.naive_bayes.MultinomialNB()</span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line">y_predict = estimator.predict(x_test)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-2-4代码示例"><a href="#1-2-4代码示例" class="headerlink" title="1.2.4代码示例"></a>1.2.4代码示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="comment"># 1）获取数据</span></span><br><span class="line">news =load_iris()</span><br><span class="line"><span class="comment"># 2）划分数据集</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(news.data, news.target)</span><br><span class="line"><span class="comment"># 3）特征工程：不用做标准化</span></span><br><span class="line"><span class="comment"># 4）朴素贝叶斯算法预估器流程</span></span><br><span class="line">estimator = MultinomialNB()</span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line"><span class="comment"># 5）模型评估</span></span><br><span class="line">score = estimator.score(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;准确率为：\n&quot;</span>, score)</span><br><span class="line"><span class="comment"># 6）预测</span></span><br><span class="line">index=estimator.predict([[<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测:\n&quot;</span>,index,news.target_names,news.target_names[index])</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3决策树-分类"><a href="#1-3决策树-分类" class="headerlink" title="1.3决策树-分类"></a>1.3决策树-分类</h3><h4 id="1-3-1理论"><a href="#1-3-1理论" class="headerlink" title="1.3.1理论"></a>1.3.1理论</h4><p>1、决策节点<br>通过条件判断而进行分支选择的节点。如：将某个样本中的属性值(特征值)与决策节点上的值进行比较，从而判断它的流向。</p>
+<p>2、叶子节点<br>没有子节点的节点，表示最终的决策结果。</p>
+<p>3、决策树的深度<br>所有节点的最大层次数。</p>
+<p>决策树具有一定的层次结构，根节点的层次数定为0，从下面开始每一层子节点层次数增加</p>
+<p>4、决策树优点：</p>
+<p>​      可视化 - 可解释能力-对算力要求低</p>
+<p> 5、 决策树缺点：</p>
+<p>​      容易产生过拟合，所以不要把深度调整太大了。</p>
+<h4 id="1-3-2公式与算法"><a href="#1-3-2公式与算法" class="headerlink" title="1.3.2公式与算法"></a>1.3.2公式与算法</h4><p><strong>基于信息增益决策树的建立</strong></p>
+<p>信息增益决策树倾向于选择取值较多的属性，在有些情况下这类属性可能不会提供太多有价值的信息，算法只能对描述属性为离散型属性的数据集构造决策树。</p>
+<p>根据以下信息构建一棵预测是否贷款的决策树。我们可以看到有4个影响因素：职业，年龄，收入和学历。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>职业</th>
+<th>年龄</th>
+<th>收入</th>
+<th>学历</th>
+<th>是否贷款</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>工人</td>
+<td>36</td>
+<td>5500</td>
+<td>高中</td>
+<td>否</td>
+</tr>
+<tr>
+<td>2</td>
+<td>工人</td>
+<td>42</td>
+<td>2800</td>
+<td>初中</td>
+<td>是</td>
+</tr>
+<tr>
+<td>3</td>
+<td>白领</td>
+<td>45</td>
+<td>3300</td>
+<td>小学</td>
+<td>是</td>
+</tr>
+<tr>
+<td>4</td>
+<td>白领</td>
+<td>25</td>
+<td>10000</td>
+<td>本科</td>
+<td>是</td>
+</tr>
+<tr>
+<td>5</td>
+<td>白领</td>
+<td>32</td>
+<td>8000</td>
+<td>硕士</td>
+<td>否</td>
+</tr>
+<tr>
+<td>6</td>
+<td>白领</td>
+<td>28</td>
+<td>13000</td>
+<td>博士</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<h3 id="1-信息熵"><a href="#1-信息熵" class="headerlink" title="(1) 信息熵"></a>(1) 信息熵</h3><p>信息熵描述的是不确定性。信息熵越大，不确定性越大。信息熵的值越小，则D的纯度越高。</p>
+<p>假设样本集合D共有N类，第k类样本所占比例为<img src="/imgs/image-20240123101100180.png" alt="image-20240123101100180">，则D的信息熵为$$ P(C_k | x_1, x_2, \ldots, x_n) &#x3D; \frac{P(C_k) \prod_{i&#x3D;1}^{n} P(x_i | C_k)}{\prod_{i&#x3D;1}^{n} P(x_i)} $$</p>
+<h3 id="2-信息增益"><a href="#2-信息增益" class="headerlink" title="(2) 信息增益"></a>(2) 信息增益</h3><p>信息增益是一个统计量，用来描述一个属性区分数据样本的能力。信息增益越大，那么决策树就会越简洁。这里信息增益的程度用信息熵的变化程度来衡量, 信息增益公式：</p>
+<p>$$ IG(Y|X) &#x3D; H(Y) - H(Y|X) \geq 0 ; .$$</p>
+<h4 id="1-3-3API"><a href="#1-3-3API" class="headerlink" title="1.3.3API"></a>1.3.3API</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.tree.DecisionTreeClassifier(....)</span><br><span class="line">参数：</span><br><span class="line">criterion &quot;gini&quot; &quot;entropy” 默认为=&quot;gini&quot; </span><br><span class="line">	当criterion取值为&quot;gini&quot;时采用 基尼不纯度（Gini impurity）算法构造决策树，</span><br><span class="line">	当criterion取值为&quot;entropy”时采用信息增益（ information gain）算法构造决策树.</span><br><span class="line">max_depth	int, 默认为=None  树的最大深度</span><br><span class="line"></span><br><span class="line"># 可视化决策树</span><br><span class="line">function sklearn.tree.export_graphviz(estimator, out_file=&quot;iris_tree.dot&quot;, feature_names=iris.feature_names)</span><br><span class="line">参数：</span><br><span class="line">	estimator决策树预估器</span><br><span class="line">	out_file生成的文档</span><br><span class="line">    feature_names节点特征属性名</span><br><span class="line">功能:</span><br><span class="line">    把生成的文档打开，复制出内容粘贴到&quot;http://webgraphviz.com/&quot;中，点击&quot;generate Graph&quot;会生成一个树型的决策树图</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3-4代码示例"><a href="#1-3-4代码示例" class="headerlink" title="1.3.4代码示例"></a>1.3.4代码示例</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier, export_graphviz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1）获取数据集</span></span><br><span class="line">iris = load_iris()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2）划分数据集</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=<span class="number">22</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3）标准化</span></span><br><span class="line">transfer = StandardScaler()</span><br><span class="line">x_train = transfer.fit_transform(x_train)</span><br><span class="line">x_test = transfer.transform(x_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4）决策树预估器</span></span><br><span class="line">estimator = DecisionTreeClassifier(criterion=<span class="string">&quot;entropy&quot;</span>)</span><br><span class="line"></span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5）模型评估，计算准确率</span></span><br><span class="line">score = estimator.score(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;准确率为：\n&quot;</span>, score)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6）预测</span></span><br><span class="line">index=estimator.predict([[<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测:\n&quot;</span>,index,iris.target_names,iris.target_names[index])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可视化决策树</span></span><br><span class="line">export_graphviz(estimator, out_file=<span class="string">&quot;iris_tree.dot&quot;</span>, feature_names=iris.feature_names)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">准确率为：</span><br><span class="line"> 0.8947368421052632</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-4集成学习：随机森林"><a href="#1-4集成学习：随机森林" class="headerlink" title="1.4集成学习：随机森林"></a>1.4集成学习：随机森林</h3><h4 id="1-4-1API"><a href="#1-4-1API" class="headerlink" title="1.4.1API"></a>1.4.1API</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.ensemble.RandomForestClassifier</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">n_estimators	int, default=100</span><br><span class="line">森林中树木的数量。(决策树个数)</span><br><span class="line"></span><br><span class="line">criterion	&#123;“gini”, “entropy”&#125;, default=”gini” 决策树属性划分算法选择</span><br><span class="line">	当criterion取值为“gini”时采用 基尼不纯度（Gini impurity）算法构造决策树，</span><br><span class="line">	当criterion取值为 “entropy” 时采用信息增益（ information gain）算法构造决策树.</span><br><span class="line">	</span><br><span class="line">max_depth	int, default=None 树的最大深度。 </span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-2示例"><a href="#1-4-2示例" class="headerlink" title="1.4.2示例"></a>1.4.2示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.feature_extraction import DictVectorizer</span><br><span class="line">from sklearn.tree import  export_graphviz</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line"># 1、获取数据</span><br><span class="line">titanic = pd.read_csv(&quot;src/titanic/titanic.csv&quot;)</span><br><span class="line">titanic.head()</span><br><span class="line"># 筛选特征值和目标值</span><br><span class="line">x = titanic[[&quot;pclass&quot;, &quot;age&quot;, &quot;sex&quot;]]</span><br><span class="line">y = titanic[&quot;survived&quot;]</span><br><span class="line"></span><br><span class="line">#2、数据处理</span><br><span class="line"># 1）缺失值处理</span><br><span class="line">x[&quot;age&quot;].fillna(x[&quot;age&quot;].mean(), inplace=True)</span><br><span class="line"># 2) 转换成字典</span><br><span class="line">x = x.to_dict(orient=&quot;records&quot;)</span><br><span class="line"># 3)、数据集划分</span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=22)</span><br><span class="line"># 4)、字典特征抽取</span><br><span class="line">transfer = DictVectorizer()</span><br><span class="line">x_train = transfer.fit_transform(x_train)</span><br><span class="line">x_test = transfer.transform(x_test)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">#3 预估: 不加网格搜索与交叉验证的代码</span><br><span class="line">estimator = RandomForestClassifier(n_estimators=120, max_depth=5)</span><br><span class="line"># 训练</span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">#3 预估: 加网格搜索与交叉验证的代码</span><br><span class="line">estimator = RandomForestClassifier()</span><br><span class="line"># 参数准备  n_estimators树的数量， max_depth树的最大深度</span><br><span class="line">param_dict = &#123;&quot;n_estimators&quot;: [120,200,300,500,800,1200], &quot;max_depth&quot;: [5,8,15,25,30]&#125;</span><br><span class="line"># 加入网格搜索与交叉验证, cv=3表示3次交叉验证</span><br><span class="line">estimator = GridSearchCV(estimator, param_grid=param_dict, cv=3)</span><br><span class="line"># 训练</span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 5）模型评估</span><br><span class="line"># 方法1：直接比对真实值和预测值</span><br><span class="line">y_predict = estimator.predict(x_test)</span><br><span class="line">print(&quot;y_predict:\n&quot;, y_predict)</span><br><span class="line">print(&quot;直接比对真实值和预测值:\n&quot;, y_test == y_predict)</span><br><span class="line"></span><br><span class="line"># 方法2：计算准确率</span><br><span class="line">score = estimator.score(x_test, y_test)</span><br><span class="line">print(&quot;准确率为：\n&quot;, score)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">加网格搜索与交叉验证的代码</span><br><span class="line">print(&quot;最佳参数：\n&quot;, estimator.best_params_)</span><br><span class="line">print(&quot;最佳结果：\n&quot;, estimator.best_score_)</span><br><span class="line">print(&quot;最佳估计器:\n&quot;, estimator.best_estimator_)</span><br><span class="line">print(&quot;交叉验证结果:\n&quot;, estimator.cv_results_)</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">#估计运行花1min</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-模型选择与调优"><a href="#2-模型选择与调优" class="headerlink" title="2.模型选择与调优"></a>2.模型选择与调优</h2><h3 id="2-1交叉验证"><a href="#2-1交叉验证" class="headerlink" title="2.1交叉验证"></a>2.1交叉验证</h3><h4 id="2-1-1保留交叉验证"><a href="#2-1-1保留交叉验证" class="headerlink" title="2.1.1保留交叉验证"></a>2.1.1保留交叉验证</h4><p>HoldOut Cross-validation（Train-Test Split）</p>
+<p>在这种交叉验证技术中，<strong>整个数据集被随机地划分为训练集和验证集</strong>。根据经验法则，整个数据集的近70%被用作训练集，其余30%被用作验证集。也就是我们最常使用的，直接划分数据集的方法。</p>
+<p>优点：很简单很容易执行。</p>
+<p>缺点1：不适用于不平衡的数据集。假设我们有一个不平衡的数据集，有0类和1类。假设80%的数据属于 “0 “类，其余20%的数据属于 “1 “类。这种情况下，训练集的大小为80%，测试数据的大小为数据集的20%。可能发生的情况是，所有80%的 “0 “类数据都在训练集中，而所有 “1 “类数据都在测试集中。因此，我们的模型将不能很好地概括我们的测试数据，因为它之前没有见过 “1 “类的数据。</p>
+<p>缺点2：一大块数据被剥夺了训练模型的机会。</p>
+<p>在小数据集的情况下，有一部分数据将被保留下来用于测试模型，这些数据可能具有重要的特征，而我们的模型可能会因为没有在这些数据上进行训练而错过。</p>
+<h4 id="2-1-2K-fold"><a href="#2-1-2K-fold" class="headerlink" title="2.1.2K_fold"></a>2.1.2K_fold</h4><p>（K-fold Cross Validation，记为K-CV或K-fold）</p>
+<p>K-Fold交叉验证技术中，整个数据集被划分为K个大小相同的部分。每个分区被称为 一个”Fold”。所以我们有K个部分，我们称之为K-Fold。一个Fold被用作验证集，其余的K-1个Fold被用作训练集。</p>
+<p>该技术重复K次，直到每个Fold都被用作验证集，其余的作为训练集。</p>
+<p>模型的最终准确度是通过取k个模型验证数据的平均准确度来计算的。</p>
+<h4 id="2-1-3分层k-折交叉验证Stratified-k-fold"><a href="#2-1-3分层k-折交叉验证Stratified-k-fold" class="headerlink" title="2.1.3分层k-折交叉验证Stratified k-fold"></a>2.1.3分层k-折交叉验证Stratified k-fold</h4><p>Stratified k-fold cross validation,</p>
+<p>K-折交叉验证的变种， 分层的意思是说在每一折中都保持着原始数据中各个类别的比例关系，比如说：原始数据有3类，比例为1:2:1，采用3折分层交叉验证，那么划分的3折中，每一折中的数据类别保持着1:2:1的比例，这样的验证结果更加可信。</p>
+<h4 id="2-1-4其他验证"><a href="#2-1-4其他验证" class="headerlink" title="2.1.4其他验证"></a>2.1.4其他验证</h4><ul>
+<li>去除p交叉验证</li>
+<li>留一交叉验证</li>
+<li>蒙特卡罗交叉验证</li>
+<li>时间序列交叉验证</li>
+</ul>
+<h4 id="2-1-5常用API"><a href="#2-1-5常用API" class="headerlink" title="2.1.5常用API"></a>2.1.5常用API</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import StratifiedKFold</span><br><span class="line"></span><br><span class="line">说明:普通K折交叉验证和分层K折交叉验证的使用是一样的  只是引入的类不同</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import KFold</span><br><span class="line"></span><br><span class="line">使用时只是KFold这个类名不一样其他代码完全一样</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">strat_k_fold=sklearn.model_selection.StratifiedKFold(n_splits=5, shuffle=True, random_state=42)</span><br><span class="line"></span><br><span class="line">​	n_splits划分为几个折叠 </span><br><span class="line">​	shuffle是否在拆分之前被打乱(随机化),False则按照顺序拆分</span><br><span class="line">​	random_state随机因子</span><br><span class="line"></span><br><span class="line">indexs=strat_k_fold.split(X,y) </span><br><span class="line"></span><br><span class="line">​	返回一个可迭代对象,一共有5个折叠,每个折叠对应的是训练集和测试集的下标</span><br><span class="line"></span><br><span class="line">​	然后可以用for循环取出每一个折叠对应的X和y下标来访问到对应的测试数据集和训练数据集 以及测试目标集和训练目标集</span><br><span class="line"></span><br><span class="line">for train_index, test_index in indexs:</span><br><span class="line"></span><br><span class="line">​	X[train_index]    y[train_index]   X[test_index ]  y[test_index ]</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-6示例"><a href="#2-1-6示例" class="headerlink" title="2.1.6示例"></a>2.1.6示例</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> StratifiedKFold</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line">iris = load_iris()</span><br><span class="line">X = iris.data</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化分层k-折交叉验证器</span></span><br><span class="line"><span class="comment">#n_splits划分为几个折叠 </span></span><br><span class="line"><span class="comment">#shuffle是否在拆分之前被打乱(随机化),False则按照顺序拆分</span></span><br><span class="line"><span class="comment">#random_state随机因子</span></span><br><span class="line">strat_k_fold = StratifiedKFold(n_splits=<span class="number">5</span>, shuffle=<span class="literal">True</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个K近邻分类器实例</span></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行交叉验证</span></span><br><span class="line">accuracies = []</span><br><span class="line"><span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> strat_k_fold.split(X, y):</span><br><span class="line">    <span class="built_in">print</span>(train_index, test_index)</span><br><span class="line">    X_train, X_test = X[train_index], X[test_index]</span><br><span class="line">    y_train, y_test = y[train_index], y[test_index]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 数据预处理（标准化）</span></span><br><span class="line">    scaler = StandardScaler()</span><br><span class="line">    X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">    X_test_scaled = scaler.transform(X_test)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用K近邻分类器进行训练</span></span><br><span class="line">    knn.fit(X_train_scaled, y_train)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 输出每次折叠的准确性得分</span></span><br><span class="line">    score = knn.score(X_test,y_test)</span><br><span class="line">    <span class="built_in">print</span>(score)</span><br><span class="line">    accuracies.append(score)<span class="comment">#把分数添加到外面列表中</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>(accuracies)/<span class="built_in">len</span>(accuracies))<span class="comment">#平均得分</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用StratifiedKFold来创建5个折叠，每个折叠中鸢尾花数据集的类别分布与整体数据集的分布一致。然后我们对每个折叠进行了训练和测试，计算了分类器的准确性。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2超参数搜索"><a href="#2-2超参数搜索" class="headerlink" title="2.2超参数搜索"></a>2.2超参数搜索</h3><p>超参数搜索也叫网格搜索(Grid Search)</p>
+<p>比如在KNN算法中，k是一个可以人为设置的参数，所以就是一个超参数。网格搜索能自动的帮助我们找到最好的超参数值。</p>
+<h4 id="2-2-1API"><a href="#2-2-1API" class="headerlink" title="2.2.1API"></a>2.2.1API</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.model_selection.GridSearchCV(estimator, param_grid)</span><br><span class="line"></span><br><span class="line">说明：</span><br><span class="line">同时进行交叉验证(CV)、和网格搜索(GridSearch)，GridSearchCV实际上也是一个估计器(estimator)，同时它有几个重要属性：</span><br><span class="line">      best_params_  最佳参数</span><br><span class="line">      best_score_ 在训练集中的准确率</span><br><span class="line">      best_estimator_ 最佳估计器</span><br><span class="line">      cv_results_ 交叉验证过程描述</span><br><span class="line">      best_index_最佳k在列表中的下标</span><br><span class="line">参数：</span><br><span class="line">	estimator： scikit-learn估计器实例</span><br><span class="line">	param_grid:以参数名称（str）作为键，将参数设置列表尝试作为值的字典</span><br><span class="line">		示例： &#123;&quot;n_neighbors&quot;: [1, 3, 5, 7, 9, 11]&#125;</span><br><span class="line">    cv: 确定交叉验证切分策略,值为:</span><br><span class="line">        (1)None  默认5折</span><br><span class="line">        (2)integer  设置多少折</span><br><span class="line">        如果估计器是分类器，使用&quot;分层k-折交叉验证(StratifiedKFold)&quot;。在所有其他情况下，使用KFold。</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-2示例"><a href="#2-2-2示例" class="headerlink" title="2.2.2示例"></a>2.2.2示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用KNN算法对鸢尾花进行分类，添加网格搜索和交叉验证</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">knn_iris_gscv</span>():</span><br><span class="line">    <span class="comment"># 1）获取数据</span></span><br><span class="line">    iris = load_iris()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2）划分数据集</span></span><br><span class="line">    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=<span class="number">22</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3）特征工程：标准化</span></span><br><span class="line">    transfer = StandardScaler()</span><br><span class="line">    x_train = transfer.fit_transform(x_train)</span><br><span class="line">    x_test = transfer.transform(x_test)</span><br><span class="line">   </span><br><span class="line">    <span class="comment"># 4）KNN算法预估器, 这里就不传参数n_neighbors了，交给GridSearchCV来传递</span></span><br><span class="line">    estimator = KNeighborsClassifier()</span><br><span class="line">    <span class="comment"># 加入网格搜索与交叉验证, GridSearchCV会让k分别等于1,2,5,7,9,11进行网格搜索偿试。cv=10表示进行10次交叉验证</span></span><br><span class="line">    estimator = GridSearchCV(estimator, param_grid=&#123;<span class="string">&quot;n_neighbors&quot;</span>: [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">11</span>]&#125;, cv=<span class="number">10</span>)</span><br><span class="line">    estimator.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5）模型评估</span></span><br><span class="line">    <span class="comment"># 方法1：直接比对真实值和预测值</span></span><br><span class="line">    y_predict = estimator.predict(x_test)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;y_predict:\n&quot;</span>, y_predict)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;直接比对真实值和预测值:\n&quot;</span>, y_test == y_predict)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 方法2：计算准确率</span></span><br><span class="line">    score = estimator.score(x_test, y_test)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;在测试集中的准确率为：\n&quot;</span>, score)  <span class="comment">#0.9736842105263158</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 最佳参数：best_params_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳参数：\n&quot;</span>, estimator.best_params_) <span class="comment">#&#123;&#x27;n_neighbors&#x27;: 3&#125;， 说明k=3时最好</span></span><br><span class="line">    <span class="comment"># 最佳结果：best_score_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;在训练集中的准确率：\n&quot;</span>, estimator.best_score_)  <span class="comment">#0.9553030303030303</span></span><br><span class="line">    <span class="comment"># 最佳估计器：best_estimator_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳估计器:\n&quot;</span>, estimator.best_estimator_) <span class="comment"># KNeighborsClassifier(n_neighbors=3)</span></span><br><span class="line">    <span class="comment"># 交叉验证结果：cv_results_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;交叉验证过程描述:\n&quot;</span>, estimator.cv_results_)</span><br><span class="line">    <span class="comment">#最佳参数组合的索引:最佳k在列表中的下标</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳参数组合的索引:\n&quot;</span>,estimator.best_index_)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#通常情况下，直接使用best_params_更为方便</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">knn_iris_gscv()</span><br></pre></td></tr></table></figure>
+
+<h2 id="3线性回归"><a href="#3线性回归" class="headerlink" title="3线性回归"></a>3线性回归</h2><h3 id="3-1线性回归主要理论"><a href="#3-1线性回归主要理论" class="headerlink" title="3.1线性回归主要理论"></a>3.1线性回归主要理论</h3><h4 id="3-1-1理论"><a href="#3-1-1理论" class="headerlink" title="3.1.1理论"></a>3.1.1理论</h4><p>说到回归，一般都是指线性回归（linear regression）。线性回归意味着可以将输入项分别乘以一些常量，再将结果加起来得到输出。线性回归是机器学习中一种<strong>有监督学习</strong>的算法,<strong>回归问题</strong>主要关注的是<strong>因变量</strong>(需要预测的值)和一个或多个数值型的<strong>自变量</strong>(预测变量)之间的关系.</p>
+<p>需要预测的值:即目标变量,target,y</p>
+<p>影响目标变量的因素:$X_1,X_2…X_n$,可以是连续值也可以是离散值</p>
+<p>因变量和自变量之间的关系:即<strong>模型</strong>,model,就是我们要求解的</p>
+<p>比如1个包子是2元 3个包子是6元  预测5个包子多少钱</p>
+<p>列出方程: $y&#x3D;wx+b$</p>
+<p>带入:</p>
+<p> 2&#x3D;w*1+b</p>
+<p> 6&#x3D;w*3+b</p>
+<p>轻易求得 w&#x3D;2 b&#x3D;0</p>
+<p><strong>模型</strong>(x与y的关系): $y&#x3D;2*x+0$</p>
+<p>预测 x&#x3D;5 时 target_y&#x3D;2*5+0&#x3D;10元</p>
+<h4 id="3-1-2损失函数"><a href="#3-1-2损失函数" class="headerlink" title="3.1.2损失函数"></a>3.1.2损失函数</h4><p>$$\text{MSE} &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} (\hat{y}_i - y_i)^2 $$</p>
+</style></div>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>CXZ</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/04/20/OpenCV%E5%A4%84%E7%90%86%E5%9B%BE%E5%83%8F/">OpenCV处理图像</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
