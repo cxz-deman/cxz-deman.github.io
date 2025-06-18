@@ -987,7 +987,7 @@
 
 <h4 id="2-2-2示例"><a href="#2-2-2示例" class="headerlink" title="2.2.2示例"></a>2.2.2示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用KNN算法对鸢尾花进行分类，添加网格搜索和交叉验证</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">knn_iris_gscv</span>():</span><br><span class="line">    <span class="comment"># 1）获取数据</span></span><br><span class="line">    iris = load_iris()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2）划分数据集</span></span><br><span class="line">    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=<span class="number">22</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3）特征工程：标准化</span></span><br><span class="line">    transfer = StandardScaler()</span><br><span class="line">    x_train = transfer.fit_transform(x_train)</span><br><span class="line">    x_test = transfer.transform(x_test)</span><br><span class="line">   </span><br><span class="line">    <span class="comment"># 4）KNN算法预估器, 这里就不传参数n_neighbors了，交给GridSearchCV来传递</span></span><br><span class="line">    estimator = KNeighborsClassifier()</span><br><span class="line">    <span class="comment"># 加入网格搜索与交叉验证, GridSearchCV会让k分别等于1,2,5,7,9,11进行网格搜索偿试。cv=10表示进行10次交叉验证</span></span><br><span class="line">    estimator = GridSearchCV(estimator, param_grid=&#123;<span class="string">&quot;n_neighbors&quot;</span>: [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">11</span>]&#125;, cv=<span class="number">10</span>)</span><br><span class="line">    estimator.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5）模型评估</span></span><br><span class="line">    <span class="comment"># 方法1：直接比对真实值和预测值</span></span><br><span class="line">    y_predict = estimator.predict(x_test)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;y_predict:\n&quot;</span>, y_predict)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;直接比对真实值和预测值:\n&quot;</span>, y_test == y_predict)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 方法2：计算准确率</span></span><br><span class="line">    score = estimator.score(x_test, y_test)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;在测试集中的准确率为：\n&quot;</span>, score)  <span class="comment">#0.9736842105263158</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 最佳参数：best_params_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳参数：\n&quot;</span>, estimator.best_params_) <span class="comment">#&#123;&#x27;n_neighbors&#x27;: 3&#125;， 说明k=3时最好</span></span><br><span class="line">    <span class="comment"># 最佳结果：best_score_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;在训练集中的准确率：\n&quot;</span>, estimator.best_score_)  <span class="comment">#0.9553030303030303</span></span><br><span class="line">    <span class="comment"># 最佳估计器：best_estimator_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳估计器:\n&quot;</span>, estimator.best_estimator_) <span class="comment"># KNeighborsClassifier(n_neighbors=3)</span></span><br><span class="line">    <span class="comment"># 交叉验证结果：cv_results_</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;交叉验证过程描述:\n&quot;</span>, estimator.cv_results_)</span><br><span class="line">    <span class="comment">#最佳参数组合的索引:最佳k在列表中的下标</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;最佳参数组合的索引:\n&quot;</span>,estimator.best_index_)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#通常情况下，直接使用best_params_更为方便</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">knn_iris_gscv()</span><br></pre></td></tr></table></figure>
 
-<h2 id="3线性回归"><a href="#3线性回归" class="headerlink" title="3线性回归"></a>3线性回归</h2><h3 id="3-1线性回归主要理论"><a href="#3-1线性回归主要理论" class="headerlink" title="3.1线性回归主要理论"></a>3.1线性回归主要理论</h3><h4 id="3-1-1理论"><a href="#3-1-1理论" class="headerlink" title="3.1.1理论"></a>3.1.1理论</h4><p>说到回归，一般都是指线性回归（linear regression）。线性回归意味着可以将输入项分别乘以一些常量，再将结果加起来得到输出。线性回归是机器学习中一种<strong>有监督学习</strong>的算法,<strong>回归问题</strong>主要关注的是<strong>因变量</strong>(需要预测的值)和一个或多个数值型的<strong>自变量</strong>(预测变量)之间的关系.</p>
+<h2 id="3回归"><a href="#3回归" class="headerlink" title="3回归"></a>3回归</h2><h3 id="3-1线性回归"><a href="#3-1线性回归" class="headerlink" title="3.1线性回归"></a>3.1线性回归</h3><h4 id="3-1-1理论"><a href="#3-1-1理论" class="headerlink" title="3.1.1理论"></a>3.1.1理论</h4><p>说到回归，一般都是指线性回归（linear regression）。线性回归意味着可以将输入项分别乘以一些常量，再将结果加起来得到输出。线性回归是机器学习中一种<strong>有监督学习</strong>的算法,<strong>回归问题</strong>主要关注的是<strong>因变量</strong>(需要预测的值)和一个或多个数值型的<strong>自变量</strong>(预测变量)之间的关系.</p>
 <p>需要预测的值:即目标变量,target,y</p>
 <p>影响目标变量的因素:$X_1,X_2…X_n$,可以是连续值也可以是离散值</p>
 <p>因变量和自变量之间的关系:即<strong>模型</strong>,model,就是我们要求解的</p>
@@ -1000,6 +1000,170 @@
 <p><strong>模型</strong>(x与y的关系): $y&#x3D;2*x+0$</p>
 <p>预测 x&#x3D;5 时 target_y&#x3D;2*5+0&#x3D;10元</p>
 <h4 id="3-1-2损失函数"><a href="#3-1-2损失函数" class="headerlink" title="3.1.2损失函数"></a>3.1.2损失函数</h4><p>$$\text{MSE} &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} (\hat{y}_i - y_i)^2 $$</p>
+<p>$$\hat{y}_i $$ 是预测值，$$y_i$$是真实值，不断更新参数w使得损失值MSE更小</p>
+<h4 id="3-1-3多参数回归"><a href="#3-1-3多参数回归" class="headerlink" title="3.1.3多参数回归"></a>3.1.3多参数回归</h4><p>上面案例中,实际情况下,影响这种植物高度的不仅仅有温度,还有海拔,湿度,光照等等因素：</p>
+<p>实际情况下,往往影响结果y的因素不止1个,这时x就从一个变成了n个,$x_1,x_2,x_3…x_n$ 上面的思路是对的,但是求解的公式就不再适用了</p>
+<p>案例: 假设一个人健康程度怎么样,由很多因素组成</p>
+<table>
+<thead>
+<tr>
+<th>被爱</th>
+<th>学习指数</th>
+<th>抗压指数</th>
+<th>运动指数</th>
+<th>饮食情况</th>
+<th>金钱</th>
+<th>心态</th>
+<th>压力</th>
+<th>健康程度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>14</td>
+<td>8</td>
+<td>0</td>
+<td>5</td>
+<td>-2</td>
+<td>9</td>
+<td>-3</td>
+<td>339</td>
+</tr>
+<tr>
+<td>-4</td>
+<td>10</td>
+<td>6</td>
+<td>4</td>
+<td>-14</td>
+<td>-2</td>
+<td>-14</td>
+<td>8</td>
+<td>-114</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>-6</td>
+<td>5</td>
+<td>-12</td>
+<td>3</td>
+<td>-3</td>
+<td>2</td>
+<td>-2</td>
+<td>30</td>
+</tr>
+<tr>
+<td>5</td>
+<td>-2</td>
+<td>3</td>
+<td>10</td>
+<td>5</td>
+<td>11</td>
+<td>4</td>
+<td>-8</td>
+<td>126</td>
+</tr>
+<tr>
+<td>-15</td>
+<td>-15</td>
+<td>-8</td>
+<td>-15</td>
+<td>7</td>
+<td>-4</td>
+<td>-12</td>
+<td>2</td>
+<td>-395</td>
+</tr>
+<tr>
+<td>11</td>
+<td>-10</td>
+<td>-2</td>
+<td>4</td>
+<td>3</td>
+<td>-9</td>
+<td>-6</td>
+<td>7</td>
+<td>-87</td>
+</tr>
+<tr>
+<td>-14</td>
+<td>0</td>
+<td>4</td>
+<td>-3</td>
+<td>5</td>
+<td>10</td>
+<td>13</td>
+<td>7</td>
+<td>422</td>
+</tr>
+<tr>
+<td>-3</td>
+<td>-7</td>
+<td>-2</td>
+<td>-8</td>
+<td>0</td>
+<td>-6</td>
+<td>-5</td>
+<td>-9</td>
+<td>-309</td>
+</tr>
+<tr>
+<td>11</td>
+<td>14</td>
+<td>8</td>
+<td>10</td>
+<td>5</td>
+<td>10</td>
+<td>8</td>
+<td>1</td>
+<td>?</td>
+</tr>
+</tbody></table>
+<p>求如果karen的各项指标是:</p>
+<p> 被爱:11 学习指数:14  抗压指数:8  运动指数:10  饮食水平:5  金钱:10 心态:8 压力:1</p>
+<p>那么karen的健康程度是多少?</p>
+<p>直接能想到的就是<strong>八元一次方程求解</strong>:</p>
+<p>$14w_2+8w_3+5w_5+-2w_6+9w_7+-3w_8&#x3D;399$</p>
+<p>$-4w_1+10w_2+6w_3+4w_4+-14w_5+-2w_6+-14w_7+8w_8&#x3D;-144$</p>
+<p>$-1w_1+-6w_2+5w_3+-12w_4+3w_3+-3w_6+2w_7+-2w_8&#x3D;30$</p>
+<p>$5w_1+-2w_2+3w_3+10w_4+5w_5+11w_6+4w_7+-8w_8&#x3D;126$</p>
+<p>$-15w_1+-15w_2+-8w_3+-15w_4+7w_5+-4w_6+-12w_7+2w_8&#x3D;126$</p>
+<p>$11w_1+-10w_2+-2w_3+4w_4+3w_5+-9w_6+-6w_7+7w_8&#x3D;-87$</p>
+<p>$-14w_1+4w_3+-3w_4+5w_5+10w_6+13w_7+7w_8&#x3D;422$</p>
+<p>$-3w_1+-7w_2+-2w_3+-8w_4+-6w_6+-5w_7+-9w_8&#x3D;-309$</p>
+<p>解出 <strong>权重</strong> $w(w_1,w_2…w_8)$ 然后带入即可求出karen的健康程度</p>
+<p>权重即重要程度,某一项的权重越大说明它影响最终健康的程度越大</p>
+<p>但是这有一个前提:这个八元一次方程组得有解才行</p>
+<p>因此我们还是按照损失最小的思路来求<strong>权重</strong> $w(w_1,w_2…w_8)$</p>
+<p><strong>多元线性回归</strong>:</p>
+<p>$y^,&#x3D;w_1x_1+w_2x_2+….w_nx_n+b$</p>
+<p>b是截距,我们也可以使用$w_0$来表示只要是个常量就行</p>
+<p>$y^,&#x3D;w_1x_1+w_2x_2+….w_nx_n+w_0$</p>
+<p>$y^,&#x3D;w_1x_1+w_2x_2+….w_nx_n+w_0*1$</p>
+<p>那么损失函数就是</p>
+<p>$loss&#x3D;[(y_1-y_1^,)^2+(y_2-y_2^,)^2+….(y_n-y_n^,)^2]&#x2F;n$</p>
+<p>如何求得对应的$W{(w_1,w_2..w_0)}$ 使得loss最小呢?</p>
+<p>数学家高斯给出了答案，使用最小二乘法</p>
+<p>最小二乘法公式：</p>
+<p>$h(x)&#x3D;w_1x_1+w_2x_2+w_3x_3+w_4x_4+w_5x_5+w_6x_6+w_7x_7+w_8x_8+w_0x_0$</p>
+<p>$loss&#x3D;[(h_1(x)-y_1)^2+(h_2(x)-y_2)^2+…(h_n(x)-y_n)^2]&#x2F;n\&#x3D;\frac{1}{n} \textstyle\sum_{i&#x3D;1}^{n}(h(x_{i})-y_{i})^{2}\&#x3D;\frac{1}{n}||(XW-y)||^2\&#x3D;\frac{1}{2}||(XW-y)||^2  $</p>
+<p>这就是传说中的最小二乘法公式 \ ||A||^2 是欧几里得范数的平方,也就是每个元素的平方相加,令n为2不会改变结果但是会简化计算过程</p>
+<h4 id="3-1-4代码演示"><a href="#3-1-4代码演示" class="headerlink" title="3.1.4代码演示"></a>3.1.4代码演示</h4><p>导入sklearn.linear_model中的LinearRegression</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">data=np.array([[<span class="number">0</span>,<span class="number">14</span>,<span class="number">8</span>,<span class="number">0</span>,<span class="number">5</span>,-<span class="number">2</span>,<span class="number">9</span>,-<span class="number">3</span>,<span class="number">399</span>],</span><br><span class="line">               [-<span class="number">4</span>,<span class="number">10</span>,<span class="number">6</span>,<span class="number">4</span>,-<span class="number">14</span>,-<span class="number">2</span>,-<span class="number">14</span>,<span class="number">8</span>,-<span class="number">144</span>],</span><br><span class="line">               [-<span class="number">1</span>,-<span class="number">6</span>,<span class="number">5</span>,-<span class="number">12</span>,<span class="number">3</span>,-<span class="number">3</span>,<span class="number">2</span>,-<span class="number">2</span>,<span class="number">30</span>],</span><br><span class="line">               [<span class="number">5</span>,-<span class="number">2</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">11</span>,<span class="number">4</span>,-<span class="number">8</span>,<span class="number">126</span>],</span><br><span class="line">               [-<span class="number">15</span>,-<span class="number">15</span>,-<span class="number">8</span>,-<span class="number">15</span>,<span class="number">7</span>,-<span class="number">4</span>,-<span class="number">12</span>,<span class="number">2</span>,-<span class="number">395</span>],</span><br><span class="line">               [<span class="number">11</span>,-<span class="number">10</span>,-<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>,-<span class="number">9</span>,-<span class="number">6</span>,<span class="number">7</span>,-<span class="number">87</span>],</span><br><span class="line">               [-<span class="number">14</span>,<span class="number">0</span>,<span class="number">4</span>,-<span class="number">3</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">13</span>,<span class="number">7</span>,<span class="number">422</span>],</span><br><span class="line">               [-<span class="number">3</span>,-<span class="number">7</span>,-<span class="number">2</span>,-<span class="number">8</span>,<span class="number">0</span>,-<span class="number">6</span>,-<span class="number">5</span>,-<span class="number">9</span>,-<span class="number">309</span>]])</span><br><span class="line">x=data[:,<span class="number">0</span>:<span class="number">8</span>]</span><br><span class="line">y=data[:,<span class="number">8</span>:]</span><br><span class="line"><span class="comment">#模型实例化</span></span><br><span class="line">estimator=LinearRegression(fit_intercept=<span class="literal">False</span>)</span><br><span class="line">estimator.fit(x,y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;权重系数为：\n&quot;</span>, estimator.coef_)  <span class="comment">#权重系数与特征数一定是同样的个数。</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏置为：\n&quot;</span>, estimator.intercept_)</span><br><span class="line">x_new=[[<span class="number">11</span>,<span class="number">14</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">8</span>,<span class="number">1</span>]]</span><br><span class="line">y_predict=estimator.predict(x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测结果:\n&quot;</span>,y_predict)</span><br><span class="line"><span class="built_in">print</span>(-<span class="number">3</span>*<span class="number">0.4243965</span>-<span class="number">7</span>*<span class="number">7.32281732</span>-<span class="number">2</span>*<span class="number">15.05217218</span>-<span class="number">8</span>*<span class="number">3.5996297</span>+<span class="number">0</span>*<span class="number">12.05805264</span>-<span class="number">6</span>*<span class="number">1.76972959</span>-<span class="number">5</span>*<span class="number">17.0276393</span>-<span class="number">9</span>*<span class="number">11.31212591</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">权重系数为：</span><br><span class="line"> [[ 0.4243965   7.32281732 15.05217218  3.5996297  12.05805264  1.76972959</span><br><span class="line">  17.0276393  11.31212591]]</span><br><span class="line">偏置为：</span><br><span class="line"> 0.0</span><br><span class="line">预测结果:</span><br><span class="line"> [[ 399.]</span><br><span class="line"> [-144.]</span><br><span class="line"> [  30.]</span><br><span class="line"> [ 126.]</span><br><span class="line"> [-395.]</span><br><span class="line"> [ -87.]</span><br><span class="line"> [ 422.]</span><br><span class="line"> [-309.]]</span><br><span class="line">-308.99999993</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2梯度下降"><a href="#3-2梯度下降" class="headerlink" title="3.2梯度下降"></a>3.2梯度下降</h3><h4 id="3-2-1理论和公式"><a href="#3-2-1理论和公式" class="headerlink" title="3.2.1理论和公式"></a>3.2.1理论和公式</h4><p>从山顶到山底，利用求导的方式，不断改变参数w</p>
+<p>公式：</p>
+<p>$w^{n+1}&#x3D;w^n-learn*gredient$</p>
+<p>learn:学习率</p>
+<p>gredient:导数</p>
+<p>$w^n$:所求w参数</p>
+<p>$W^{n+1}$：下次所求参数</p>
+<p>多参数时可以是矩阵</p>
+<h4 id="3-2-2步骤"><a href="#3-2-2步骤" class="headerlink" title="3.2.2步骤"></a>3.2.2步骤</h4><p>在机器学习中，<strong>梯度表示损失函数对于模型参数的偏导数</strong>。具体来说，对于每个可训练参数，<strong>梯度告诉我们在当前参数值下，沿着每个参数方向变化时，损失函数的变化率</strong>。通过计算损失函数对参数的梯度，梯度下降算法能够根据梯度的信息来调整参数，朝着减少损失的方向更新模型，从而逐步优化模型，使得模型性能更好。</p>
+<p>在 $\bar e&#x3D;{\frac{1}{n}}\sum_{i&#x3D;1}^{n}x_{i}^{2}w^{2}-{\frac{2}{n}}\sum_{i&#x3D;1}^{n} x_{i}y_{i}w+{\frac{1}{n}}\sum_{i&#x3D;1}^{n} y_{i}^{2}$ 这个一元二次方程中，损失函数对于参数 w 的梯度就是关于 w 点的切线斜率。梯度下降算法会根据该斜率的信息来调整参数 w，使得损失函数逐步减小，从而找到使得损失最小化的参数值，优化模型的性能。</p>
+<p><strong>梯度下降法(<strong>Gradient Descent)是一个算法，但不是像多元线性回归那样是一个具体做回归任务的算法，而是一个非常通用的优化算法来帮助一些机器学习算法求解出</strong>最优解</strong>，所谓的通用就是很多机器学习算法都是用梯度下降，甚至<strong>深度学习</strong>也是用它来求解最优解。<br>所有优化算法的目的都是期望以<strong>最快的速度</strong>把模型参数W求解出来，梯度下降法就是一种经典常用的优化算法。</p>
 </style></div>
         </div>
 
