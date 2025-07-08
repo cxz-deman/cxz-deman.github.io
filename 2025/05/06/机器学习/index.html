@@ -1161,9 +1161,157 @@
 <p>$w^n$:所求w参数</p>
 <p>$W^{n+1}$：下次所求参数</p>
 <p>多参数时可以是矩阵</p>
-<h4 id="3-2-2步骤"><a href="#3-2-2步骤" class="headerlink" title="3.2.2步骤"></a>3.2.2步骤</h4><p>在机器学习中，<strong>梯度表示损失函数对于模型参数的偏导数</strong>。具体来说，对于每个可训练参数，<strong>梯度告诉我们在当前参数值下，沿着每个参数方向变化时，损失函数的变化率</strong>。通过计算损失函数对参数的梯度，梯度下降算法能够根据梯度的信息来调整参数，朝着减少损失的方向更新模型，从而逐步优化模型，使得模型性能更好。</p>
+<h4 id="3-2-2步骤"><a href="#3-2-2步骤" class="headerlink" title="3.2.2步骤"></a>3.2.2步骤</h4><p>梯度下降的学习率</p>
+<p>在机器学习中，<strong>梯度表示损失函数对于模型参数的偏导数</strong>。具体来说，对于每个可训练参数，<strong>梯度告诉我们在当前参数值下，沿着每个参数方向变化时，损失函数的变化率</strong>。通过计算损失函数对参数的梯度，梯度下降算法能够根据梯度的信息来调整参数，朝着减少损失的方向更新模型，从而逐步优化模型，使得模型性能更好。</p>
 <p>在 $\bar e&#x3D;{\frac{1}{n}}\sum_{i&#x3D;1}^{n}x_{i}^{2}w^{2}-{\frac{2}{n}}\sum_{i&#x3D;1}^{n} x_{i}y_{i}w+{\frac{1}{n}}\sum_{i&#x3D;1}^{n} y_{i}^{2}$ 这个一元二次方程中，损失函数对于参数 w 的梯度就是关于 w 点的切线斜率。梯度下降算法会根据该斜率的信息来调整参数 w，使得损失函数逐步减小，从而找到使得损失最小化的参数值，优化模型的性能。</p>
 <p><strong>梯度下降法(<strong>Gradient Descent)是一个算法，但不是像多元线性回归那样是一个具体做回归任务的算法，而是一个非常通用的优化算法来帮助一些机器学习算法求解出</strong>最优解</strong>，所谓的通用就是很多机器学习算法都是用梯度下降，甚至<strong>深度学习</strong>也是用它来求解最优解。<br>所有优化算法的目的都是期望以<strong>最快的速度</strong>把模型参数W求解出来，梯度下降法就是一种经典常用的优化算法。</p>
+<h4 id="3-2-3几种梯度下降的方法"><a href="#3-2-3几种梯度下降的方法" class="headerlink" title="3.2.3几种梯度下降的方法"></a>3.2.3几种梯度下降的方法</h4><p>官方的梯度下降API常用有三种:</p>
+<p>批量梯度下降BGD(Batch Gradient Descent) </p>
+<p>小批量梯度下降MBGD(Mini-BatchGradient Descent)</p>
+<p>随机梯度下降SGD(Stochastic Gradient Descent)。</p>
+<p>**优化：**标准化、正则化</p>
+<h5 id="3-2-3-1批量梯度下降BGD"><a href="#3-2-3-1批量梯度下降BGD" class="headerlink" title="3.2.3.1批量梯度下降BGD"></a>3.2.3.1<strong>批量梯度下降BGD</strong></h5><p><strong>Batch Gradient Descent (BGD)</strong>: 在这种情况下，每一次迭代都会使用全部的训练样本<strong>计算梯度</strong>来更新权重。这意味着每一步梯度更新都是基于整个数据集的平均梯度。这种方法的优点是每次更新的方向是最准确的，但缺点是计算量大且速度慢，尤其是在大数据集上</p>
+<h5 id="3-2-3-2小批量的梯度下降"><a href="#3-2-3-2小批量的梯度下降" class="headerlink" title="3.2.3.2小批量的梯度下降"></a>3.2.3.2小批量的梯度下降</h5><p><strong>Mini-Batch Gradient Descent (MBGD)</strong>: 这种方法介于批量梯度下降和随机梯度下降之间。它不是用全部样本也不是只用一个样本，而是每次迭代从数据集中随机抽取一小部分样本（例如，从500个样本中选取32个），然后基于这一小批样本的平均梯度来更新权重。这种方法在准确性和计算效率之间取得了一个平衡。</p>
+<h5 id="3-2-3-3随机梯度下降"><a href="#3-2-3-3随机梯度下降" class="headerlink" title="3.2.3.3随机梯度下降"></a>3.2.3.3随机梯度下降</h5><p><strong>Stochastic Gradient Descent (SGD)</strong>: 在随机梯度下降中，每次迭代仅使用随机单个样本（或有时称为“例子”）来计算梯度并更新权重。这种方法能够更快地收敛，但由于每次更新都基于单个样本，所以会导致权重更新路径不稳定。</p>
+<h4 id="3-2-4小批量梯度下降案例"><a href="#3-2-4小批量梯度下降案例" class="headerlink" title="3.2.4小批量梯度下降案例"></a>3.2.4小批量梯度下降案例</h4><p>使用还是使用sklearn.linear_model.SGDRegressor()</p>
+<p><strong>Stochastic Gradient Descent (SGD)</strong>: 在随机梯度下降中，每次迭代仅使用随机单个样本（或有时称为“例子”）来计算梯度并更新权重。这种方法能够更快地收敛，但由于每次更新都基于单个样本，所以会导致权重更新路径不稳定。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 线性回归 加载加利福尼亚住房数据集，进行回归预测</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, SGDRegressor, Ridge</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_california_housing</span><br><span class="line"><span class="comment"># 1)加载数据</span></span><br><span class="line">housing = fetch_california_housing(data_home=<span class="string">&quot;./src&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(housing)</span><br><span class="line"><span class="comment"># 2)划分训练集与测试集</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(housing.data, housing.target, random_state=<span class="number">22</span>)</span><br><span class="line"><span class="comment"># 3)标准化</span></span><br><span class="line">transfer = StandardScaler()</span><br><span class="line">x_train = transfer.fit_transform(x_train)</span><br><span class="line">x_test = transfer.transform(x_test)</span><br><span class="line"><span class="comment"># 4）线性回归预估器</span></span><br><span class="line">estimator = SGDRegressor(learning_rate=<span class="string">&quot;constant&quot;</span>, eta0=<span class="number">0.01</span>, max_iter=<span class="number">1000</span>,shuffle=<span class="literal">True</span>, penalty=<span class="string">&quot;l1&quot;</span>)</span><br><span class="line"><span class="comment"># 小批量梯度下降</span></span><br><span class="line">batch_size = <span class="number">50</span>  <span class="comment"># 批量大小</span></span><br><span class="line">n_batches = <span class="built_in">len</span>(x_train) // batch_size  <span class="comment"># 批次数量</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(estimator.max_iter):</span><br><span class="line">    indices = np.random.permutation(<span class="built_in">len</span>(x_train))  <span class="comment"># 随机打乱样本顺序</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n_batches):</span><br><span class="line">        start_idx = i * batch_size</span><br><span class="line">        end_idx = (i + <span class="number">1</span>) * batch_size</span><br><span class="line">        batch_indices = indices[start_idx:end_idx]</span><br><span class="line">        X_batch = x_train[batch_indices]</span><br><span class="line">        y_batch = y_train[batch_indices]</span><br><span class="line">        estimator.partial_fit(X_batch, y_batch)  <span class="comment"># 更新模型权重</span></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 5）得出模型</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;权重系数为：\n&quot;</span>, estimator.coef_)  <span class="comment">#权重系数与特征数一定是同样的个数。</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏置为：\n&quot;</span>, estimator.intercept_)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6）模型评估</span></span><br><span class="line">y_predict = estimator.predict(x_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;得分:\n&quot;</span>,estimator.score(x_test, y_test))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测的数据集：\n&quot;</span>, y_predict)</span><br><span class="line">error = mean_squared_error(y_test, y_predict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;均方误差为：\n&quot;</span>, error)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3欠拟合与过拟合"><a href="#3-3欠拟合与过拟合" class="headerlink" title="3.3欠拟合与过拟合"></a>3.3欠拟合与过拟合</h3><h4 id="3-3-1欠拟合"><a href="#3-3-1欠拟合" class="headerlink" title="3.3.1欠拟合"></a>3.3.1欠拟合</h4><p>欠拟合是指模型在训练数据上表现不佳，同时在新的未见过的数据上也表现不佳。这通常发生在模型过于简单，无法捕捉数据中的复杂模式时。欠拟合模型的表现特征如下：</p>
+<p>1.模型简单 2.训练次数 3.数据量丰富度</p>
+<ul>
+<li>训练误差较高。</li>
+<li>测试误差同样较高。</li>
+<li>模型可能过于简化，不能充分学习训练数据中的模式。</li>
+</ul>
+<h4 id="3-3-2过拟合"><a href="#3-3-2过拟合" class="headerlink" title="3.3.2过拟合"></a>3.3.2过拟合</h4><p>过拟合是指模型在训练数据上表现得非常好，但在新的未见过的数据上表现较差。这通常发生在模型过于复杂，以至于它不仅学习了数据中的真实模式，还学习了噪声和异常值。过拟合模型的表现特征如下：</p>
+<ul>
+<li><p>训练误差非常低。</p>
+</li>
+<li><p>测试误差较高。</p>
+</li>
+<li><p>模型可能过于复杂，以至于它对训练数据进行了过度拟合。</p>
+</li>
+</ul>
+<h4 id="3-3-3正则化"><a href="#3-3-3正则化" class="headerlink" title="3.3.3正则化"></a>3.3.3正则化</h4><p>  正则化就是防止过拟合，增加模型的<strong>鲁棒性</strong>，鲁棒是Robust 的音译，也就是强壮的意思。就像计算机软件在面临攻击、网络过载等情况下能够不死机不崩溃，这就是软件的鲁棒性,鲁棒性调优就是让模型拥有更好的鲁棒<br>性，也就是让模型的泛化能力和推广能力更加的强大。</p>
+<p>比如,下面两个方程描述两个模型,哪个更好?</p>
+<p>$y&#x3D;0.5x_1+0.6x_2+0.7$</p>
+<p>$y&#x3D;5x_1+6x_2+7$</p>
+<p>第一个更好，因为下面的公式是上面的十倍，当w越小公式的容错的能力就越好。我们都知道人工智能中回归是有误差的,为了把误差降低而拟合出来的一个接近真实的公式,比如把一个测试数据[10,20]带入计算得到的值跟真实值会存在一定的误差,但是第二个方程会把误差放大,公式中$y &#x3D; W^Tx$，当$x$有一点错误，这个错误会通过w放大。但是w不能太小，当w太小时(比如都趋近0)，模型就没有意义了，无法应用。想要有一定的容错率又要保证正确率就要由<strong>正则项</strong>来发挥作用了!<br>所以**正则化(鲁棒性调优)**的本质就是牺牲模型在训练集上的正确率来提高推广、泛化能力，W在数值上越小越好，这样能抵抗数值的扰动。同时为了保证模型的正确率W又不能极小。<strong>因此将原来的损失函数加上一个惩罚项使得计算出来的模型W相对小一些，就是正则化</strong>。这里面损失函数就是原来固有的损失函数，比如回归的话通常是MSE，然后在加上一部分惩罚项来使得计算出来的模型W相对小一些来带来泛化能力。</p>
+<p>常用的惩罚项有L1正则项或者L2正则项:</p>
+<p>$L1&#x3D;||w||<em>1&#x3D;\textstyle\sum</em>{i&#x3D;1}^{n}|w_i|$  对应曼哈顿距离</p>
+<p>$L2&#x3D;||w||<em>2&#x3D;\textstyle\sqrt[p]{\sum</em>{i&#x3D;1}^{n}x^p_i,X&#x3D;(x_1,x_2,…x_n)}$  对应欧氏距离</p>
+<p>其实$L1$ 和$L2$ 正则的公式在数学里面的意义就是范数,代表空间中向量到原点的距离</p>
+<p>当我们把多元线性回归损失函数加上$L2$正则的时候，就诞生了Ridge岭回归。当我们把多元线性回归损失函数加上$L1$正则的时候，就孕育出来了Lasso回归。其实$L1$和$L2$正则项惩罚项可以加到任何算法的损失函数上面去提高计算出来模型的泛化能力的。</p>
+<h3 id="3-4岭回归Ridge"><a href="#3-4岭回归Ridge" class="headerlink" title="3.4岭回归Ridge"></a>3.4岭回归Ridge</h3><h4 id="3-4-1岭回归的损失函数"><a href="#3-4-1岭回归的损失函数" class="headerlink" title="3.4.1岭回归的损失函数"></a>3.4.1岭回归的损失函数</h4><p>$J(w)&#x3D;\frac{1}{2m} \sum_{i&#x3D;1}^{n} (h_w(x_i) - y_i)^2+\lambda \sum_{i&#x3D;1}^{n}w_j^2$</p>
+<p>均方差除以2是因为方便求导，$w_j$指所有的权重系数, λ指惩罚型系数，又叫正则项力度</p>
+<p>特点:</p>
+<ul>
+<li>岭回归不会将权重压缩到零，这意味着所有特征都会保留在模型中，但它们的权重会被缩小。</li>
+<li>适用于特征间存在多重共线性的情况。</li>
+<li>岭回归产生的模型通常更为平滑，因为它对所有特征都有影响。</li>
+</ul>
+<h4 id="3-4-2API"><a href="#3-4-2API" class="headerlink" title="3.4.2API"></a>3.4.2API</h4><p>具有L2正则化的线性回归-岭回归。<br><strong>sklearn.linear_model.Ridge()</strong><br>1 参数：<br>(1)<strong>alpha</strong>, default&#x3D;1.0，正则项力度<br>(2**)fit_intercept**, 是否计算偏置， default&#x3D;True<br>(3)<strong>solver</strong>, {‘auto’, ‘svd’, ‘cholesky’, ‘lsqr’, ‘sparse_cg’, ‘sag’, ‘saga’, ‘lbfgs’}, default&#x3D;’auto’，解决方法<br>当值为auto,并且数据量、特征都比较大时，内部会随机梯度下降法。<br>(4)<strong>normalize</strong>：,default&#x3D;True, 数据进行标准化，如果特征工程中已经做过标准化，这里就该设置为False<br>(5)<strong>max_iterint</strong>, default&#x3D;None,梯度解算器的最大迭代次数，默认为15000</p>
+<p>2 属性<br>coef_ 回归后的权重系数<br>intercept_ 偏置</p>
+<p>调用实例化为model后，利用print(model.coef_,model.intercept_)</p>
+<p>说明:SGDRegressor也可以做岭回归的事情，比如SGDRegressor(penalty&#x3D;’l2’,loss&#x3D;”squared_loss”),但是其中梯度下降法有些不同。所以推荐使用Ridge实现岭回归</p>
+<h4 id="3-4-3案例"><a href="#3-4-3案例" class="headerlink" title="3.4.3案例"></a>3.4.3案例</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 岭回归 加载加利福尼亚住房数据集，进行回归预测</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression, SGDRegressor, Ridge</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_california_housing</span><br><span class="line"><span class="comment"># 1)加载数据</span></span><br><span class="line">housing = fetch_california_housing(data_home=<span class="string">&quot;./src&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(housing)</span><br><span class="line"><span class="comment"># 2)划分训练集与测试集</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(housing.data, housing.target, random_state=<span class="number">22</span>)</span><br><span class="line"><span class="comment"># 3)标准化</span></span><br><span class="line">transfer = StandardScaler()</span><br><span class="line">x_train = transfer.fit_transform(x_train)</span><br><span class="line">x_test = transfer.transform(x_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4）岭回归预估器</span></span><br><span class="line">estimator = Ridge(alpha=<span class="number">0.5</span>, max_iter=<span class="number">10000</span>)</span><br><span class="line">estimator.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5）得出模型</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;权重系数为：\n&quot;</span>, estimator.coef_)  <span class="comment">#权重系数与特征数一定是同样的个数。</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏置为：\n&quot;</span>, estimator.intercept_)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6）模型评估</span></span><br><span class="line">y_predict = estimator.predict(x_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测的数据集：\n&quot;</span>, y_predict)</span><br><span class="line">error = mean_squared_error(y_test, y_predict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;均方误差为：\n&quot;</span>, error)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5拉索回归"><a href="#3-5拉索回归" class="headerlink" title="3.5拉索回归"></a>3.5拉索回归</h3><h4 id="3-5-1损失函数"><a href="#3-5-1损失函数" class="headerlink" title="3.5.1损失函数"></a>3.5.1损失函数</h4><p>Lasso回归是一种线性回归模型，它通过添加所有权重的绝对值之和(L1)来惩罚模型的复杂度。</p>
+<p>Lasso回归的目标是最小化以下损失函数：$\text{J(w)}&#x3D; \frac{1}{2n}\sum_{i&#x3D;1}^n (h_w(x_i)-y_i)^2 + \lambda \sum_{j&#x3D;1}^p |w_j|$</p>
+<p>特点:</p>
+<ul>
+<li>拉索回归可以将一些权重压缩到零，从而实现特征选择。这意味着模型最终可能只包含一部分特征。</li>
+<li>适用于特征数量远大于样本数量的情况，或者当特征间存在相关性时，可以从中选择最相关的特征。</li>
+<li>拉索回归产生的模型可能更简单，因为它会去除一些不重要的特征。</li>
+</ul>
+<h4 id="3-5-2API"><a href="#3-5-2API" class="headerlink" title="3.5.2API"></a>3.5.2API</h4><p>sklearn.linear_model.Lasso()</p>
+<p>参数:</p>
+<ol>
+<li><strong>alpha (float, default&#x3D;1.0)</strong>:<ul>
+<li>控制正则化强度；必须是非负浮点数。较大的 alpha 增加了正则化强度。</li>
+</ul>
+</li>
+<li><strong>fit_intercept (bool, default&#x3D;True)</strong>:<ul>
+<li>是否计算此模型的截距。如果设置为 False，则不会使用截距（即数据应该已经被居中）。</li>
+</ul>
+</li>
+<li><strong>precompute (bool or array-like, default&#x3D;False)</strong>:<ul>
+<li>如果为 True，则使用预计算的 Gram 矩阵来加速计算。如果为数组，则使用提供的 Gram 矩阵。</li>
+</ul>
+</li>
+<li><strong>copy_X (bool, default&#x3D;True)</strong>:<ul>
+<li>如果为 True，则复制数据 X，否则可能对其进行修改。</li>
+</ul>
+</li>
+<li><strong>max_iter (int, default&#x3D;1000)</strong>:<ul>
+<li>最大迭代次数。</li>
+</ul>
+</li>
+<li><strong>tol (float, default&#x3D;1e-4)</strong>:<ul>
+<li>精度阈值。如果更新后的系数向量减去之前的系数向量的无穷范数除以 1 加上更新后的系数向量的无穷范数小于 tol，则认为收敛。</li>
+</ul>
+</li>
+<li><strong>warm_start (bool, default&#x3D;False)</strong>:<ul>
+<li>当设置为 True 时，再次调用 fit 方法会重新使用之前调用 fit 方法的结果作为初始估计值，而不是清零它们。</li>
+</ul>
+</li>
+<li><strong>positive (bool, default&#x3D;False)</strong>:<ul>
+<li>当设置为 True 时，强制系数为非负。</li>
+</ul>
+</li>
+<li><strong>random_state (int, RandomState instance, default&#x3D;None)</strong>:<ul>
+<li>随机数生成器的状态。用于随机初始化坐标下降算法中的随机选择。</li>
+</ul>
+</li>
+<li><strong>selection ({‘cyclic’, ‘random’}, default&#x3D;’cyclic’)</strong>:<ul>
+<li>如果设置为 ‘random’，则随机选择坐标进行更新。如果设置为 ‘cyclic’，则按照循环顺序选择坐标。</li>
+</ul>
+</li>
+</ol>
+<p>属性:</p>
+<ol>
+<li><p><strong>coef_</strong></p>
+<ul>
+<li>系数向量或者矩阵，代表了每个特征的权重。</li>
+</ul>
+</li>
+<li><p>**intercept_ **</p>
+<ul>
+<li>截距项（如果 fit_intercept&#x3D;True）。</li>
+</ul>
+</li>
+<li><p>**n_iter_ **</p>
+<ul>
+<li>实际使用的迭代次数。</li>
+</ul>
+</li>
+<li><p><strong>n_features_in_ (int)</strong>:</p>
+<ul>
+<li>训练样本中特征的数量。</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-5-3案例"><a href="#3-5-3案例" class="headerlink" title="3.5.3案例"></a>3.5.3案例</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_california_housing</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Lasso</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载波士顿房价数据集</span></span><br><span class="line">data = fetch_california_housing(data_home=<span class="string">&quot;./src&quot;</span>)</span><br><span class="line">X, y = data.data, data.target</span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分训练集和测试集</span></span><br><span class="line">X_train, x_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.2</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Lasso回归模型</span></span><br><span class="line">lasso = Lasso(alpha=<span class="number">0.1</span>)  <span class="comment"># alpha是正则化参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line">lasso.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得出模型</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;权重系数为：\n&quot;</span>, lasso.coef_)  <span class="comment">#权重系数与特征数一定是同样的个数。</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏置为：\n&quot;</span>, lasso.intercept_)</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型评估</span></span><br><span class="line">y_predict = lasso.predict(x_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;预测的数据集：\n&quot;</span>, y_predict)</span><br><span class="line">error = mean_squared_error(y_test, y_predict)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;均方误差为：\n&quot;</span>, error)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-6逻辑回归"><a href="#3-6逻辑回归" class="headerlink" title="3.6逻辑回归"></a>3.6逻辑回归</h3><p>简单的神经网络，广泛应用于二分类</p>
+<p>逻辑回归(Logistic Regression)是机器学习中的一种分类模型，<strong>逻辑回归是一种分类算法</strong>，虽然名字中带有回归，但是它与回归之间有一定的联系。由于算法的简单和高效，在实际中应用非常广泛。</p>
+<p>逻辑回归一般用于二分类问题,比如:</p>
+<p>是好瓜还是坏瓜</p>
+<p>健康还是不健康</p>
+<p>可以托付终身还是不可以</p>
+<h4 id="3-6-1原理"><a href="#3-6-1原理" class="headerlink" title="3.6.1原理"></a>3.6.1原理</h4><p>逻辑是多有个体进行计算等于真实值y的概率，调整系数让概率尽量最大</p>
+<p>概率与种类有关（详情见原笔记）</p>
+<p>逻辑回归的输入是线性回归的输出</p>
+<p>线性回归: <strong>$h(w)&#x3D;w_1x_1+w_2x_2+….+b$</strong> </p>
+<p>sigmoid激活函数 :$f(x)&#x3D;\frac{1}{1+e^{-x}}$      </p>
+<p>sigmoid函数的值是在[0,1]区间中的一个概率值,默认为0.5为阈值可以自己设定,大于0.5认为是正例,小于则认为是负例</p>
+<p>把上面的$h(w)$ 线性的输出再输入到sigmoid函数当中 $f(w)&#x3D;\frac{1}{1+e^{-h(w)}}$</p>
+<h4 id="3-6-2API"><a href="#3-6-2API" class="headerlink" title="3.6.2API"></a>3.6.2API</h4><p>sklearn.linear_model.LogisticRegression()<br>参数:<br>	fit_intercept bool, default&#x3D;True 指定是否计算截距<br>	max_iter int, default&#x3D;100  最大迭代次数。迭代达到此数目后，即使未收敛也会停止。<br>模型对象:<br>  .coef_ 权重<br>  .intercept_ 偏置<br>  predict()预测分类<br>  predict_proba()预测分类(对应的概率)<br>  score()准确率</p>
+<h4 id="3-6-3示例"><a href="#3-6-3示例" class="headerlink" title="3.6.3示例"></a>3.6.3示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#导包</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">#加载数据</span><br><span class="line">X,y = load_iris(return_X_y=True)</span><br><span class="line">print(y)</span><br><span class="line"></span><br><span class="line">#二分类 删除第三类</span><br><span class="line">X=X[y!=2]</span><br><span class="line">y=y[y!=2]</span><br><span class="line">print(y)</span><br><span class="line"></span><br><span class="line">#数据集划分</span><br><span class="line">X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.25,random_state=33)</span><br><span class="line">print(X_train.shape,y_train.shape)</span><br><span class="line"></span><br><span class="line">#逻辑回归模型</span><br><span class="line">model=LogisticRegression()</span><br><span class="line"></span><br><span class="line">#训练</span><br><span class="line">model.fit(X_train,y_train)</span><br><span class="line"></span><br><span class="line">#权重</span><br><span class="line">print(model.coef_)</span><br><span class="line"></span><br><span class="line">#偏置</span><br><span class="line">print(model.intercept_)</span><br><span class="line"></span><br><span class="line">#预测分类</span><br><span class="line">y_predict=model.predict(X_test)</span><br><span class="line">print(y_predict)</span><br><span class="line">print(y_test)</span><br><span class="line"></span><br><span class="line">#预测分类对应的概率</span><br><span class="line">proba=model.predict_proba(X_test)</span><br><span class="line">print(proba)</span><br><span class="line"></span><br><span class="line">#评估</span><br><span class="line">print(model.score(X_test,y_test))</span><br></pre></td></tr></table></figure>
+
 </style></div>
         </div>
 
