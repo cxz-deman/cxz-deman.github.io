@@ -717,6 +717,7 @@
 </table>
 #### 7.3.4TfidfVectorizer TF-IDF文本特征词的重要程度特征提取
 
+
 <h5 id="7-3-4API"><a href="#7-3-4API" class="headerlink" title="7.3.4API"></a>7.3.4API</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sklearn.feature_extraction.text.TfidfVectorizer()</span><br><span class="line"></span><br><span class="line">​	构造函数关键字参数stop_words，表示词特征黑名单</span><br><span class="line"></span><br><span class="line">fit_transform函数的返回值为稀疏矩阵</span><br></pre></td></tr></table></figure>
 
 <h5 id="7-3-5代码示例"><a href="#7-3-5代码示例" class="headerlink" title="7.3.5代码示例"></a>7.3.5代码示例</h5><p>代码与CountVectorizer的示例基本相同,仅仅把CountVectorizer改为TfidfVectorizer即可</p>
@@ -941,7 +942,7 @@
 <li><strong>(1) 信息熵</strong></li>
 </ul>
 <p>信息熵描述的是不确定性。信息熵越大，不确定性越大。信息熵的值越小，则D的纯度越高。</p>
-<p>假设样本集合D共有N类，第k类样本所占比例为<img src="/imgs/image-20240123101100180.png" alt="image-20240123101100180">，则D的信息熵为$$ P(C_k | x_1, x_2, \ldots, x_n) &#x3D; \frac{P(C_k) \prod_{i&#x3D;1}^{n} P(x_i | C_k)}{\prod_{i&#x3D;1}^{n} P(x_i)} $$</p>
+<p>假设样本集合D共有N类，第k类样本所占比例为<img src="/../imgs/image-20240123101100180.png" alt="image-20240123101100180">，则D的信息熵为$$ P(C_k | x_1, x_2, \ldots, x_n) &#x3D; \frac{P(C_k) \prod_{i&#x3D;1}^{n} P(x_i | C_k)}{\prod_{i&#x3D;1}^{n} P(x_i)} $$</p>
 <ul>
 <li><strong>(2) 信息增益</strong></li>
 </ul>
@@ -1331,7 +1332,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</a></span>
+                        <span><a href="https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">https://cxz-deman.github.io/2025/05/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></span>
                     </p>
                 
                 
