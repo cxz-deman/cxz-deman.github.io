@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>卷积神经网络 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">卷积神经网络</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">CXZ</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 21, 2025&nbsp;&nbsp;16:45:34</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h2 id="1入门"><a href="#1入门" class="headerlink" title="1入门"></a>1入门</h2><h3 id="1-1特点"><a href="#1-1特点" class="headerlink" title="1.1特点"></a>1.1特点</h3><ul>
+<li><p>卷积-激活-池化</p>
+</li>
+<li><p>卷积神经网络处理数据的三个特性：局部连接、权值共享、池化</p>
+</li>
+</ul>
+<h4 id="1-1-1-局部连接（Local-Connectivity）"><a href="#1-1-1-局部连接（Local-Connectivity）" class="headerlink" title="1.1.1 局部连接（Local Connectivity）"></a>1.1.1 局部连接（Local Connectivity）</h4><ul>
+<li><p><strong>定义</strong><br>每个神经元只与输入数据的<strong>局部区域</strong>相连，而非全连接。<br>例如，在图像处理中，每个神经元仅关注图像的一小块区域（如 5×5 像素），而非整幅图像。</p>
+</li>
+<li><p><strong>作用</strong>  </p>
+<ul>
+<li>模拟人类视觉系统的<strong>感受野</strong>机制。  </li>
+<li>大幅减少模型参数，降低计算成本。  </li>
+<li>帮助网络专注于学习<strong>局部特征</strong>（如边缘、纹理）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="1-1-2-权重共享（Weight-Sharing）"><a href="#1-1-2-权重共享（Weight-Sharing）" class="headerlink" title="1.1.2. 权重共享（Weight Sharing）"></a>1.1.2. 权重共享（Weight Sharing）</h4><ul>
+<li><p><strong>定义</strong><br>同一卷积层中的所有神经元使用<strong>相同的权重向量</strong>（卷积核 &#x2F; 滤波器）来扫描输入数据的不同局部区域；卷积核在滑动过程中<strong>权重保持不变</strong>。</p>
+</li>
+<li><p><strong>作用</strong>  </p>
+<ul>
+<li>进一步减少参数数量，提高计算效率。  </li>
+<li>赋予模型<strong>平移不变性</strong>（translation invariance）：无论特征出现在图像何处，都能被识别。  </li>
+<li>使 CNN 特别适用于图像分类等具有平移不变性的任务。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="1-1-3-池化（Pooling）"><a href="#1-1-3-池化（Pooling）" class="headerlink" title="1.1.3. 池化（Pooling）"></a>1.1.3. 池化（Pooling）</h4><ul>
+<li><p><strong>定义</strong><br>通过下采样操作降低特征图的<strong>空间尺寸</strong>，常见形式为 <strong>最大池化（MaxPooling）</strong>：在每个固定大小的子区域内取最大值。</p>
+</li>
+<li><p><strong>作用</strong>  </p>
+<ul>
+<li>降低计算复杂度，控制过拟合。  </li>
+<li>提供<strong>位置不变性</strong>：对输入中的微小变化不敏感（如物体轻微移动）。  </li>
+<li>提取主要特征，去除冗余信息。</li>
+</ul>
+</li>
+</ul>
+<p>注意图像文件：</p>
+<p>- *.jpg,*.jpeg 有损压缩</p>
+<p>- *.png 无损压缩，有透明度，四通道颜色不失真</p>
+<h3 id="1-2卷积层"><a href="#1-2卷积层" class="headerlink" title="1.2卷积层"></a>1.2卷积层</h3><h4 id="1-2-1函数"><a href="#1-2-1函数" class="headerlink" title="1.2.1函数"></a>1.2.1函数</h4><p>常用参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.Conv2D(in_channels,out_channels,kernel_size,stride,paddng,bias)</span><br></pre></td></tr></table></figure>
+
+<p> in_channels&#x3D;1: 输入通道数</p>
+<p> out_channels&#x3D;1: 输出通道数</p>
+<p> kernel_size&#x3D;3: 卷积核大小</p>
+<p> stride&#x3D;: 卷积核步长</p>
+<p> padding&#x3D;0: 填充</p>
+<p> bias&#x3D;False): 是否使用偏置</p>
+<h4 id="1-2-2示例"><a href="#1-2-2示例" class="headerlink" title="1.2.2示例"></a>1.2.2示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line">kernel=torch.tensor([[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>]],dtype=torch.float32)</span><br><span class="line"></span><br><span class="line">input_matrix=torch.tensor([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]],dtype=torch.float32)</span><br><span class="line">input_matrix=input_matrix.view(<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>)<span class="comment">#改变维度的原因：卷积层需要输入的维度为4维</span></span><br><span class="line"></span><br><span class="line">conv_layer=nn.Conv2d(in_channels=<span class="number">1</span>,<span class="comment">#输入通道数</span></span><br><span class="line">                     out_channels=<span class="number">1</span>,<span class="comment">#输出通道数</span></span><br><span class="line">                     kernel_size=<span class="number">3</span>,<span class="comment">#卷积核大小</span></span><br><span class="line">                     stride=<span class="number">1</span>,<span class="comment">#卷积核步长</span></span><br><span class="line">                     padding=<span class="number">0</span>,<span class="comment">#填充</span></span><br><span class="line">                     bias=<span class="literal">False</span>)<span class="comment">#是否使用偏置</span></span><br><span class="line">conv_layer.weight.data=kernel.view(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>)<span class="comment">#改变维度的原因：卷积层需要输入的维度为4维</span></span><br><span class="line"></span><br><span class="line">output=conv_layer(input_matrix)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(output)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3池化层"><a href="#1-3池化层" class="headerlink" title="1.3池化层"></a>1.3池化层</h3><h4 id="1-3-1最大池化"><a href="#1-3-1最大池化" class="headerlink" title="1.3.1最大池化"></a>1.3.1最大池化</h4><p>在卷积核内最大值作为特征</p>
+<h4 id="1-3-2均值池化"><a href="#1-3-2均值池化" class="headerlink" title="1.3.2均值池化"></a>1.3.2均值池化</h4><p>在卷积核内所有数求均值作为特征</p>
+<h4 id="1-3-3函数"><a href="#1-3-3函数" class="headerlink" title="1.3.3函数"></a>1.3.3函数</h4><p>kerel_size核的大小，stride步长</p>
+<h5 id="1-3-3-1最大池化"><a href="#1-3-3-1最大池化" class="headerlink" title="1.3.3.1最大池化"></a>1.3.3.1最大池化</h5><p>max_pool_layer&#x3D;nn.MaxPool2d(kernel_size&#x3D;2, stride&#x3D;3)</p>
+<h5 id="1-3-3-2均值池化"><a href="#1-3-3-2均值池化" class="headerlink" title="1.3.3.2均值池化"></a>1.3.3.2均值池化</h5><p>ave_pool_layer&#x3D;nn.AvgPool2d(kernel_size&#x3D;2, stride&#x3D;3)</p>
+<h4 id="1-3-4示例"><a href="#1-3-4示例" class="headerlink" title="1.3.4示例"></a>1.3.4示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#池化操作代码</span><br><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># 定义输入张量</span><br><span class="line">input_tensor = torch.randn(1, 1, 5, 5)  # 形状为 [batch_size, channels, height, width]</span><br><span class="line"></span><br><span class="line"># 创建一个 NumPy 数组</span><br><span class="line">matrix_np = np.array([[[[1.0, 0.0, 0.0, 0.0, 1.0],</span><br><span class="line">                        [0.0, 1.0, 0.0, 1.0, 0.0],</span><br><span class="line">                        [0.0, 0.0, 1.0, 0.0, 0.0],</span><br><span class="line">                        [0.0, 1.0, 0.0, 1.0, 0.0],</span><br><span class="line">                        [1.0, 0.0, 0.0, 0.0, 1.0]]]],dtype=np.float32)</span><br><span class="line">kernel = torch.tensor([</span><br><span class="line">    [0., 0., 1.],</span><br><span class="line">    [0., 1., 0.],</span><br><span class="line">    [1., 0., 0.]</span><br><span class="line">], dtype=torch.float32)</span><br><span class="line"></span><br><span class="line">matrix_np=torch.from_numpy(matrix_np)</span><br><span class="line"></span><br><span class="line">conv_layer = nn.Conv2d(1, 1, kernel_size=3, stride=1, padding=1)</span><br><span class="line">conv_layer.weight.data = kernel.view(1, 1, 3, 3)</span><br><span class="line"></span><br><span class="line">output_np = conv_layer(matrix_np)</span><br><span class="line">print(output_np)</span><br><span class="line"></span><br><span class="line">max_pool_layer=nn.MaxPool2d(kernel_size=2, stride=3)</span><br><span class="line">ave_pool_layer=nn.AvgPool2d(kernel_size=2, stride=3)</span><br><span class="line">max_out=max_pool_layer(output_np)</span><br><span class="line">ave_out=ave_pool_layer(output_np)</span><br><span class="line">print(&quot;Max Pool Output:&quot;)</span><br><span class="line">print(torch.round(max_out))</span><br><span class="line">print(&quot;Average Pool Output:&quot;)</span><br><span class="line">print(torch.round(ave_out))</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[[ 0.7703, -0.2297,  0.7703, -0.2297,  1.7703],</span><br><span class="line">          [-0.2297,  0.7703, -0.2297,  2.7703, -0.2297],</span><br><span class="line">          [ 0.7703, -0.2297,  2.7703, -0.2297,  0.7703],</span><br><span class="line">          [-0.2297,  2.7703, -0.2297,  0.7703, -0.2297],</span><br><span class="line">          [ 1.7703, -0.2297,  0.7703, -0.2297,  0.7703]]]],</span><br><span class="line">       grad_fn=&lt;ConvolutionBackward0&gt;)</span><br><span class="line">Max Pool Output:</span><br><span class="line">tensor([[[[1., 3.],</span><br><span class="line">          [3., 1.]]]], grad_fn=&lt;RoundBackward0&gt;)</span><br><span class="line">Average Pool Output:</span><br><span class="line">tensor([[[[0., 1.],</span><br><span class="line">          [1., 0.]]]], grad_fn=&lt;RoundBackward0&gt;)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>CXZ</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://cxz-deman.github.io/2025/07/21/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">https://cxz-deman.github.io/2025/07/21/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2025/05/06/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
