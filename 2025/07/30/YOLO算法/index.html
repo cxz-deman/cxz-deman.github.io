@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>YOLO算法 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">YOLO算法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">CXZ</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 30, 2025&nbsp;&nbsp;15:53:54</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="YOLO算法"><a href="#YOLO算法" class="headerlink" title="YOLO算法"></a>YOLO算法</h1><h2 id="一、目标检测基础"><a href="#一、目标检测基础" class="headerlink" title="一、目标检测基础"></a>一、目标检测基础</h2><h3 id="1、概念"><a href="#1、概念" class="headerlink" title="1、概念"></a>1、概念</h3><ul>
+<li><p><strong>目标检测（Object Detection）<strong>是计算机视觉中的一个重要领域，它涉及到识别图片或视频某一帧中的</strong>物体是什么类别，并确定它们的位置</strong>。通常用于多个物体的识别，可以同时处理图像中的多个实例，并为每个实例提供一个边界框和类别标签</p>
+</li>
+<li><p>目标检测面临到的问题：</p>
+<ul>
+<li>目标种类和数量问题</li>
+<li>目标尺度问题</li>
+<li>环境干扰问题</li>
+</ul>
+<p>略</p>
+</li>
+</ul>
+<h3 id="2、指标"><a href="#2、指标" class="headerlink" title="2、指标"></a>2、指标</h3><h4 id="2-1边界框"><a href="#2-1边界框" class="headerlink" title="2.1边界框"></a>2.1边界框</h4><ul>
+<li>在<strong>目标检测</strong>任务中，<strong>Bounding Box（边界框）</strong> 是用来<strong>定位图像中检测到的物体位置</strong>的一个矩形框。每个检测出的物体都会被分配一个边界框，用来表示该物体在图像中的<strong>位置</strong>和<strong>大小</strong></li>
+<li>边界框通常由以下信息表示：<ul>
+<li><strong>类别标签（Class Label）</strong>：表示这个物体是什么，例如“猫”、“车”、“人”等</li>
+<li><strong>置信度分数（Confidence Score）</strong>：表示模型对该检测结果的置信程度，通常是一个 0 到 1 之间的值</li>
+<li><strong>边界框坐标（Bounding Box Coordinates）</strong>：表示矩形框的位置和大小</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2交并比"><a href="#2-2交并比" class="headerlink" title="2.2交并比"></a>2.2交并比</h4><ul>
+<li>在<strong>目标检测</strong>任务中，IoU（Intersection over Union，交并比）是一个非常关键的<strong>评估指标</strong>，用于衡量<strong>模型预测的边界框（Predicted Bounding Box）与真实边界框（Ground Truth Bounding Box）之间的重合程度</strong></li>
+<li>IoU 的计算方式是两个边界框的<strong>交集面积</strong>除以它们的<strong>并集面积</strong>，公式如下：</li>
+</ul>
+<p>$$<br>IoU&#x3D;\frac{Area,of,Overlap}{Area,of,Union}&#x3D;\frac{A∩B}{A∪B}<br>$$</p>
+<p>分母为预测和真实所标注的框的总面积</p>
+<p>分子为他们重叠的面积</p>
+<table>
+<thead>
+<tr>
+<th>IoU 值</th>
+<th>含义说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IoU &#x3D; 0</td>
+<td>两个框完全不重合，预测框与真实框没有任何交集</td>
+</tr>
+<tr>
+<td>0 &lt; IoU &lt; 0.5</td>
+<td>有一定重合，但重合度较低，预测效果一般</td>
+</tr>
+<tr>
+<td>0.5 ≤ IoU &lt; 1</td>
+<td>重合度较高，预测框接近真实框，效果较好</td>
+</tr>
+<tr>
+<td>IoU &#x3D; 1</td>
+<td>完全重合，预测框与真实框完全一致，可能是理想情况或存在过拟合风险</td>
+</tr>
+</tbody></table>
+<h4 id="2-3置信度"><a href="#2-3置信度" class="headerlink" title="2.3置信度"></a>2.3置信度</h4><ul>
+<li><p>在目标检测中，<strong>置信度</strong>是模型对预测框是否包含目标物体、以及框的位置是否准确的“信心值”，取值范围 0 到 1 之间的数值</p>
+</li>
+<li><p>在一些经典的目标检测模型中（如 YOLO），置信度通常由两个部分组成：置信度 &#x3D; Pr(Object) × 预测的 IOU</p>
+<ul>
+<li><p>Pr(Object)&#x3D;1：边界框内有对象</p>
+</li>
+<li><p>Pr(Object)&#x3D;0：边界框内没有对象</p>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目标存在置信度</strong></td>
+<td>表示当前预测框中存在目标物体的概率（不管是什么类别）</td>
+</tr>
+<tr>
+<td><strong>类别置信度</strong></td>
+<td>表示当前框中的物体属于某个类别的概率（如“猫”、“狗”、“人”等）</td>
+</tr>
+<tr>
+<td><strong>综合置信度</strong></td>
+<td>最终输出的置信度，等于目标存在置信度 × 类别置信度</td>
+</tr>
+</tbody></table>
+<h4 id="2-4混淆矩阵"><a href="#2-4混淆矩阵" class="headerlink" title="2.4混淆矩阵"></a>2.4混淆矩阵</h4><ul>
+<li>混淆矩阵是一种<strong>用于评估分类模型性能</strong>的表格形式，特别适用于监督学习中的分类任务。它通过将模型的预测结果与真实标签进行对比，帮助我们直观地理解模型在各个类别上的表现</li>
+<li>在混淆矩阵中：<ul>
+<li><strong>列（Columns）</strong>：表示<strong>真实类别（True Labels）</strong></li>
+<li><strong>行（Rows）</strong>：表示<strong>预测类别（Predicted Labels）</strong></li>
+<li><strong>单元格中的数值</strong>：表示在该真实类别与预测类别组合下的样本数量</li>
+</ul>
+</li>
+<li>在目标检测任务中，<strong>混淆矩阵的构建依赖于 IoU 阈值</strong>，因为 IoU 决定了哪些预测被认为是“正确检测”，从而影响 TP、FP、FN 的统计，最终影响混淆矩阵的结构和数值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>实际为正类</th>
+<th>实际为负类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>预测为正类</strong></td>
+<td>TP（真正例）</td>
+<td>FP（假正例）</td>
+</tr>
+<tr>
+<td><strong>预测为负类</strong></td>
+<td>FN（假反例）</td>
+<td>TN（真反例）</td>
+</tr>
+</tbody></table>
+<h4 id="2-5精确率和召回率"><a href="#2-5精确率和召回率" class="headerlink" title="2.5精确率和召回率"></a>2.5精确率和召回率</h4><p>见机器学习</p>
+<h4 id="2-6mAP（重要）"><a href="#2-6mAP（重要）" class="headerlink" title="2.6mAP（重要）"></a>2.6mAP（重要）</h4><p><strong>mAP</strong>：<strong>平均平均精度</strong></p>
+<h5 id="2-6-1PR曲线"><a href="#2-6-1PR曲线" class="headerlink" title="2.6.1PR曲线"></a>2.6.1PR曲线</h5><p>个本样本的精确率和召回率构成的图像， PR 曲线越靠近右上角性能越好。即 PR 曲线的面积越大，表示分类模型在精确率和召回率之间有更好的权衡，性能越好</p>
+<h5 id="2-6-2AP"><a href="#2-6-2AP" class="headerlink" title="2.6.2AP"></a>2.6.2AP</h5><p>11 点插值法：只需要选取当 Recall &gt;&#x3D; 0, 0.1, 0.2, …, 1 共11个点，找到所有大于等于该 Recall 值的点，并选取这些点中最大的 Precision 值作为该 Recall 下的代表值，然后 AP 就是这 11 个 Precision 的平均值<br>$$<br>\mathrm{AP}&#x3D;\frac{1}{11}\sum_{r\in{0,0.1,…,1}}p_{interp(r)}\<br>p_{interp(r)}&#x3D;\max_{\tilde{r}:\tilde{r}\geq r}p(\tilde{r}) \<br>\tilde{r}表示大于或等于r实际召回率，并选择这些召回率对应的精确率中的最大值作为插值精确率<br>$$</p>
+<p>面积法：需要针对每一个不同的Recall值（包括0和1），选取其大于等于这些 Recall 值时的 Precision 最大值，然后计算 PR 曲线下面积作为 AP 值，假设真实目标数为 M，recall 取样间隔为 [0, 1&#x2F;M, …, M&#x2F;M]，假设有 8 个目标，recall 取值 &#x3D; [0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0]</p>
+<h3 id="3、NMS后处理技术"><a href="#3、NMS后处理技术" class="headerlink" title="3、NMS后处理技术"></a>3、NMS后处理技术</h3><ul>
+<li><strong>非极大值抑制（Non-Maximum Suppression，NMS）</strong> 是目标检测任务中常用的<strong>后处理技术</strong>，用于<strong>去除冗余的边界框（Bounding Boxes）</strong>，保留<strong>最有可能的检测结果</strong></li>
+<li>在目标检测中，模型通常会对同一目标生成多个边界框（预测框），这些边界框之间可能高度重叠。NMS 的作用就是<strong>筛选出置信度高、位置准确的边界框</strong>，抑制其他冗余的预测框</li>
+<li>NMS 的基本思想是：对于每一个预测的类别，按照预测边界框的置信度（Confidence Score）对所有边界框进行排序，然后依次考虑每个边界框，将其与之前的边界框进行比较，如果重叠度过高，则丢弃当前边界框，保留置信度更高的那个，对于每个                                                                             </li>
+<li>类别会独立进行操作</li>
+<li>NMS 的步骤：<ul>
+<li>设定目标框置信度阈值，常设置为 0.5，小于阈值的目标框被过滤掉</li>
+<li>将所有预测的满足置信度范围的边界框按照它们的置信度从高到低排序</li>
+<li>选取置信度最高的框（不同类型分开处理）添加到输出列表，并将其从候选框列表中删除</li>
+<li>对于当前正在考虑的边界框，计算其与前面已选定的边界框的重叠程度（IoU），如果当前边界框与已选定边界框的 IoU 大于某个阈值（如 0.5），则将其抑制（即不保留，重合度过高）；否则保留当前边界框，并继续处理下一个边界框</li>
+<li>重复上述步骤，直到所有边界框都被处理完毕</li>
+<li>输出列表就是最后留下来的目标框</li>
+</ul>
+</li>
+</ul>
+<h3 id="4、检测速度"><a href="#4、检测速度" class="headerlink" title="4、检测速度"></a>4、检测速度</h3><h4 id="4-1-前向传播耗时"><a href="#4-1-前向传播耗时" class="headerlink" title="4.1 前向传播耗时"></a>4.1 前向传播耗时</h4><ul>
+<li>前向传播耗时是指从<strong>输入图像到输出最终检测结果</strong>所消耗的总时间（单位：毫秒 ms），包括以下三个阶段：<ol>
+<li><strong>前处理耗时（Preprocessing）</strong>：<ul>
+<li>图像归一化（如 0<del>255 → 0</del>1）</li>
+<li>图像缩放、填充、通道转换（如 BGR → RGB）</li>
+<li>张量格式转换（如 NHWC → NCHW）</li>
+</ul>
+</li>
+<li><strong>网络前向传播耗时（Forward Pass）</strong>：<ul>
+<li>模型推理过程，即从输入图像经过网络各层计算得到输出结果的时间</li>
+</ul>
+</li>
+<li><strong>后处理耗时（Postprocessing）</strong>：<ul>
+<li>应用非极大值抑制（NMS）</li>
+<li>置信度过滤、类别筛选等</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="4-2-FPS"><a href="#4-2-FPS" class="headerlink" title="4.2 FPS"></a>4.2 FPS</h4><ul>
+<li>FPS（每秒帧数）是指模型每秒钟可以处理的图像帧数，是衡量<strong>实时性</strong>的重要指标，计算公式</li>
+</ul>
+<p>$$<br>FPS &#x3D; \frac{1}{Total \quad Inference  \quad Time(s)}<br>$$</p>
+<ul>
+<li>实时性要求：<ul>
+<li><strong>实时检测</strong>：通常要求 FPS ≥ 30</li>
+<li><strong>低延迟场景</strong>（如无人机、自动驾驶）：要求 FPS ≥ 60</li>
+<li><strong>移动端&#x2F;嵌入式设备</strong>：常要求在 15~25 FPS 之间达到可用性</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-3-FLOPS"><a href="#4-3-FLOPS" class="headerlink" title="4.3 FLOPS"></a>4.3 FLOPS</h4><ul>
+<li>FLOPS（Floating Point Operations Per Second，每秒浮点运算次数）是衡量计算设备性能的一个重要指标，特别是在高性能计算和深度学习领域。它表示设备在一秒内可以执行的浮点运算次数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>单位</th>
+<th>全称</th>
+<th>中文含义</th>
+<th>数值表示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>KFLOPS</td>
+<td>Kilo FLOPS</td>
+<td>千次浮点运算每秒</td>
+<td>$10^3$FLOPS</td>
+</tr>
+<tr>
+<td>MFLOPS</td>
+<td>Mega FLOPS</td>
+<td>百万次浮点运算每秒</td>
+<td>$10^6$FLOPS</td>
+</tr>
+<tr>
+<td><strong>GFLOPS</strong></td>
+<td>Giga FLOPS（常用单位）</td>
+<td>十亿次浮点运算每秒</td>
+<td>$10^9$FLOPS</td>
+</tr>
+<tr>
+<td>TFLOPS</td>
+<td>Tera FLOPS</td>
+<td>万亿次浮点运算每秒</td>
+<td>$10^{12}$FLOPS</td>
+</tr>
+<tr>
+<td>PFLOPS</td>
+<td>Peta FLOPS</td>
+<td>千万亿次浮点运算每秒</td>
+<td>$10^{15}$FLOPS</td>
+</tr>
+</tbody></table>
+<h3 id="5、YOLO网络结构"><a href="#5、YOLO网络结构" class="headerlink" title="5、YOLO网络结构"></a>5、YOLO网络结构</h3><h4 id="5-1-Backbone-network"><a href="#5-1-Backbone-network" class="headerlink" title="5.1 Backbone network"></a>5.1 Backbone network</h4><ul>
+<li>描述：<ul>
+<li>Backbone network，即主干网络（骨干网络），目标检测网络最为核心的部分，主要是使用不同的卷积神经网络构建</li>
+</ul>
+</li>
+<li>任务：<ul>
+<li>特征提取：从输入图像中提取特征信息，这些特征通常包含丰富的信息，能够帮助后续模块进行目标检测</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-2-Neck-network"><a href="#5-2-Neck-network" class="headerlink" title="5.2 Neck network"></a>5.2 Neck network</h4><ul>
+<li>描述：<ul>
+<li>Neck network，即颈部网络，主要对主干网络输出的特征进行整合</li>
+</ul>
+</li>
+<li>任务：<ul>
+<li>特征融合：将主干网络提取的多尺度特征进行融合，以增强特征的表达能力和鲁棒性</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-3-Detection-head"><a href="#5-3-Detection-head" class="headerlink" title="5.3 Detection head"></a>5.3 Detection head</h4><ul>
+<li>描述：<ul>
+<li>Detection head，即检测头，在特征之上进行预测，包括物体的类别和位置</li>
+</ul>
+</li>
+<li>任务：<ul>
+<li>目标检测：检测头的主要任务是基于融合后的特征图，通过回归任务预测边界框的坐标，通过分类任务预测目标的类别，生成最终的检测结果，包括边界框和类别</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-4-总结"><a href="#5-4-总结" class="headerlink" title="5.4 总结"></a>5.4 总结</h4><ul>
+<li>YOLOV1-YOLOV4：学习掌握 YOLO 作者的涉及思路和优化方式【理论】</li>
+<li>YOLOV5 和 <strong>YOLO11</strong>：学习掌握使用 YOLO 开源算法完成模型的训练、应用、优化等【实践】</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Backbone</th>
+<th>Neck</th>
+<th>Head</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v1</td>
+<td>GoogLeNet</td>
+<td>None</td>
+<td>FC → 7×7×(2x5+20)</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>Darknet19</td>
+<td>Passthrough</td>
+<td>13×13×5×(5+20)</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>Darknet53</td>
+<td>FPN</td>
+<td>13×13×3×(5+80), 26×26×3×(5+80), 52×52×3×(5+80)</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>Darknet53_CSP</td>
+<td>SPP、FPN、PAN</td>
+<td>13×13×3×(5+80), 26×26×3×(5+80), 52×52×3×(5+80)</td>
+</tr>
+<tr>
+<td>v5</td>
+<td>Darknet53_CSP</td>
+<td>SPP、cspFPN、cspPAN</td>
+<td>13×13×3×(5+80), 26×26×3×(5+80), 52×52×3×(5+80)</td>
+</tr>
+</tbody></table>
+<h2 id="二、YOLOv1"><a href="#二、YOLOv1" class="headerlink" title="二、YOLOv1"></a>二、YOLOv1</h2><ul>
+<li><p>YOLOV1 论文地址：【<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf?spm=5176.28103460.0.0.359a5d27d0cimU&file=Redmon_You_Only_Look_CVPR_2016_paper.pdf%E3%80%91">https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf?spm=5176.28103460.0.0.359a5d27d0cimU&amp;file=Redmon_You_Only_Look_CVPR_2016_paper.pdf】</a></p>
+</li>
+<li><p>YOLOV1 论文中文翻译地址：【<a target="_blank" rel="noopener" href="https://blog.csdn.net/muye_IT/article/details/124612829%E3%80%91">https://blog.csdn.net/muye_IT/article/details/124612829】</a></p>
+</li>
+</ul>
+<h3 id="1、参数解释"><a href="#1、参数解释" class="headerlink" title="1、参数解释"></a>1、参数解释</h3><table>
+<thead>
+<tr>
+<th align="center">layer</th>
+<th align="center">output size</th>
+<th align="center">module</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">448x448x3</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">224x224x64</td>
+<td align="center">Conv 7x7x64, s-2, p-3</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">112x112x64</td>
+<td align="center">Maxpool 2x2, s-2, p-0</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">112x112x192</td>
+<td align="center">Conv 3x3x192, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">56x56x192</td>
+<td align="center">Maxpool 2x2, s-2, p-0</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">56x56x128</td>
+<td align="center">Conv 1x1x128, s-1, p-0</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">56x56x256</td>
+<td align="center">Conv 3x3x256, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">56x56x256</td>
+<td align="center">Conv 1x1x256, s-1, p-0</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">56x56x512</td>
+<td align="center">Conv 3x3x512, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">28x28x512</td>
+<td align="center">Maxpool 2x2, s-2, p-0</td>
+</tr>
+<tr>
+<td align="center">7,9,11,13</td>
+<td align="center">28x28x256</td>
+<td align="center">Conv 1x1x256, s-1, p-0</td>
+</tr>
+<tr>
+<td align="center">8,10,12,14</td>
+<td align="center">28x28x512</td>
+<td align="center">Conv 3x3x512, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">28x28x512</td>
+<td align="center">Conv 1x1x512, s-1, p-0</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="center">28x28x1024</td>
+<td align="center">Conv 3x3x1024, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">14x14x1024</td>
+<td align="center">Maxpool 2x2, s-2, p-0</td>
+</tr>
+<tr>
+<td align="center">17,19</td>
+<td align="center">14x14x512</td>
+<td align="center">Conv 1x1x512, s-1, p-0</td>
+</tr>
+<tr>
+<td align="center">18,20</td>
+<td align="center">14x14x1024</td>
+<td align="center">Conv 3x3x1024, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td align="center">14x14x1024</td>
+<td align="center">Conv 3x3x1024, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">22</td>
+<td align="center">7x7x1024</td>
+<td align="center">Conv 3x3x1024, s-2, p-1</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td align="center">7x7x1024</td>
+<td align="center">Conv 3x3x1024, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td align="center">7x7x1024</td>
+<td align="center">Conv 3x3x1024, s-1, p-1</td>
+</tr>
+<tr>
+<td align="center">25</td>
+<td align="center">4096x1</td>
+<td align="center">FC1</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td align="center">1470x1</td>
+<td align="center">FC2</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">7x7x30</td>
+<td align="center">reshape</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>总共24个卷积层，2个池化层，2两个全连接层</p>
+</li>
+<li><p>yolov1借鉴谷歌的网络思想</p>
+</li>
+<li><p>最后一层为7x7x30,将图像分为49个格子</p>
+<ul>
+<li><p>每个格子有两个边界框2x49</p>
+</li>
+<li><p>包含五个信息（hwxy以及置信度）49x2x5</p>
+</li>
+<li><p>以及作者使用voc数据集的种类20种 49x(2x5+20)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2、损失函数"><a href="#2、损失函数" class="headerlink" title="2、损失函数"></a>2、损失函数</h3><ul>
+<li>YOLOv1 中的损失函数&#x3D;定位损失+置信度损失+分类损失，由 5 个部分组成，公式：</li>
+</ul>
+<p>$$<br>\begin{gathered}<br>\lambda_{\mathbf{coord}}\sum_{i&#x3D;0}^{S^{2}}\sum_{j&#x3D;0}^{B}\mathbb{1}<em>{ij}^{\mathrm{obj}}\left[\left(x</em>{i}-\hat{x}<em>{i}\right)^{2}+\left(y</em>{i}-\hat{y}<em>{i}\right)^{2}\right]【注解：边框中心点误差】 \<br>+\lambda</em>{\mathbf{coord}}\sum_{i&#x3D;0}^{S^{2}}\sum_{j&#x3D;0}^{B}\mathbb{1}<em>{ij}^{\mathrm{obj}}\left[\left(\sqrt{w</em>{i}}-\sqrt{\hat{w}<em>{i}}\right)^{2}+\left(\sqrt{h</em>{i}}-\sqrt{\hat{h}<em>{i}}\right)^{2}\right] 【注解：边框宽高误差】\<br>+\sum</em>{i&#x3D;0}^{S^2}\sum_{j&#x3D;0}^B\mathbb{1}<em>{ij}^{\mathrm{obj}}\left(C_i-\hat{C}<em>i\right)^2 【注解：有物体时置信度误差】\<br>+\lambda</em>\text{noobj}\sum</em>{i&#x3D;0}^{S^2}\sum_{j&#x3D;0}^B\mathbb{1}_{ij}^\text{noobj}\left(C_i-\hat{C}<em>i\right)^2 【注解：无物体时置信度误差】\<br>+\sum</em>{i&#x3D;0}^{S^2}\mathbb{1}<em>i^\mathrm{obj}\sum</em>{c\in\mathrm{classes}}\left(p_i(c)-\hat{p}_i(c)\right)^2 【注解：网格内有物体时的分类误差】  \<br>\end{gathered}<br>$$</p>
+<p>计算宽和高的损失加根号的原因：减少大尺寸框误差对小尺寸框误差的影响</p>
+<h3 id="3、优缺点"><a href="#3、优缺点" class="headerlink" title="3、优缺点"></a>3、优缺点</h3><h4 id="3-1-优点"><a href="#3-1-优点" class="headerlink" title="3.1 优点"></a>3.1 优点</h4><ul>
+<li>实时处理：可达到 45 fps，远高于 Faster R-CNN 系列，轻松满足视频目标检测</li>
+<li>避免产生背景错误：YOLO 的区域选择阶段是对整张图进行输入，上下文信息利用更充分，不容易出现错误背景信息</li>
+</ul>
+<h4 id="3-2-缺点"><a href="#3-2-缺点" class="headerlink" title="3.2 缺点"></a>3.2 缺点</h4><ul>
+<li>定位精度不够高：由于输出层为全连接层，在检测时只支持与训练图像相同的输入分辨率</li>
+<li>小物体和密集物体检测效果不佳：每个网格单元只能预测两个框，并且只能有一个类，这使得它难以处理成群出现的小对象，例如鸟群</li>
+<li>召回率低：会错过一些实际存在的目标</li>
+</ul>
+<h2 id="三、YOLOv2"><a href="#三、YOLOv2" class="headerlink" title="三、YOLOv2"></a>三、YOLOv2</h2><ul>
+<li>YOLOv2 是 Joseph Redmon 和 Ali Farhadi 发表在 CVPR 2017，对原始 YOLOV1 的一些改进</li>
+<li>YOLOv2 主要是在 COCO 和 ImageNet 数据集上进行训练，由于 YOLOv2 能够检测 9000 个类别，所以 YOLOv2 也被称之为 YOLO9000：<strong>Better、Faster、Stronger</strong></li>
+<li>YOLOv2 论文地址：【<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1612.08242#page=4.24%E3%80%91">https://arxiv.org/pdf/1612.08242#page=4.24】</a></li>
+<li>YOLOv2 论文中文对照地址：【<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42755230/article/details/125820723%E3%80%91">https://blog.csdn.net/qq_42755230/article/details/125820723】</a></li>
+</ul>
+<h3 id="1、整体结构"><a href="#1、整体结构" class="headerlink" title="1、整体结构"></a>1、整体结构</h3><p>主干网络为Dark-Net19，速度更快，精度略微下降</p>
+<p>轻量高效，使用全局平均池化</p>
+<p><strong>总共有 19 个卷积层（conv 层） + 5 个 max pooling 层，不包含全连接层（FC）</strong></p>
+<h3 id="2、优化策略"><a href="#2、优化策略" class="headerlink" title="2、优化策略"></a>2、优化策略</h3><p>相较于YOLOv1，YOLOv2添加了高分辨率分类器，批量归一化，有锚框的卷积神经网络，维度集群，增加了新网络，多尺度训练，高分辨率检测器，位置预测，等</p>
+<p><img src="/.io//%E5%A2%9E%E5%8A%A0%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%9F%E8%AE%A1%E8%A1%A8.png"></p>
+<h4 id="2-1移除全连接层"><a href="#2-1移除全连接层" class="headerlink" title="2.1移除全连接层"></a>2.1移除全连接层</h4><ul>
+<li>YOLOv2 中移除了最后的全连接层，用了一个全局平均池化层来替换全连接层</li>
+</ul>
+<h4 id="2-2Achor-box"><a href="#2-2Achor-box" class="headerlink" title="2.2Achor box"></a>2.2Achor box</h4><p>通过引入锚框来辅助预测目标位置，不用直接进行预测。</p>
+<p>通过人工标记框，以及后续生成框，进行聚类找到簇心图像锚框，保存进行卷积运算</p>
+<p><img src="/.io//%E9%94%9A%E6%A1%86.png"></p>
+<p>图像中每个格子会预设多个 Anchor Boxes（YOLOV2 论文中设置 5 个）， 他们分别具有不同的尺寸，<strong>作为预测边界框的参考模板</strong>，YOLOv2 基于 Anchor Boxes 预测相对偏移量并对宽高做调整，使得预测更加灵活，它被用来帮助模型更好地预测不同大小和长宽比的目标</p>
+<h4 id="2-3寻找锚框的方法——Dimension-Clusters"><a href="#2-3寻找锚框的方法——Dimension-Clusters" class="headerlink" title="2.3寻找锚框的方法——Dimension Clusters"></a>2.3寻找锚框的方法——Dimension Clusters</h4><p>使用Dimension Clusters操作初始化锚框的尺寸</p>
+<p>在一般的kmeans聚类算法中，通常使用欧氏距离。但在YOLOv2中采用IOU距离，IoU度量了两个边界框之间的重叠程度反应了两种图像的相关程度</p>
+<p>$d(box,centroids)&#x3D;1-IoU(box,centroids)<br>\注解：centroids为聚类中心边框，box是gt的边框$</p>
+<p>步骤：-</p>
+<ul>
+<li><p>提取所有目标的真实边界框（人工打的标签），信息为（x,y,w,h）</p>
+</li>
+<li><p>初始化，随机选择k个边界框，YOLOv2选择的k&#x3D;5</p>
+</li>
+<li><p>遍历每一个边界框计算它们与簇心得IOU距离</p>
+</li>
+<li><p>然后更新聚类中心，一般取簇内所有边界框的平均数或中位数</p>
+</li>
+<li><p>重复第一和第二个步骤</p>
+</li>
+<li><p>找到的五个簇心作为最终锚框的尺寸</p>
+<p>k值通过可视化平均IOU和k值之间关系，找到的k值满足大于k时，平均IOU变化趋于平缓</p>
+</li>
+</ul>
+<h4 id="2-4预测对象"><a href="#2-4预测对象" class="headerlink" title="2.4预测对象"></a>2.4预测对象</h4><p>YOLOv2预测的是锚框的偏移量，偏移量的中心左边为什么要打上SIGMOD函数，宽度和高度为什么要使用e的次方，就是想把中心坐标限制在对应网络，那么就要保证中心点无论怎么偏移，一定要在网络中，既不能抛出网格，宽度和宽度的限制就是未来保证求出来的值为正数</p>
+<h4 id="2-5多尺度训练"><a href="#2-5多尺度训练" class="headerlink" title="2.5多尺度训练"></a>2.5多尺度训练</h4><ul>
+<li>目标：能够让模型在推理的时候，能够对于输入的不同的尺寸的图像有一定的<strong>鲁棒性</strong></li>
+<li>方法：先以448x448的分辨率训练10个epochs，然后动态的根据设置的尺寸去修改输入图形的尺寸，比如416x416，训练10个epochs，<strong>【重点】：满足32的倍数</strong></li>
+</ul>
+<h4 id="2-6高分辨分辨器"><a href="#2-6高分辨分辨器" class="headerlink" title="2.6高分辨分辨器"></a>2.6高分辨分辨器</h4><ul>
+<li>yolov1中训练的时候采取的是224x224，推理的时候采用的是448x448，训练的时候采取低分辨率图片，推理的时候采取的是高分辨率的图片，那么就会导致误差。</li>
+<li>yolov2为了缓解yolov1存在的问题，他就提前的让模型去狗啊分辨率图像上做了一个训练，相当于让模型具备识别高分辨率的图像的能力。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>CXZ</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://cxz-deman.github.io/2025/07/30/YOLO%E7%AE%97%E6%B3%95/">https://cxz-deman.github.io/2025/07/30/YOLO%E7%AE%97%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/08/07/NLP%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/">NLP自然语言处理</a>
+            
+            
+            <a class="next" rel="next" href="/2025/07/21/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
