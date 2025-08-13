@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="CXZ">
+
+
+
+
+
+<title>刷题笔记 | CXZ_note</title>
+
+
+
+    <link rel="icon" href="/head.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">CXZ&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">CXZ&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">刷题笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">CXZ</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 11, 2025&nbsp;&nbsp;19:59:27</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="1、数组"><a href="#1、数组" class="headerlink" title="1、数组"></a>1、数组</h2><p><strong>单选题</strong></p>
+<ol start="3">
+<li>数组作为函数参数传递的是（）。</li>
+</ol>
+<ul>
+<li>A. 数组的首地址</li>
+<li>B. 数组元素个数</li>
+<li>C. 数组中各元素值</li>
+<li>D. 数组的大小</li>
+</ul>
+<p>数组作为函数传递的是数组的首地址</p>
+<p>解析：<strong>在C语言中,当数组作为函数参数传递时,传递的是数组的首地址。这是因为数组名本质上就是一个指向数组第一个元素的指针常量。</strong></p>
+<h2 id="2、图"><a href="#2、图" class="headerlink" title="2、图"></a>2、图</h2><ol start="5">
+<li>设某有向图中有n个顶点，则该有向图对应的邻接表中有（）个表头结点。</li>
+</ol>
+<ul>
+<li><p>A. n-1</p>
+</li>
+<li><p>B. n</p>
+</li>
+<li><p>C. n+1</p>
+</li>
+<li><p>D. 2n-1</p>
+<p>设某有向图中有n个顶点，则该有向图对应的邻接表中有（n）个表头结点。</p>
+<p>解析：</p>
+<p><strong>邻接表</strong>是图的一种存储结构,对于一个有向图来说,在邻接表中每个顶点都需要有一个表头结点。因此表头结点的个数恰好等于图中顶点的个数n,所以正确答案是B。</p>
+<p>具体分析:</p>
+<ol>
+<li><p>邻接表的结构:每个顶点在邻接表中都对应一个表头结点,表头结点中记录该顶点的相关信息。从表头结点延伸出一个链表,链表中的结点记录了与该顶点相邻的顶点信息。</p>
+</li>
+<li><p>对于n个顶点的有向图:<br>- 每个顶点都必须有一个对应的表头结点来管理其出边信息<br>- 即使某个顶点没有任何出边,也需要有表头结点的存在<br>- 因此表头结点总数就等于顶点数n</p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="3、树"><a href="#3、树" class="headerlink" title="3、树"></a>3、树</h2><p>设 <em>F</em> 是由 <em>T</em>1、<em>T</em>2 和 <em>T</em>3 三棵树组成的森林，与 <em>F</em> 对应的二叉树为 <em>B</em>，<em>T</em>1、<em>T</em>2 和 <em>T</em>3 的结点数分别为 <em>N</em>1、<em>N</em>2 和 <em>N</em>3，则二叉树 <em>B</em> 的根结点的左子树的结点数为（）。</p>
+<ul>
+<li>A. <em>N</em>1−1</li>
+<li>B. <em>N</em>2−1</li>
+<li>C. <em>N</em>2+<em>N</em>3</li>
+<li>D. <em>N</em>1+<em>N</em>3</li>
+</ul>
+<p>官方解析：</p>
+<p>要理解这道题目,需要掌握森林转换为二叉树的规则。在将森林转换为二叉树时:</p>
+<p>\1. 森林中每棵树的根节点相当于二叉树中同一层的兄弟节点<br>\2. 对于森林中的每棵树,其根节点的第一个子节点会成为二叉树中该节点的左孩子<br>\3. 每个节点在原树中的兄弟节点会成为二叉树中该节点的右孩子</p>
+<p>所以A选项(N1-1)是正确的,因为:<br>- 二叉树B的根节点是森林F中第一棵树T1的根节点<br>- T1树的所有其他节点都会出现在B的根节点的左子树中<br>- 所以B的根节点的左子树的节点数就是T1的总节点数减1(减去根节点)</p>
+<h3 id="3-1哈夫曼树"><a href="#3-1哈夫曼树" class="headerlink" title="3.1哈夫曼树"></a>3.1哈夫曼树</h3><h4 id="例题："><a href="#例题：" class="headerlink" title="例题："></a>例题：</h4><p>见b站</p>
+<p><strong>解题过程：构建哈夫曼树并计算带权路径长度（WPL）</strong></p>
+<p><strong>1. 初始叶子节点及其权值</strong></p>
+<p>给定的叶子节点及其权值为：  </p>
+<ul>
+<li>叶子A：3  </li>
+<li>叶子B：8  </li>
+<li>叶子C：6  </li>
+<li>叶子D：2</li>
+</ul>
+<p><strong>2. 构建哈夫曼树的步骤</strong></p>
+<p>哈夫曼树的构建规则是每次选择权值最小的两个节点合并，直到所有节点合并为一棵树。</p>
+<p><strong>步骤1</strong>：将所有叶子节点按权值从小到大排序。<br>排序后：2（D）、3（A）、6（C）、8（B）。</p>
+<p><strong>步骤2</strong>：选择权值最小的两个节点（D和A）合并，生成新节点，其权值为2 + 3 &#x3D; 5。  </p>
+<ul>
+<li>新树结构：  <ul>
+<li>左子节点：D（2）  </li>
+<li>右子节点：A（3）  </li>
+<li>剩余节点：5（新节点）、6（C）、8（B）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>步骤3</strong>：重新排序剩余节点：5、6、8。<br>选择权值最小的两个节点（5和6）合并，生成新节点，其权值为5 + 6 &#x3D; 11。  </p>
+<ul>
+<li>新树结构：  <ul>
+<li>左子节点：5（由D和A组成）  </li>
+<li>右子节点：C（6）  </li>
+<li>剩余节点：11（新节点）、8（B）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>步骤4</strong>：重新排序剩余节点：8、11。<br>选择权值最小的两个节点（8和11）合并，生成新节点，其权值为8 + 11 &#x3D; 19。  </p>
+<ul>
+<li>新树结构：  <ul>
+<li>左子节点：B（8）  </li>
+<li>右子节点：11（由5和C组成）  </li>
+<li>剩余节点：19（根节点）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>最终哈夫曼树结构</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   19</span><br><span class="line">  /  \</span><br><span class="line"> 8    11</span><br><span class="line">    /  \</span><br><span class="line">   5    6</span><br><span class="line"> /  \</span><br><span class="line">2    3</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 计算带权路径长度（WPL）</strong></p>
+<p>带权路径长度是每个叶子节点的权值乘以它的路径长度（从根到该叶子的边数）的总和。</p>
+<ul>
+<li>叶子B（8）：路径长度 &#x3D; 1 → 8 × 1 &#x3D; 8  </li>
+<li>叶子D（2）：路径长度 &#x3D; 3 → 2 × 3 &#x3D; 6  </li>
+<li>叶子A（3）：路径长度 &#x3D; 3 → 3 × 3 &#x3D; 9  </li>
+<li>叶子C（6）：路径长度 &#x3D; 2 → 6 × 2 &#x3D; 12</li>
+</ul>
+<p><strong>WPL &#x3D; 8 + 6 + 9 + 12 &#x3D; 35</strong></p>
+<ol start="4">
+<li><strong>验证</strong></li>
+</ol>
+<p>另一种计算WPL的方法是累加所有非叶子节点的权值：</p>
+<ul>
+<li>5（D+A） + 11（5+C） + 19（8+11） &#x3D; 35<br>结果一致。</li>
+</ul>
+<ol start="5">
+<li><strong>最终答案</strong></li>
+</ol>
+<p>哈夫曼树的带权路径长度为 <strong>35</strong>。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>CXZ</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://cxz-deman.github.io/2025/08/11/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/">https://cxz-deman.github.io/2025/08/11/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>god</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/08/13/Transformers/">Transformers</a>
+            
+            
+            <a class="next" rel="next" href="/2025/08/07/NLP%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/">NLP自然语言处理</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© CXZ | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

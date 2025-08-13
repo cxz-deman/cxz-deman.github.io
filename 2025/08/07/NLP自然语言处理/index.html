@@ -129,6 +129,71 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
@@ -151,7 +216,243 @@
         </header>
 
         <div class="post-content">
-            
+            <h1 id="NLP自然语言处理"><a href="#NLP自然语言处理" class="headerlink" title="NLP自然语言处理"></a>NLP自然语言处理</h1><h1 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h1><h2 id="1-基本介绍"><a href="#1-基本介绍" class="headerlink" title="1 基本介绍"></a>1 基本介绍</h2><h3 id="1-1语言相关的概念"><a href="#1-1语言相关的概念" class="headerlink" title="1.1语言相关的概念"></a>1.1语言相关的概念</h3><p>在定义NLP之前，先了解几个相关概念：</p>
+<ul>
+<li><p>语言（Language）：是人类用于沟通的一种结构化系统，可以包括声音、书写符号或手势。</p>
+</li>
+<li><p>自然语言（Natural Language）：是指自然进化中通过使用和重复，无需有意计划或预谋而形成的语言。</p>
+</li>
+<li><p>计算语言学（Computational Linguistics）：是语言学和计算机科学之间的跨学科领域，它包括：</p>
+<p>a.计算机辅助语言学（Computer-aided Linguistics）：利用计算机研究语言的学科，主要为语言学家所实践。</p>
+<p>b.自然语言处理（NLP）：使计算机能够解决以自然语言表达的数据问题的技术，主要由工程师和计算机科学家实践。</p>
+</li>
+</ul>
+<p>​	NLP的研究范围广泛，包括但不限于<strong>语言理解</strong>（让计算机理解输入的语言）、<strong>语言生成</strong>（让计算机生成人类可以理解的语言）、<strong>机器翻译</strong>（将一种语言翻译成另一种语言）、<strong>情感分析</strong>（分析文本中的情绪倾向）、<strong>语音识别和语音合成</strong>等。</p>
+<p>​	在中文环境下，自然语言处理的定义和应用也与英文环境相似，但需要考虑中文的特殊性，如<strong>中文分词、中文语法和语义分析</strong>等，因为中文与英文在语言结构上有很大的不同，这对NLP技术的实现提出了特殊的挑战。自然语言处理使计算机不仅能够理解和解析人类的语言，还能在一定程度上模仿人类的语言使用方式，进行有效的沟通和信息交换。</p>
+<h3 id="1-2-为什么使用NLP"><a href="#1-2-为什么使用NLP" class="headerlink" title="1.2 为什么使用NLP"></a>1.2 为什么使用NLP</h3><ul>
+<li><p>每种动物都有自己的语言，机器也是！</p>
+</li>
+<li><p>自然语言处理（NLP）就是在机器语言和人类语言之间沟通的桥梁，以实现人机交流的目的。人类通过语言来交流，猫通过喵喵叫来交流。</p>
+</li>
+<li><p>机器也有自己的语言，那就是数字信息。</p>
+</li>
+<li><p>NLP 就是让机器学会处理我们的语言！</p>
+</li>
+</ul>
+<h2 id="2、NLP的应用方向"><a href="#2、NLP的应用方向" class="headerlink" title="2、NLP的应用方向"></a>2、NLP的应用方向</h2><ul>
+<li><p><strong>情感分析</strong>：对给定的文本输入，在给定的选项范围内分析文本的情绪是正面还是负面；</p>
+</li>
+<li><p>**文本分类：**对给定的文本输入，在给定的选项范围内对文本进行二分类或多分类；</p>
+</li>
+<li><p>**信息检索：**搜索引擎依托于多种技术，如网络爬虫技术、检索排序技术、网页处理技术、大数据处理技术、自然语言处理技术等，为信息检索用户提供快速、高相关性的信息服务；</p>
+</li>
+<li><p>**抽取式阅读理解：**对给定的文本输入，用文本中的内容回答问题；</p>
+</li>
+</ul>
+<p>**语义匹配：**对给定的两个文本输入，判断是否相似；</p>
+<ul>
+<li><p>**自然语言推理：**对给定的两个文本输入，判断是蕴涵、矛盾还是无关；</p>
+</li>
+<li><p>**命名实体识别：**对给定的文本输入，返回含有命名实体及其对应标签的映射，例如{‘糖尿病’:’疾病’}；</p>
+</li>
+<li><p>**文本摘要：**对给定的文本输入，用文本中的内容对文本进行摘要。</p>
+</li>
+</ul>
+<h1 id="二、NLP的特征工程"><a href="#二、NLP的特征工程" class="headerlink" title="二、NLP的特征工程"></a>二、NLP的特征工程</h1><h2 id="1-词向量的引入"><a href="#1-词向量的引入" class="headerlink" title="1 词向量的引入"></a>1 词向量的引入</h2><p>词向量也称词嵌入，这些向量能够<strong>体现词语之间的语义关系</strong>，单词和短语嵌入已经被证明可以提高 NLP 任务的性能，能够提高NLP任务的性能，例如文本分类、命名实体识别、关系抽取等。例如，“猫”对应的向量为（0.1 0.2 0.3），“狗”对应的向量为（0.2 0.2 0.4），“爱情”对应的映射为（-0.4 -0.5 -0.2）（本数据仅为示意）。像这种将文本X{x1,x2,x3,x4,x5……xn}映射到多维向量空间Y{y1,y2,y3,y4,y5……yn }，这个映射的过程就叫做词嵌入。计算这几个词的夹角来衡量词语的相关度</p>
+<h2 id="2传统NLP中的特征工程"><a href="#2传统NLP中的特征工程" class="headerlink" title="2传统NLP中的特征工程"></a>2传统NLP中的特征工程</h2><h3 id="2-1独热编码"><a href="#2-1独热编码" class="headerlink" title="2.1独热编码"></a>2.1独热编码</h3><p>​	<strong>独热编码（One-Hot Encoding）</strong> 是一种常见的特征表示方法，通常用于将离散的类别型数据转换为数值型表示，以便输入到机器学习模型中。它的特点是将每个类别表示为一个向量，在该向量中，只有一个元素为1，其余元素全部为0。</p>
+<p><strong>One-Hot Encoding 的工作原理</strong></p>
+<p>假设你有一个包含以下类别的分类任务：</p>
+<ul>
+<li>红色（red）</li>
+<li>绿色（green）</li>
+<li>蓝色（blue）</li>
+</ul>
+<p>要将这些类别转换为 One-Hot 编码，我们会为每个类别创建一个独特的二进制向量：</p>
+<ul>
+<li>红色：<code>[1, 0, 0]</code></li>
+<li>绿色：<code>[0, 1, 0]</code></li>
+<li>蓝色：<code>[0, 0, 1]</code></li>
+</ul>
+<p>例如，如果输入数据是“红色”，在使用 One-Hot 编码后，它将被表示为 <code>[1, 0, 0]</code>。</p>
+<p>**总结：**独热编码，统计词语种类，每一个词语的向量为1xN,N为文档里词语的种类</p>
+<p>所有词语生成稀疏矩阵</p>
+<h3 id="2-2词频-逆文档频率"><a href="#2-2词频-逆文档频率" class="headerlink" title="2.2词频-逆文档频率"></a>2.2词频-逆文档频率</h3><p>详情见机器学习的特征工程</p>
+<h3 id="2-3n-grams"><a href="#2-3n-grams" class="headerlink" title="2.3n-grams"></a>2.3n-grams</h3><p><strong>n-grams</strong> 是特征工程中的一种技术，它通过将文本中的连续 n 个词（或字符）组合起来，形成一个短语来捕捉文本中的局部上下文信息。n 可以为 1、2、3 等，具体取决于希望捕捉的上下文范围。</p>
+<p><strong>什么是 n-grams？</strong></p>
+<ul>
+<li><strong>1-gram（Unigram）</strong>：每个单独的词作为一个单位。例如，”I love NLP” 的 1-gram 是 <code>[&quot;I&quot;, &quot;love&quot;, &quot;NLP&quot;]</code>。</li>
+<li><strong>2-grams（Bigram）</strong>：相邻的两个词组合成一个短语。例如，”I love NLP” 的 2-grams 是 <code>[&quot;I love&quot;, &quot;love NLP&quot;]</code>。</li>
+<li><strong>3-grams（Trigram）</strong>：相邻的三个词组合成一个短语。例如，”I love NLP” 的 3-grams 是 <code>[&quot;I love NLP&quot;]</code>。</li>
+</ul>
+<p><strong>n-grams 的作用</strong></p>
+<p>使用 n-grams 可以捕捉词之间的局部上下文关系。例如，1-gram 只关心词的独立出现频率，而 bigram 和 trigram 能捕捉到词之间的顺序关系。例如，bigram <code>&quot;love NLP&quot;</code> 表示词 “love” 和 “NLP” 是一起出现的，这种信息在建模中会比仅仅知道 “love” 和 “NLP” 出现频率更有价值。</p>
+<p><strong>n-grams 的示例</strong></p>
+<p>假设句子为 “I love NLP and machine learning”：</p>
+<ul>
+<li><strong>1-gram</strong>（Unigram）: <code>[&quot;I&quot;, &quot;love&quot;, &quot;NLP&quot;, &quot;and&quot;, &quot;machine&quot;, &quot;learning&quot;]</code></li>
+<li><strong>2-grams</strong>（Bigram）: <code>[&quot;I love&quot;, &quot;love NLP&quot;, &quot;NLP and&quot;, &quot;and machine&quot;, &quot;machine learning&quot;]</code></li>
+<li><strong>3-grams</strong>（Trigram）: <code>[&quot;I love NLP&quot;, &quot;love NLP and&quot;, &quot;NLP and machine&quot;, &quot;and machine learning&quot;]</code></li>
+</ul>
+<p>通过这些 n-grams，模型可以捕捉到词与词之间的局部依赖关系。</p>
+<p>​	将 <strong>n-grams</strong> 与 <strong>TF-IDF</strong> 相结合是文本特征工程中非常常见的做法，它不仅能够捕捉词与词之间的局部关系，还能通过 TF-IDF 来衡量这些短语在整个语料库中的重要性。结合的过程基本上是先生成 n-grams，然后对这些 n-grams 计算 TF-IDF 权重。</p>
+<p><strong>结合 n-grams 与 TF-IDF 的步骤：</strong></p>
+<ol>
+<li><strong>生成 n-grams</strong>：首先从文本中生成 n-grams（n 可以是 1, 2, 3 等）。这些 n-grams 就像是词的组合，通常使用 <code>CountVectorizer</code> 或类似的工具生成。</li>
+<li><strong>计算词频 (TF)</strong>：统计每个 n-gram 在文本中出现的频率。</li>
+<li><strong>计算逆文档频率 (IDF)</strong>：计算 n-gram 在所有文档中出现的频率，稀有的 n-grams 会得到较高的权重，而常见的 n-grams 权重较低。</li>
+<li><strong>计算 TF-IDF</strong>：将每个 n-gram 的 TF 和 IDF 相乘，得到 TF-IDF 权重，表示该 n-gram 对特定文本的重要性。</li>
+</ol>
+<p>注意：当使用 <strong>2-grams</strong> 时，<code>I love</code> 和 <code>love NLP</code> 被看作是两个单独的特征，总共有两个特征（总特征数 &#x3D; 2）。</p>
+<h2 id="3深度学习中NLP的特征输入"><a href="#3深度学习中NLP的特征输入" class="headerlink" title="3深度学习中NLP的特征输入"></a>3深度学习中NLP的特征输入</h2><h3 id="3-1稠密编码（特征嵌入）"><a href="#3-1稠密编码（特征嵌入）" class="headerlink" title="3.1稠密编码（特征嵌入）"></a>3.1稠密编码（特征嵌入）</h3><p>​	稠密编码（Dense Encoding），在机器学习和深度学习中，<strong>通常指的是将离散或高维稀疏数据转化为低维的连续、密集向量表示</strong>。这种编码方式在特征嵌入（Feature Embedding）中尤为常见。</p>
+<p>稠密向量表示：不再以独热编码中的一维来表示各个特征，而是把每个核心特征（词，词性，位置等)都嵌入到d维空间中，并用空间中的一个向量表示。通常空间维度d远小于每个特征的样本数(40000的词表，100&#x2F;200维向量)。嵌入的向量(每个核心特征的向量表示)作为网络参数与神经网络中的其他参数一起被训练。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><strong>低维度</strong>：相比稀疏表示（如独热编码），稠密编码的维度更低，能够减少计算和存储成本。</li>
+<li><strong>语义相似性</strong>：嵌入向量之间的距离（如欧氏距离或余弦相似度）可以表示这些对象之间的语义相似性。</li>
+<li><strong>可微学习</strong>：嵌入表示通常通过神经网络进行学习，并且通过反向传播算法进行优化。</li>
+</ul>
+<h3 id="3-2常用词嵌入算法"><a href="#3-2常用词嵌入算法" class="headerlink" title="3.2常用词嵌入算法"></a>3.2常用词嵌入算法</h3><h4 id="3-2-1skip-gram模型"><a href="#3-2-1skip-gram模型" class="headerlink" title="3.2.1skip-gram模型"></a>3.2.1skip-gram模型</h4><p> Skip-gram 模型是一种根据目标单词来预测上下文单词的模型。具体来说，给定一个中心单词，Skip-gram 模型的任务是预测在它周围窗口大小为 n 内的上下文单词。</p>
+<p>Skip-gram 模型的优点是：由于它是基于目标单词来预测上下文单词的，因此它可以利用目标单词的语义和语法特征来预测上下文单词；模型能够生成更多的训练数据，因此可以更好地训练低频词汇的表示；<strong>Skip-gram 模型在处理大规模语料库时效果比 CBOW 模型更好</strong>。</p>
+<p><img src="/.io//fbf43b71-4fcf-4ce2-a23d-016b5c712d05.png"></p>
+<p>代码实现skip-gram（初级版）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义数据类型为浮点数</span></span><br><span class="line">dtype = torch.FloatTensor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 语料库，包含训练模型的句子</span></span><br><span class="line">sentences = [<span class="string">&quot;i like dog&quot;</span>, <span class="string">&quot;i like cat&quot;</span>, <span class="string">&quot;i like animal&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog cat animal&quot;</span>, <span class="string">&quot;apple cat dog like&quot;</span>, <span class="string">&quot;cat like fish&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog like meat&quot;</span>, <span class="string">&quot;i like apple&quot;</span>, <span class="string">&quot;i hate apple&quot;</span>,</span><br><span class="line">             <span class="string">&quot;i like movie book music apple&quot;</span>, <span class="string">&quot;dog like bark&quot;</span>, <span class="string">&quot;dog friend cat&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将所有句子拼接为一个字符串并按空格分词</span></span><br><span class="line">word_sequence = <span class="string">&#x27; &#x27;</span>.join(sentences).split()</span><br><span class="line"><span class="comment"># 获取词汇表中的所有唯一词</span></span><br><span class="line">word_list = <span class="built_in">list</span>(<span class="built_in">set</span>(word_sequence))</span><br><span class="line"><span class="comment"># 创建词典，词汇表中的每个词都分配一个唯一的索引</span></span><br><span class="line">word_dict = &#123;w: i <span class="keyword">for</span> i, w <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建跳字模型的训练数据</span></span><br><span class="line">skip_grams = []  <span class="comment"># 训练数据</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(word_sequence) - <span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 当前词对应的id</span></span><br><span class="line">    target = word_dict[word_sequence[i]]</span><br><span class="line">    <span class="comment"># 获取当前词的前后两个上下文词对应的id</span></span><br><span class="line">    context = [word_dict[word_sequence[i - <span class="number">1</span>]], word_dict[word_sequence[i + <span class="number">1</span>]]]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将目标词与上下文词配对，添加到训练数据中</span></span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> context:</span><br><span class="line">        skip_grams.append([target, w])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义嵌入维度（嵌入向量的大小）为2</span></span><br><span class="line">embedding_size = <span class="number">2</span></span><br><span class="line"><span class="comment"># 词汇表大小</span></span><br><span class="line">voc_size = <span class="built_in">len</span>(word_list)</span><br><span class="line"><span class="comment"># 每次训练的批量大小</span></span><br><span class="line">batch_size = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义Word2Vec模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Word2Vec</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Word2Vec, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="comment"># 定义词嵌入矩阵W，随机初始化，大小为(voc_size, embedding_size)</span></span><br><span class="line">        <span class="variable language_">self</span>.W = nn.Parameter(torch.rand(voc_size, embedding_size)).<span class="built_in">type</span>(dtype)</span><br><span class="line">        <span class="comment"># 定义上下文矩阵WT，随机初始化，大小为(embedding_size, voc_size)</span></span><br><span class="line">        <span class="variable language_">self</span>.WT = nn.Parameter(torch.rand(embedding_size, voc_size)).<span class="built_in">type</span>(dtype)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前向传播</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="comment"># 通过乘以嵌入矩阵W得到词向量</span></span><br><span class="line">        weight_layer = torch.matmul(x, <span class="variable language_">self</span>.W)</span><br><span class="line">        <span class="comment"># 通过上下文矩阵WT得到输出</span></span><br><span class="line">        output_layer = torch.matmul(weight_layer, <span class="variable language_">self</span>.WT)</span><br><span class="line">        <span class="keyword">return</span> output_layer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型实例</span></span><br><span class="line">model = Word2Vec()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义损失函数为交叉熵损失</span></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment"># 使用Adam优化器</span></span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr=<span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义随机批量生成函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_batch</span>(<span class="params">data, size</span>):</span><br><span class="line">    random_inputs = []  <span class="comment"># 输入批次</span></span><br><span class="line">    random_labels = []  <span class="comment"># 标签批次</span></span><br><span class="line">    <span class="comment"># 从数据中随机选择size个索引</span></span><br><span class="line">    random_index = np.random.choice(<span class="built_in">range</span>(<span class="built_in">len</span>(data)), size, replace=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据随机索引生成输入和标签批次</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> random_index:</span><br><span class="line">        <span class="comment"># 目标词one-hot编码</span></span><br><span class="line">        random_inputs.append(np.eye(voc_size)[data[i][<span class="number">0</span>]])</span><br><span class="line">        <span class="comment"># 上下文词的索引作为标签</span></span><br><span class="line">        random_labels.append(data[i][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> random_inputs, random_labels</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    <span class="comment"># 获取一批随机的输入和目标</span></span><br><span class="line">    input_batch, target_batch = random_batch(skip_grams, batch_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 转换为张量</span></span><br><span class="line">    input_batch = torch.Tensor(input_batch)</span><br><span class="line">    target_batch = torch.LongTensor(target_batch)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 梯度清零</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前向传播得到模型输出</span></span><br><span class="line">    output = model(input_batch)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算损失</span></span><br><span class="line">    loss = criterion(output, target_batch)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每1000个epoch打印一次损失</span></span><br><span class="line">    <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Epoch:&#x27;</span>, <span class="string">&#x27;%04d&#x27;</span> % (epoch + <span class="number">1</span>), <span class="string">&#x27;cost =&#x27;</span>, <span class="string">&#x27;&#123;:.6f&#125;&#x27;</span>.<span class="built_in">format</span>(loss))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向传播</span></span><br><span class="line">    loss.backward()</span><br><span class="line">    <span class="comment"># 更新参数</span></span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可视化词嵌入</span></span><br><span class="line"><span class="keyword">for</span> i, label <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list):</span><br><span class="line">    W, WT = model.parameters()  <span class="comment"># 获取模型参数</span></span><br><span class="line">    x, y = <span class="built_in">float</span>(W[i][<span class="number">0</span>]), <span class="built_in">float</span>(W[i][<span class="number">1</span>])  <span class="comment"># 获取词嵌入的二维坐标</span></span><br><span class="line">    plt.scatter(x, y)  <span class="comment"># 绘制散点图</span></span><br><span class="line">    plt.annotate(label, xy=(x, y), xytext=(<span class="number">5</span>, <span class="number">2</span>), textcoords=<span class="string">&#x27;offset points&#x27;</span>, ha=<span class="string">&#x27;right&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)  <span class="comment"># 标注词汇</span></span><br><span class="line">plt.show()  <span class="comment"># 显示图形</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注释：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据随机索引生成输入和标签批次</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> random_index:</span><br><span class="line">    <span class="comment"># 目标词one-hot编码</span></span><br><span class="line">    random_inputs.append(np.eye(voc_size)[data[i][<span class="number">0</span>]])</span><br><span class="line">    <span class="comment"># 上下文词的索引作为标签</span></span><br><span class="line">    random_labels.append(data[i][<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>for i in random_index:</code></strong><br>遍历<code>random_index</code>列表中的每个索引<code>i</code>。这些索引用于从数据集中随机选择样本。</p>
+<p><strong><code>random_inputs.append(np.eye(voc_size)[data[i][0]])</code></strong></p>
+<ul>
+<li><code>np.eye(voc_size)</code>：生成一个大小为<code>voc_size</code>的单位矩阵。这里的<code>voc_size</code>通常表示词汇表的大小。</li>
+<li><code>data[i][0]</code>：从数据集中获取第<code>i</code>个样本的第一个元素，通常代表目标词的索引。</li>
+<li><code>np.eye(voc_size)[data[i][0]]</code>：通过索引获取目标词的one-hot编码，结果是一个长度为<code>voc_size</code>的向量，其中目标词的位置为1，其余位置为0。</li>
+<li><code>random_inputs.append(...)</code>：将生成的one-hot编码添加到<code>random_inputs</code>列表中。</li>
+</ul>
+<p><strong><code>random_labels.append(data[i][1])</code></strong></p>
+<ul>
+<li><code>data[i][1]</code>：从数据集中获取第<code>i</code>个样本的第二个元素，通常代表上下文词的索引（作为标签）。</li>
+<li><code>random_labels.append(...)</code>：将获取的标签添加到<code>random_labels</code>列表中。</li>
+</ul>
+<h4 id="3-2-2-CBOW模型"><a href="#3-2-2-CBOW模型" class="headerlink" title="3.2.2 CBOW模型"></a>3.2.2 CBOW模型</h4><p>连续词袋模型（CBOW）是一种根据上下文单词来预测目标单词的模型。具体来说，给定一个窗口大小为 n 的上下文单词序列，连续词袋模型的任务是预测中间的目标单词。</p>
+<p>CBOW模型∶使用文本的中间词作为目标词（标签），<strong>去掉了隐藏层。用上下文各词的词向量的均值</strong>代替NNLM拼接起来的词向量。</p>
+<p><img src="/.io//cee74e69-0e20-4b95-8581-0825c2ccb67c.png"></p>
+<img src="/.io//a3079555-6a27-4d80-bbc8-b7576cb4a226.png" style="zoom: 50%;">
+
+<p>连续词袋模型的优点是：由于它是基于上下文单词来预测目标单词的，因此它可以利用上下文单词的信息来推断目标单词的语义和语法特征；模型参数较少，训练速度相对较快。<strong>CBOW对小型数据库比较合适。</strong></p>
+<p><strong>输入∶上下文的语义表示</strong></p>
+<p><strong>输出∶中间词是哪个词</strong></p>
+<p><strong>练习：</strong></p>
+<p>之前案例中的模型换成CBOW模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">dtype = torch.FloatTensor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 语料库</span></span><br><span class="line">sentences = [<span class="string">&quot;i like dog&quot;</span>, <span class="string">&quot;i like cat&quot;</span>, <span class="string">&quot;i like animal&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog cat animal&quot;</span>, <span class="string">&quot;apple cat dog like&quot;</span>, <span class="string">&quot;cat like fish&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog like meat&quot;</span>, <span class="string">&quot;i like apple&quot;</span>, <span class="string">&quot;i hate apple&quot;</span>,</span><br><span class="line">             <span class="string">&quot;i like movie book music apple&quot;</span>, <span class="string">&quot;dog like bark&quot;</span>, <span class="string">&quot;dog friend cat&quot;</span>]</span><br><span class="line"></span><br><span class="line">word_sequence = <span class="string">&#x27; &#x27;</span>.join(sentences).split()  <span class="comment"># 将所有句子合并成一个长的词序列</span></span><br><span class="line">word_list = <span class="built_in">list</span>(<span class="built_in">set</span>(word_sequence))  <span class="comment"># 获取去重的词汇列表</span></span><br><span class="line">word_dict = &#123;w: i <span class="keyword">for</span> i, w <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list)&#125;  <span class="comment"># 创建词典，词对应的索引</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建CBOW训练数据</span></span><br><span class="line">cbow_data = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(word_sequence) - <span class="number">1</span>):</span><br><span class="line">    context = [word_dict[word_sequence[i - <span class="number">1</span>]], word_dict[word_sequence[i + <span class="number">1</span>]]]  <span class="comment"># 上下文词的索引</span></span><br><span class="line">    target = word_dict[word_sequence[i]]  <span class="comment"># 当前词（目标词）的索引</span></span><br><span class="line">    cbow_data.append([context, target])  <span class="comment"># 将上下文和目标词加入训练数据</span></span><br><span class="line"></span><br><span class="line">embedding_size = <span class="number">2</span>  <span class="comment"># 词向量的维度</span></span><br><span class="line">voc_size = <span class="built_in">len</span>(word_list)  <span class="comment"># 词汇表的大小</span></span><br><span class="line">batch_size = <span class="number">5</span>  <span class="comment"># 每个批次的大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义CBOW模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CBOW</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(CBOW, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.embeddings = nn.Embedding(voc_size, embedding_size)  <span class="comment"># 词嵌入层</span></span><br><span class="line">        <span class="variable language_">self</span>.linear1 = nn.Linear(embedding_size, voc_size)  <span class="comment"># 输出层，将嵌入映射回词汇表大小</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        embeds = <span class="variable language_">self</span>.embeddings(x)  <span class="comment"># 查找上下文词的嵌入向量</span></span><br><span class="line">        avg_embeds = torch.mean(embeds, dim=<span class="number">1</span>)  <span class="comment"># 对上下文词向量取平均值</span></span><br><span class="line">        out = <span class="variable language_">self</span>.linear1(avg_embeds)  <span class="comment"># 通过全连接层，预测词汇表中的每个词的概率</span></span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例化模型</span></span><br><span class="line">model = CBOW()</span><br><span class="line"></span><br><span class="line">criterion = nn.CrossEntropyLoss()  <span class="comment"># 使用交叉熵损失</span></span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr=<span class="number">0.001</span>)  <span class="comment"># 使用Adam优化器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机批次生成函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_batch</span>(<span class="params">data, size</span>):</span><br><span class="line">    random_inputs = []  <span class="comment"># 上下文词</span></span><br><span class="line">    random_labels = []  <span class="comment"># 目标词</span></span><br><span class="line">    random_index = np.random.choice(<span class="built_in">range</span>(<span class="built_in">len</span>(data)), size, replace=<span class="literal">False</span>)  <span class="comment"># 随机选择数据索引</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> random_index:</span><br><span class="line">        random_inputs.append(data[i][<span class="number">0</span>])  <span class="comment"># 上下文词加入输入列表</span></span><br><span class="line">        random_labels.append(data[i][<span class="number">1</span>])  <span class="comment"># 目标词加入标签列表</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> random_inputs, random_labels</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    input_batch, target_batch = random_batch(cbow_data, batch_size)  <span class="comment"># 获取随机批次数据</span></span><br><span class="line"></span><br><span class="line">    input_batch = torch.LongTensor(input_batch)  <span class="comment"># 转换为LongTensor，因为Embedding需要整数索引</span></span><br><span class="line">    target_batch = torch.LongTensor(target_batch)  <span class="comment"># 转换为LongTensor</span></span><br><span class="line"></span><br><span class="line">    optimizer.zero_grad()  <span class="comment"># 梯度清零</span></span><br><span class="line">    output = model(input_batch)  <span class="comment"># 前向传播，预测输出</span></span><br><span class="line">    loss = criterion(output, target_batch)  <span class="comment"># 计算损失</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">1000</span> == <span class="number">0</span>:  <span class="comment"># 每1000个epoch打印一次损失</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Epoch:&#x27;</span>, <span class="string">&#x27;%04d&#x27;</span> % (epoch + <span class="number">1</span>), <span class="string">&#x27;cost =&#x27;</span>, <span class="string">&#x27;&#123;:.6f&#125;&#x27;</span>.<span class="built_in">format</span>(loss.item()))</span><br><span class="line"></span><br><span class="line">    loss.backward()  <span class="comment"># 反向传播</span></span><br><span class="line">    optimizer.step()  <span class="comment"># 更新参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可视化嵌入结果</span></span><br><span class="line"><span class="keyword">for</span> i, label <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list):</span><br><span class="line">    W = model.embeddings.weight.data.numpy()  <span class="comment"># 获取词嵌入的权重</span></span><br><span class="line">    x, y = W[i][<span class="number">0</span>], W[i][<span class="number">1</span>]  <span class="comment"># 获取每个词的嵌入向量的两个维度</span></span><br><span class="line">    plt.scatter(x, y)  <span class="comment"># 在二维空间中绘制点</span></span><br><span class="line">    plt.annotate(label, xy=(x, y), xytext=(<span class="number">5</span>, <span class="number">2</span>), textcoords=<span class="string">&#x27;offset points&#x27;</span>, ha=<span class="string">&#x27;right&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)  <span class="comment"># 标注词汇</span></span><br><span class="line">plt.show()  <span class="comment"># 显示图形</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-3-gensim-API调用"><a href="#3-2-3-gensim-API调用" class="headerlink" title="3.2.3 gensim  API调用"></a>3.2.3 gensim  API调用</h4><p>Word2vec是一个用来产生词向量的模型。是一个将单词转换成向量形式的工具。<br>通过转换，可以把对<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9&spm=1001.2101.3001.7020">文本内容</a>的处理简化为向量空间中的向量运算，计算出向量空间上的相似度，来表示文本语义上的相似度。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>sentences</strong></td>
+<td><strong>可以是一个list，对于大语料集，建议使用BrownCorpus,Text8Corpus或lineSentence构建。</strong></td>
+</tr>
+<tr>
+<td><strong>vector_size</strong></td>
+<td><strong>word向量的维度，默认为100。大的size需要更多的训练数据，但是效果会更好。推荐值为几十到几百。</strong></td>
+</tr>
+<tr>
+<td>alpha</td>
+<td>学习率</td>
+</tr>
+<tr>
+<td><strong>window</strong></td>
+<td><strong>表示当前词与预测词在一个句子中的最大距离是多少。</strong></td>
+</tr>
+<tr>
+<td><strong>min_count</strong></td>
+<td><strong>可以对字典做截断。词频少于min_count次数的单词会被丢弃掉，默认值为5。</strong></td>
+</tr>
+<tr>
+<td>max_vocab_size</td>
+<td>设置词向量构建期间的RAM限制。如果所有独立单词个数超过这个，则就消除掉其中最不频繁的一个。每一千万个单词需要大约1GB的RAM。设置成None则没有限制。</td>
+</tr>
+<tr>
+<td>sample</td>
+<td>高频词汇的随机降采样的配置阈值，默认为1e-3，范围是(0，1e-5)</td>
+</tr>
+<tr>
+<td>seed</td>
+<td>用于随机数发生器。与初始化词向量有关。</td>
+</tr>
+<tr>
+<td>workers</td>
+<td>参数控制训练的并行数。</td>
+</tr>
+<tr>
+<td><strong>sg</strong></td>
+<td><strong>用于设置训练算法，默认为0，对应CBOW算法；sg&#x3D;1则采用skip-gram算法。</strong></td>
+</tr>
+<tr>
+<td>hs</td>
+<td>如果为1则会采用hierarchica·softmax技巧。如果设置为0（default），则negative sampling会被使用。</td>
+</tr>
+<tr>
+<td>negative</td>
+<td>如果&gt;0，则会采用negative samping，用于设置多少个noise words。</td>
+</tr>
+<tr>
+<td>cbow_mean</td>
+<td>如果为0，则采用上下文词向量的和，如果为1（default）则采用均值。只有使用CBOW的时候才起作用。</td>
+</tr>
+<tr>
+<td>hashfxn</td>
+<td>hash函数来初始化权重。默认使用python的hash函数。</td>
+</tr>
+<tr>
+<td>epochs</td>
+<td>迭代次数，默认为5。</td>
+</tr>
+<tr>
+<td>trim_rule</td>
+<td>用于设置词汇表的整理规则，指定那些单词要留下，哪些要被删除。可以设置为None（min_count会被使用）或者一个接受()并返回RULE_DISCARD，utils。RULE_KEEP或者utils。RULE_DEFAULT的函数。</td>
+</tr>
+<tr>
+<td>sorted_vocab</td>
+<td>如果为1（default），则在分配word index 的时候会先对单词基于频率降序排序。</td>
+</tr>
+<tr>
+<td>batch_words</td>
+<td>每一批的传递给线程的单词的数量，默认为10000</td>
+</tr>
+<tr>
+<td>min_alpha</td>
+<td>随着训练的进行，学习率线性下降到min_alpha</td>
+</tr>
+</tbody></table>
+<h6 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a><strong>常用方法</strong></h6><p><code>model.wv</code>: 这个对象包含了所有单词的词嵌入向量。常用的方法有：</p>
+<ul>
+<li><code>model.wv[word]</code>：返回某个特定单词的向量。</li>
+<li><code>model.wv.most_similar(word)</code>：获取与某个单词最相似的词。</li>
+<li><code>model.wv.similarity(word1, word2)</code>：计算两个词之间的相似度。</li>
+</ul>
+<img src="/.io//e0906ae4-57ea-4783-a13f-52c5f8b4e78b.png" style="zoom:50%;float:left">
+
+<ul>
+<li><p>model.save(“word2vec.model”)</p>
+<p>model &#x3D; Word2Vec.load(“word2vec.model”)</p>
+<p>保存和加载模型</p>
+</li>
+</ul>
+<p><strong>使用实例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> gensim.models <span class="keyword">import</span> Word2Vec</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 语料库</span></span><br><span class="line">sentences = [<span class="string">&quot;i like dog&quot;</span>, <span class="string">&quot;i like cat&quot;</span>, <span class="string">&quot;i like animal&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog cat animal&quot;</span>, <span class="string">&quot;apple cat dog like&quot;</span>, <span class="string">&quot;cat like fish&quot;</span>,</span><br><span class="line">             <span class="string">&quot;dog like meat&quot;</span>, <span class="string">&quot;i like apple&quot;</span>, <span class="string">&quot;i hate apple&quot;</span>,</span><br><span class="line">             <span class="string">&quot;i like movie book music apple&quot;</span>, <span class="string">&quot;dog like bark&quot;</span>, <span class="string">&quot;dog friend cat&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将每个句子分成单词列表（Gensim的Word2Vec API要求输入格式为二维列表：每个句子是一个单词列表）</span></span><br><span class="line">tokenized_sentences = [sentence.split() <span class="keyword">for</span> sentence <span class="keyword">in</span> sentences]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义Word2Vec模型</span></span><br><span class="line">model = Word2Vec(sentences=tokenized_sentences, vector_size=<span class="number">2</span>, window=<span class="number">2</span>, min_count=<span class="number">1</span>, sg=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取词汇表</span></span><br><span class="line">word_list = <span class="built_in">list</span>(model.wv.index_to_key)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可视化嵌入结果</span></span><br><span class="line"><span class="keyword">for</span> i, word <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list):</span><br><span class="line">    W = model.wv[word]  <span class="comment"># 获取每个单词的词向量</span></span><br><span class="line">    x, y = W[<span class="number">0</span>], W[<span class="number">1</span>]  <span class="comment"># 由于向量是二维的，提取前两个维度</span></span><br><span class="line">    plt.scatter(x, y)  <span class="comment"># 在二维空间中绘制点</span></span><br><span class="line">    plt.annotate(word, xy=(x, y), xytext=(<span class="number">5</span>, <span class="number">2</span>), textcoords=<span class="string">&#x27;offset points&#x27;</span>, ha=<span class="string">&#x27;right&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)  <span class="comment"># 标注词汇</span></span><br><span class="line"></span><br><span class="line">plt.show()  <span class="comment"># 显示图形</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> gensim.models <span class="keyword">import</span> Word2Vec</span><br><span class="line"><span class="keyword">from</span> nltk.tokenize <span class="keyword">import</span> word_tokenize</span><br><span class="line"><span class="comment"># import nltk</span></span><br><span class="line"><span class="comment"># nltk.download(&#x27;punkt&#x27;)  # 如果未安装nltk的punkt分词器，请先下载</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例文本数据</span></span><br><span class="line">sentence = <span class="string">&quot;Word embedding is the collective name for a set of language modeling and feature learning techniques in natural language processing (NLP) where words or phrases from the vocabulary are mapped to vectors of real numbers.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用NLTK进行分词</span></span><br><span class="line">tokenized_text = word_tokenize(sentence.lower())  <span class="comment"># 将文本转换为小写并进行分词</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义Word2Vec模型并进行训练</span></span><br><span class="line">model = Word2Vec(sentences=[tokenized_text], vector_size=<span class="number">100</span>, window=<span class="number">5</span>, min_count=<span class="number">1</span>, workers=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算整句话的嵌入向量</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sentence_embedding</span>(<span class="params">sentence, model,tokenized_text</span>):</span><br><span class="line">    <span class="comment"># 获取每个单词的嵌入向量</span></span><br><span class="line">    word_embeddings = [model.wv[word] <span class="keyword">for</span> word <span class="keyword">in</span> tokenized_text <span class="keyword">if</span> word <span class="keyword">in</span> model.wv]</span><br><span class="line">    <span class="comment"># 如果句子中没有任何一个单词在词汇表中，则返回None</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(word_embeddings) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="comment"># 计算平均单词嵌入</span></span><br><span class="line">    sentence_embedding = np.mean(word_embeddings, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> sentence_embedding</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取整句话的嵌入向量</span></span><br><span class="line">sentence_emb = sentence_embedding(sentence, model,tokenized_text)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Embedding for the sentence:&quot;</span>, sentence_emb)</span><br></pre></td></tr></table></figure>
+
+
         </div>
 
         
@@ -188,6 +489,10 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%90%88%E9%9B%86/"># 阶段学习笔记合集</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -197,6 +502,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/08/11/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/">刷题笔记</a>
             
             
             <a class="next" rel="next" href="/2025/07/30/YOLO%E7%AE%97%E6%B3%95/">YOLO算法</a>
